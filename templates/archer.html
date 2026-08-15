@@ -6,152 +6,253 @@
 <title>Archer Hero - SliqGames</title>
 
 <style>
-*{
-box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
 margin:0;
-background:#07111f;
-color:white;
 font-family:Arial,Segoe UI,sans-serif;
+background:
+radial-gradient(circle at top,#18345c,#07111f 60%);
+color:white;
 overflow:hidden;
 }
 
 .top{
-height:65px;
-background:#0b1829;
-border-bottom:1px solid #243952;
+height:68px;
+background:rgba(7,17,31,.95);
+border-bottom:1px solid #263e5d;
 display:flex;
 align-items:center;
-padding:0 18px;
-gap:15px;
+padding:0 20px;
+position:relative;
+z-index:20;
 }
 
-.back{
+.top button{
 background:#2563eb;
 border:0;
 color:white;
-padding:10px 16px;
-border-radius:10px;
+padding:11px 17px;
+border-radius:11px;
 font-weight:bold;
 cursor:pointer;
 }
 
 .title{
-font-size:20px;
+flex:1;
+text-align:center;
+font-size:23px;
 font-weight:900;
-}
-
-.score{
-margin-left:auto;
-font-size:18px;
-font-weight:bold;
 }
 
 #game{
 position:relative;
-height:calc(100vh - 65px);
+width:100vw;
+height:calc(100vh - 68px);
 overflow:hidden;
 background:
-linear-gradient(#6ec6ff 0%,#bdeeff 65%,#6fba4b 65%,#4d9138 100%);
+linear-gradient(#102b48,#081321);
 }
 
-#player{
+.sky{
 position:absolute;
-left:90px;
-bottom:70px;
-font-size:70px;
-user-select:none;
-transition:transform .1s;
+inset:0;
+background:
+radial-gradient(circle at 20% 20%,rgba(96,165,250,.18),transparent 20%),
+radial-gradient(circle at 80% 15%,rgba(147,197,253,.12),transparent 25%);
+}
+
+.hud{
+position:absolute;
+top:18px;
+left:18px;
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+z-index:15;
+}
+
+.stat{
+background:rgba(7,17,31,.88);
+border:1px solid #315071;
+border-radius:12px;
+padding:10px 14px;
+font-weight:bold;
+box-shadow:0 8px 30px rgba(0,0,0,.25);
+}
+
+.arena{
+position:absolute;
+inset:0;
+}
+
+.player{
+position:absolute;
+width:74px;
+height:74px;
+left:50%;
+bottom:90px;
+transform:translateX(-50%);
+font-size:55px;
+display:flex;
+align-items:center;
+justify-content:center;
+filter:drop-shadow(0 0 12px #60a5fa);
+z-index:10;
 }
 
 .enemy{
 position:absolute;
-bottom:70px;
-font-size:60px;
-user-select:none;
+width:65px;
+height:65px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:48px;
+z-index:7;
 }
 
 .arrow{
 position:absolute;
-font-size:32px;
-z-index:5;
+width:8px;
+height:30px;
+background:#f8fafc;
+border-radius:5px;
+z-index:8;
+box-shadow:0 0 10px #93c5fd;
 }
 
-#startScreen{
+.coin{
 position:absolute;
-inset:0;
-background:rgba(7,17,31,.78);
-display:flex;
-align-items:center;
-justify-content:center;
+font-size:25px;
+z-index:8;
+}
+
+.damage{
+position:absolute;
+color:#fca5a5;
+font-size:22px;
+font-weight:900;
 z-index:20;
+animation:damage .5s forwards;
 }
 
-.panel{
-background:#0d1b2d;
-border:1px solid #2a4564;
-border-radius:22px;
-padding:35px;
-width:min(450px,90%);
-text-align:center;
-box-shadow:0 25px 80px rgba(0,0,0,.45);
+@keyframes damage{
+0%{transform:translateY(0);opacity:1}
+100%{transform:translateY(-35px);opacity:0}
 }
 
-.panel h1{
-font-size:40px;
-margin:0 0 10px;
-}
-
-.panel p{
-color:#9fb0c7;
-}
-
-.start{
-background:#2563eb;
-border:0;
-color:white;
-padding:14px 28px;
-border-radius:12px;
-font-size:17px;
-font-weight:bold;
-cursor:pointer;
-margin-top:10px;
-}
-
-.controls{
+.bottom{
 position:absolute;
-bottom:15px;
+bottom:18px;
 left:50%;
 transform:translateX(-50%);
-background:rgba(7,17,31,.65);
-padding:10px 18px;
-border-radius:12px;
-font-size:13px;
-color:#dbeafe;
+z-index:20;
+display:flex;
+gap:10px;
 }
 
-#gameOver{
+.control{
+width:62px;
+height:55px;
+border:0;
+border-radius:14px;
+background:#172c48;
+color:white;
+font-size:24px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.shoot{
+background:#2563eb;
+}
+
+.upgrades{
+position:absolute;
+right:18px;
+top:18px;
+z-index:30;
+width:250px;
+background:rgba(7,17,31,.95);
+border:1px solid #315071;
+border-radius:18px;
+padding:18px;
+display:none;
+}
+
+.upgrades.open{
+display:block;
+}
+
+.upgrades h2{
+margin-top:0;
+}
+
+.upgrade{
+width:100%;
+padding:11px;
+margin:6px 0;
+border:0;
+border-radius:10px;
+background:#172c48;
+color:white;
+font-weight:bold;
+cursor:pointer;
+text-align:left;
+}
+
+.upgrade:hover{
+background:#23466e;
+}
+
+.gameover{
 position:absolute;
 inset:0;
-background:rgba(0,0,0,.72);
 display:none;
 align-items:center;
 justify-content:center;
-z-index:15;
+background:rgba(0,0,0,.75);
+z-index:50;
 }
 
-@media(max-width:600px){
-
-#player{
-left:40px;
+.gameoverBox{
+width:min(430px,90%);
+background:#0d192b;
+border:1px solid #315071;
+border-radius:22px;
+padding:30px;
+text-align:center;
 }
 
-.panel h1{
-font-size:30px;
+.gameoverBox button{
+width:100%;
+padding:13px;
+margin-top:9px;
+border:0;
+border-radius:11px;
+background:#2563eb;
+color:white;
+font-weight:bold;
+cursor:pointer;
 }
 
+@media(min-width:850px){
+.bottom .move{
+display:none;
+}
+}
+
+@media(max-width:700px){
+.upgrades{
+width:220px;
+right:10px;
+top:75px;
+}
+
+.title{
+font-size:18px;
+}
 }
 </style>
 </head>
@@ -159,106 +260,192 @@ font-size:30px;
 <body>
 
 <div class="top">
-
-<button class="back" onclick="location.href='/'">
-← SliqGames
-</button>
-
-<div class="title">
-🏹 Archer Hero
-</div>
-
-<div class="score">
-Punkte: <span id="score">0</span>
-</div>
-
+<button onclick="location.href='/'">← SliqGames</button>
+<div class="title">🏹 Archer Hero</div>
 </div>
 
 <div id="game">
 
-<div id="player">🏹</div>
+<div class="sky"></div>
 
-<div id="startScreen">
+<div class="hud">
+<div class="stat">❤️ <span id="health">100</span></div>
+<div class="stat">💰 <span id="coins">0</span></div>
+<div class="stat">🏹 Welle <span id="wave">1</span></div>
+<div class="stat">⭐ <span id="score">0</span></div>
+</div>
 
-<div class="panel">
+<div class="arena" id="arena">
 
-<h1>🏹 Archer Hero</h1>
+<div class="player" id="player">🏹</div>
 
-<p>
-Besiege deine Gegner und sammle so viele Punkte wie möglich!
-</p>
+</div>
 
-<button class="start" onclick="startGame()">
-Spiel starten
+<div class="upgrades" id="upgradePanel">
+
+<h2>⬆️ Upgrades</h2>
+
+<p>💰 Münzen: <span id="upgradeCoins">0</span></p>
+
+<button class="upgrade" onclick="upgradeDamage()">
+🏹 Schaden +5 — <span id="damageCost">10</span> 💰
+</button>
+
+<button class="upgrade" onclick="upgradeSpeed()">
+⚡ Angriffsgeschwindigkeit — <span id="speedCost">15</span> 💰
+</button>
+
+<button class="upgrade" onclick="upgradeHealth()">
+❤️ Max. Leben +20 — <span id="healthCost">20</span> 💰
+</button>
+
+<button class="upgrade" onclick="healPlayer()">
+💚 Heilen — 10 💰
 </button>
 
 </div>
 
+<div class="bottom">
+
+<button class="control move" onclick="moveLeft()">←</button>
+<button class="control shoot" onclick="shoot()">🏹</button>
+<button class="control move" onclick="moveRight()">→</button>
+<button class="control" onclick="toggleUpgrades()">⬆️</button>
+
 </div>
 
-<div id="gameOver">
+<div class="gameover" id="gameover">
 
-<div class="panel">
+<div class="gameoverBox">
 
-<h1>💀 Game Over</h1>
+<h1>💀 Besiegt!</h1>
 
-<p>
-Deine Punkte: <strong id="finalScore">0</strong>
-</p>
+<p>Du hast <b><span id="finalScore">0</span></b> Punkte erreicht.</p>
 
-<button class="start" onclick="startGame()">
-Nochmal spielen
+<p>Du hast <b><span id="finalCoins">0</span></b> Münzen gesammelt.</p>
+
+<button onclick="restart()">🔄 Nochmal spielen</button>
+
+<button onclick="location.href='/'">
+← Zurück zu SliqGames
 </button>
 
-<button class="back" style="margin-top:10px;width:100%" onclick="location.href='/'">
-Zurück zu SliqGames
-</button>
-
 </div>
 
-</div>
-
-<div class="controls">
-Klicke oder drücke LEERTASTE, um zu schießen
 </div>
 
 </div>
 
 <script>
 
-let running=false;
+const arena=document.getElementById("arena");
+const player=document.getElementById("player");
+
+let playerX=50;
+
+let health=100;
+let maxHealth=100;
+
+let coins=0;
 let score=0;
+let wave=1;
+
+let damage=20;
+let shootDelay=600;
+
+let damageCost=10;
+let speedCost=15;
+let healthCost=20;
+
 let enemies=[];
 let arrows=[];
-let enemyTimer=null;
-let animation=null;
 
-const player=document.getElementById("player");
-const game=document.getElementById("game");
+let running=true;
 
-function startGame(){
+function updateHUD(){
 
-score=0;
+document.getElementById("health").textContent=health;
+document.getElementById("coins").textContent=coins;
+document.getElementById("upgradeCoins").textContent=coins;
+document.getElementById("wave").textContent=wave;
 document.getElementById("score").textContent=score;
 
-document.getElementById("startScreen").style.display="none";
-document.getElementById("gameOver").style.display="none";
+document.getElementById("damageCost").textContent=damageCost;
+document.getElementById("speedCost").textContent=speedCost;
+document.getElementById("healthCost").textContent=healthCost;
 
-enemies.forEach(e=>e.el.remove());
-arrows.forEach(a=>a.el.remove());
-
-enemies=[];
-arrows=[];
-
-running=true;
-
-if(enemyTimer){
-clearInterval(enemyTimer);
 }
 
-enemyTimer=setInterval(createEnemy,1200);
+function moveLeft(){
 
-animation=requestAnimationFrame(loop);
+if(!running)return;
+
+playerX-=5;
+
+if(playerX<8)playerX=8;
+
+player.style.left=playerX+"%";
+
+}
+
+function moveRight(){
+
+if(!running)return;
+
+playerX+=5;
+
+if(playerX>92)playerX=92;
+
+player.style.left=playerX+"%";
+
+}
+
+document.addEventListener("keydown",e=>{
+
+if(e.key==="ArrowLeft"||e.key.toLowerCase()==="a"){
+moveLeft();
+}
+
+if(e.key==="ArrowRight"||e.key.toLowerCase()==="d"){
+moveRight();
+}
+
+if(e.code==="Space"){
+shoot();
+}
+
+if(e.key.toLowerCase()==="u"){
+toggleUpgrades();
+}
+
+});
+
+let lastShot=0;
+
+function shoot(){
+
+if(!running)return;
+
+const now=Date.now();
+
+if(now-lastShot<shootDelay)return;
+
+lastShot=now;
+
+const arrow=document.createElement("div");
+
+arrow.className="arrow";
+
+arrow.style.left=playerX+"%";
+arrow.style.bottom="155px";
+
+arena.appendChild(arrow);
+
+arrows.push({
+element:arrow,
+x:playerX,
+y:155
+});
 
 }
 
@@ -269,103 +456,98 @@ if(!running)return;
 const enemy=document.createElement("div");
 
 enemy.className="enemy";
-enemy.textContent="👾";
 
-const startX=game.clientWidth+50;
+enemy.textContent=
+Math.random()>.5 ? "👹" : "👾";
 
-enemy.style.left=startX+"px";
+const x=10+Math.random()*80;
 
-game.appendChild(enemy);
+enemy.style.left=x+"%";
+enemy.style.top="-70px";
+
+arena.appendChild(enemy);
 
 enemies.push({
-el:enemy,
-x:startX,
-speed:3+Math.random()*2
-});
-
-}
-
-function shoot(){
-
-if(!running)return;
-
-const arrow=document.createElement("div");
-
-arrow.className="arrow";
-arrow.textContent="➡️";
-
-const playerRect=player.getBoundingClientRect();
-const gameRect=game.getBoundingClientRect();
-
-let x=playerRect.right-gameRect.left;
-let y=playerRect.top-gameRect.top+20;
-
-arrow.style.left=x+"px";
-arrow.style.top=y+"px";
-
-game.appendChild(arrow);
-
-arrows.push({
-el:arrow,
+element:enemy,
 x:x,
-y:y,
-speed:10
+y:-70,
+hp:20+wave*5,
+speed:1.2+wave*.12
 });
 
 }
 
-function loop(){
+function damageEnemy(enemy){
+
+enemy.hp-=damage;
+
+const text=document.createElement("div");
+
+text.className="damage";
+text.textContent="-"+damage;
+
+text.style.left=enemy.x+"%";
+text.style.top=enemy.y+"px";
+
+arena.appendChild(text);
+
+setTimeout(()=>text.remove(),500);
+
+if(enemy.hp<=0){
+
+enemy.element.remove();
+
+enemies=enemies.filter(e=>e!==enemy);
+
+coins+=2;
+score+=10;
+
+if(score%100===0){
+wave++;
+}
+
+updateHUD();
+
+}
+
+}
+
+function update(){
 
 if(!running)return;
-
-for(let i=enemies.length-1;i>=0;i--){
-
-const e=enemies[i];
-
-e.x-=e.speed;
-e.el.style.left=e.x+"px";
-
-if(e.x<40){
-
-gameOver();
-return;
-
-}
-
-}
 
 for(let i=arrows.length-1;i>=0;i--){
 
-const a=arrows[i];
+const arrow=arrows[i];
 
-a.x+=a.speed;
-a.el.style.left=a.x+"px";
+arrow.y+=10;
 
-if(a.x>game.clientWidth){
+arrow.element.style.bottom=arrow.y+"px";
 
-a.el.remove();
+if(arrow.y>window.innerHeight){
+
+arrow.element.remove();
 arrows.splice(i,1);
 continue;
 
 }
 
-for(let j=enemies.length-1;j>=0;j--){
+for(const enemy of enemies){
 
-const e=enemies[j];
+const a=arrow.element.getBoundingClientRect();
+const b=enemy.element.getBoundingClientRect();
 
 if(
-Math.abs(a.x-e.x)<55 &&
-Math.abs(a.y-(game.clientHeight-120))<80
+a.left<b.right &&
+a.right>b.left &&
+a.top<b.bottom &&
+a.bottom>b.top
 ){
 
-e.el.remove();
-a.el.remove();
+damageEnemy(enemy);
 
-enemies.splice(j,1);
+arrow.element.remove();
 arrows.splice(i,1);
-
-score++;
-document.getElementById("score").textContent=score;
 
 break;
 
@@ -375,52 +557,171 @@ break;
 
 }
 
-animation=requestAnimationFrame(loop);
+for(let i=enemies.length-1;i>=0;i--){
+
+const enemy=enemies[i];
+
+enemy.y+=enemy.speed;
+
+enemy.element.style.top=enemy.y+"px";
+
+const p=player.getBoundingClientRect();
+const e=enemy.element.getBoundingClientRect();
+
+if(
+p.left<e.right &&
+p.right>e.left &&
+p.top<e.bottom &&
+p.bottom>e.top
+){
+
+health-=10;
+
+enemy.element.remove();
+
+enemies.splice(i,1);
+
+if(health<=0){
+
+health=0;
+endGame();
 
 }
 
-function gameOver(){
+updateHUD();
+
+}
+
+if(enemy.y>window.innerHeight){
+
+enemy.element.remove();
+
+enemies.splice(i,1);
+
+}
+
+}
+
+requestAnimationFrame(update);
+
+}
+
+function upgradeDamage(){
+
+if(coins<damageCost)return;
+
+coins-=damageCost;
+
+damage+=5;
+
+damageCost=Math.floor(damageCost*1.7);
+
+updateHUD();
+
+}
+
+function upgradeSpeed(){
+
+if(coins<speedCost)return;
+
+coins-=speedCost;
+
+shootDelay=Math.max(150,shootDelay-80);
+
+speedCost=Math.floor(speedCost*1.7);
+
+updateHUD();
+
+}
+
+function upgradeHealth(){
+
+if(coins<healthCost)return;
+
+coins-=healthCost;
+
+maxHealth+=20;
+health=maxHealth;
+
+healthCost=Math.floor(healthCost*1.7);
+
+updateHUD();
+
+}
+
+function healPlayer(){
+
+if(coins<10)return;
+
+coins-=10;
+
+health=Math.min(maxHealth,health+30);
+
+updateHUD();
+
+}
+
+function toggleUpgrades(){
+
+document
+.getElementById("upgradePanel")
+.classList.toggle("open");
+
+}
+
+function endGame(){
 
 running=false;
 
-if(enemyTimer){
-clearInterval(enemyTimer);
-enemyTimer=null;
-}
-
-if(animation){
-cancelAnimationFrame(animation);
-animation=null;
-}
-
 document.getElementById("finalScore").textContent=score;
+document.getElementById("finalCoins").textContent=coins;
 
-document.getElementById("gameOver").style.display="flex";
-
-}
-
-document.addEventListener("keydown",function(e){
-
-if(e.code==="Space"){
-
-e.preventDefault();
-
-shoot();
+document.getElementById("gameover").style.display="flex";
 
 }
 
-});
+function restart(){
 
-game.addEventListener("click",function(e){
+document
+.querySelectorAll(".enemy,.arrow,.damage")
+.forEach(e=>e.remove());
 
-if(
-e.target.closest(".panel") ||
-e.target.closest(".back")
-)return;
+enemies=[];
+arrows=[];
 
-shoot();
+playerX=50;
 
-});
+health=100;
+maxHealth=100;
+
+coins=0;
+score=0;
+wave=1;
+
+damage=20;
+shootDelay=600;
+
+damageCost=10;
+speedCost=15;
+healthCost=20;
+
+running=true;
+
+player.style.left="50%";
+
+document
+.getElementById("gameover")
+.style.display="none";
+
+updateHUD();
+
+}
+
+setInterval(createEnemy,900);
+
+updateHUD();
+
+update();
 
 </script>
 

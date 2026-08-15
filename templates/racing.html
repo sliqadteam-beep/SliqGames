@@ -4,28 +4,199 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Neon Racing - SliqGames</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#050b14;color:white;font-family:Arial,sans-serif;overflow:hidden}
-.top{height:65px;background:#0b1829;border-bottom:1px solid #20344d;display:flex;align-items:center;padding:0 20px}
-.top button{background:#2563eb;color:white;border:0;border-radius:10px;padding:10px 16px;font-weight:bold;cursor:pointer}
-.title{flex:1;text-align:center;font-size:22px;font-weight:900}
-#game{position:relative;width:100vw;height:calc(100vh - 65px);overflow:hidden;background:#111}
-.road{position:absolute;left:50%;transform:translateX(-50%);width:min(500px,90vw);height:100%;background:#252525;border-left:8px solid #eee;border-right:8px solid #eee;overflow:hidden}
-.line{position:absolute;width:10px;height:80px;background:white;left:50%;transform:translateX(-50%)}
-.car{position:absolute;width:55px;height:95px;background:#2563eb;border-radius:12px;bottom:45px;left:50%;transform:translateX(-50%);box-shadow:0 0 20px #2563eb;z-index:5}
-.car:before{content:"";position:absolute;width:35px;height:35px;background:#8ec5ff;border-radius:8px;left:10px;top:10px}
-.enemy{position:absolute;width:55px;height:95px;background:#ef4444;border-radius:12px;box-shadow:0 0 15px #ef4444;z-index:4}
-.enemy:before{content:"";position:absolute;width:35px;height:35px;background:#ffaaaa;border-radius:8px;left:10px;top:10px}
-.hud{position:absolute;top:15px;left:15px;z-index:20;background:rgba(5,11,20,.85);border:1px solid #304966;border-radius:12px;padding:12px 16px;font-weight:bold}
-.gameover{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.75);z-index:50}
-.gameoverBox{background:#0d192b;border:1px solid #304966;border-radius:20px;padding:30px;text-align:center;width:min(400px,90%)}
-.gameoverBox button{width:100%;padding:13px;border:0;border-radius:10px;background:#2563eb;color:white;font-weight:bold;cursor:pointer;margin-top:10px}
-.controls{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:15px;z-index:30}
-.controls button{width:70px;height:55px;border:0;border-radius:14px;background:#172c48;color:white;font-size:25px;font-weight:bold}
-@media(min-width:800px){.controls{display:none}}
+
+body{
+margin:0;
+font-family:Arial,Segoe UI,sans-serif;
+background:#030712;
+color:white;
+overflow:hidden;
+}
+
+.top{
+height:68px;
+background:#07111f;
+border-bottom:1px solid #263b56;
+display:flex;
+align-items:center;
+padding:0 20px;
+z-index:20;
+position:relative;
+}
+
+.top button{
+background:#2563eb;
+border:0;
+color:white;
+padding:11px 17px;
+border-radius:11px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.title{
+flex:1;
+text-align:center;
+font-size:23px;
+font-weight:900;
+}
+
+#game{
+height:calc(100vh - 68px);
+position:relative;
+overflow:hidden;
+background:linear-gradient(#071426,#02050a);
+}
+
+.road{
+position:absolute;
+left:50%;
+transform:translateX(-50%);
+width:min(520px,90vw);
+height:100%;
+background:
+repeating-linear-gradient(
+to bottom,
+#242424 0px,
+#242424 80px,
+#292929 80px,
+#292929 160px
+);
+border-left:9px solid #e5e7eb;
+border-right:9px solid #e5e7eb;
+box-shadow:0 0 80px rgba(37,99,235,.15);
+}
+
+.line{
+position:absolute;
+left:50%;
+width:12px;
+height:90px;
+background:white;
+transform:translateX(-50%);
+border-radius:5px;
+}
+
+.car{
+position:absolute;
+bottom:60px;
+left:50%;
+transform:translateX(-50%);
+width:58px;
+height:100px;
+border-radius:16px;
+background:linear-gradient(#60a5fa,#2563eb);
+box-shadow:0 0 25px rgba(37,99,235,.8);
+z-index:5;
+}
+
+.car:before{
+content:"";
+position:absolute;
+width:38px;
+height:38px;
+left:10px;
+top:12px;
+border-radius:10px;
+background:#bfdbfe;
+}
+
+.enemy{
+position:absolute;
+width:58px;
+height:100px;
+border-radius:16px;
+background:linear-gradient(#fb7185,#dc2626);
+box-shadow:0 0 20px rgba(239,68,68,.7);
+z-index:4;
+}
+
+.enemy:before{
+content:"";
+position:absolute;
+width:38px;
+height:38px;
+left:10px;
+top:12px;
+border-radius:10px;
+background:#fecaca;
+}
+
+.hud{
+position:absolute;
+top:18px;
+left:18px;
+z-index:20;
+background:rgba(3,7,18,.9);
+border:1px solid #334b69;
+border-radius:14px;
+padding:13px 17px;
+font-weight:bold;
+line-height:1.8;
+}
+
+.controls{
+position:absolute;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+gap:15px;
+z-index:30;
+}
+
+.controls button{
+width:75px;
+height:58px;
+border:0;
+border-radius:15px;
+background:#172c48;
+color:white;
+font-size:25px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.gameover{
+position:absolute;
+inset:0;
+display:none;
+align-items:center;
+justify-content:center;
+background:rgba(0,0,0,.75);
+z-index:50;
+}
+
+.gameoverBox{
+background:#0d192b;
+border:1px solid #334b69;
+border-radius:22px;
+padding:30px;
+width:min(420px,90%);
+text-align:center;
+}
+
+.gameoverBox button{
+width:100%;
+padding:13px;
+margin-top:9px;
+border:0;
+border-radius:11px;
+background:#2563eb;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+@media(min-width:800px){
+.controls{display:none}
+}
 </style>
 </head>
+
 <body>
 
 <div class="top">
@@ -37,7 +208,8 @@ body{margin:0;background:#050b14;color:white;font-family:Arial,sans-serif;overfl
 
 <div class="hud">
 🏁 Punkte: <span id="score">0</span><br>
-⚡ Geschwindigkeit: <span id="speed">5</span>
+⚡ Geschwindigkeit: <span id="speed">5</span><br>
+🏆 Highscore: <span id="highscore">0</span>
 </div>
 
 <div class="road" id="road">
@@ -58,24 +230,30 @@ body{margin:0;background:#050b14;color:white;font-family:Arial,sans-serif;overfl
 </div>
 
 <div class="gameover" id="gameover">
+
 <div class="gameoverBox">
+
 <h1>💥 Unfall!</h1>
-<p>Deine Punktzahl:</p>
+
+<p>Deine Punktzahl</p>
 <h2 id="finalScore">0</h2>
-<button onclick="restart()">Nochmal fahren</button>
-<button onclick="location.href='/'">Zurück zu SliqGames</button>
+
+<button onclick="restart()">🔄 Nochmal fahren</button>
+
+<button onclick="location.href='/'">
+← Zurück zu SliqGames
+</button>
+
 </div>
+
 </div>
 
 </div>
 
 <script>
+
 const road=document.getElementById("road");
 const car=document.getElementById("car");
-const scoreElement=document.getElementById("score");
-const speedElement=document.getElementById("speed");
-const gameover=document.getElementById("gameover");
-const finalScore=document.getElementById("finalScore");
 
 let carX=50;
 let score=0;
@@ -83,30 +261,55 @@ let speed=5;
 let running=true;
 let enemies=[];
 
+let highscore=
+parseInt(localStorage.getItem("racingHighScore")||"0");
+
+document.getElementById("highscore").textContent=highscore;
+
 function moveLeft(){
+
 if(!running)return;
+
 carX-=7;
+
 if(carX<8)carX=8;
+
 car.style.left=carX+"%";
+
 }
 
 function moveRight(){
+
 if(!running)return;
+
 carX+=7;
+
 if(carX>92)carX=92;
+
 car.style.left=carX+"%";
+
 }
 
-document.addEventListener("keydown",function(e){
-if(e.key==="ArrowLeft"||e.key.toLowerCase()==="a")moveLeft();
-if(e.key==="ArrowRight"||e.key.toLowerCase()==="d")moveRight();
+document.addEventListener("keydown",e=>{
+
+if(e.key==="ArrowLeft"||e.key.toLowerCase()==="a"){
+moveLeft();
+}
+
+if(e.key==="ArrowRight"||e.key.toLowerCase()==="d"){
+moveRight();
+}
+
 });
 
 function createEnemy(){
+
 if(!running)return;
 
 const enemy=document.createElement("div");
+
 enemy.className="enemy";
+
 enemy.style.left=(10+Math.random()*80)+"%";
 enemy.style.top="-120px";
 
@@ -114,12 +317,13 @@ road.appendChild(enemy);
 
 enemies.push({
 element:enemy,
-x:parseFloat(enemy.style.left),
 y:-120
 });
+
 }
 
 function collision(a,b){
+
 const ar=a.getBoundingClientRect();
 const br=b.getBoundingClientRect();
 
@@ -129,20 +333,34 @@ ar.left>br.right||
 ar.bottom<br.top||
 ar.top>br.bottom
 );
+
 }
 
 function endGame(){
-running=false;
-finalScore.textContent=score;
-gameover.style.display="flex";
 
-const old=parseInt(localStorage.getItem("racingHighScore")||"0");
-if(score>old){
-localStorage.setItem("racingHighScore",score);
+running=false;
+
+document.getElementById("finalScore").textContent=score;
+
+if(score>highscore){
+
+highscore=score;
+
+localStorage.setItem(
+"racingHighScore",
+highscore
+);
+
 }
+
+document.getElementById("highscore").textContent=highscore;
+
+document.getElementById("gameover").style.display="flex";
+
 }
 
 function gameLoop(){
+
 if(!running)return;
 
 for(let i=enemies.length-1;i>=0;i--){
@@ -150,51 +368,71 @@ for(let i=enemies.length-1;i>=0;i--){
 const enemy=enemies[i];
 
 enemy.y+=speed;
+
 enemy.element.style.top=enemy.y+"px";
 
 if(collision(car,enemy.element)){
+
 endGame();
 return;
+
 }
 
 if(enemy.y>window.innerHeight){
 
 enemy.element.remove();
+
 enemies.splice(i,1);
 
 score++;
-scoreElement.textContent=score;
+
+document.getElementById("score").textContent=score;
 
 if(score%10===0){
-speed+=0.5;
-speedElement.textContent=Math.floor(speed);
+
+speed+=.5;
+
+document.getElementById("speed").textContent=
+Math.floor(speed);
+
 }
+
 }
+
 }
 
 requestAnimationFrame(gameLoop);
+
 }
 
 function restart(){
 
-document.querySelectorAll(".enemy").forEach(e=>e.remove());
+document
+.querySelectorAll(".enemy")
+.forEach(e=>e.remove());
 
 enemies=[];
+
 carX=50;
 score=0;
 speed=5;
 running=true;
 
 car.style.left="50%";
-scoreElement.textContent="0";
-speedElement.textContent="5";
-gameover.style.display="none";
+
+document.getElementById("score").textContent="0";
+document.getElementById("speed").textContent="5";
+
+document.getElementById("gameover").style.display="none";
 
 gameLoop();
+
 }
 
-setInterval(createEnemy,1000);
+setInterval(createEnemy,900);
+
 gameLoop();
+
 </script>
 
 </body>
