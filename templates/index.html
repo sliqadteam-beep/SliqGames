@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SliqGames</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#07111f;color:white}
+header{height:70px;display:flex;align-items:center;padding:0 25px;background:#0b1829;border-bottom:1px solid #1b3049}
+.logo-placeholder{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#2563eb,#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:bold;margin-right:12px}
+.title{font-size:22px;font-weight:bold}
+.right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.language{padding:9px 12px;border-radius:10px;background:#102238;color:white;border:1px solid #243b55;cursor:pointer}
+.account{padding:10px 15px;border-radius:10px;background:#2563eb;color:white;text-decoration:none;font-weight:bold}
+.account:hover{background:#1d4ed8}
+.hero{text-align:center;padding:70px 20px 45px}
+.hero h1{font-size:48px;margin:0 0 15px}
+.hero p{color:#8ea4bd;font-size:18px}
+.container{max-width:1200px;margin:auto;padding:20px}
+.section-title{font-size:25px;margin-bottom:20px}
+.games{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.game{background:#0d1c30;border:1px solid #1a3048;border-radius:18px;overflow:hidden;transition:.2s}
+.game:hover{transform:translateY(-5px);border-color:#2563eb;box-shadow:0 15px 40px rgba(37,99,235,.15)}
+.game-image{height:140px;background:linear-gradient(135deg,#2563eb,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:50px}
+.game-info{padding:16px}
+.game-name{font-size:18px;font-weight:bold}
+.game-description{color:#8196ae;font-size:13px;margin-top:7px}
+.play{display:block;margin-top:14px;padding:10px;text-align:center;border-radius:10px;background:#2563eb;color:white;text-decoration:none;font-weight:bold}
+.play:hover{background:#1d4ed8}
+footer{text-align:center;padding:50px 20px;color:#61758d}
+@media(max-width:650px){header{padding:0 12px}.title{font-size:18px}.hero h1{font-size:36px}.language{padding:8px}.account{padding:8px 10px}}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo-placeholder">SG</div>
+<div class="title">SliqGames</div>
+
+<div class="right">
+
+<select class="language" id="language">
+<option value="de">🇩🇪 Deutsch</option>
+<option value="en">🇬🇧 English</option>
+</select>
+
+<a class="account" id="accountButton" href="/login">Anmelden</a>
+
+</div>
+</header>
+
+<section class="hero">
+<h1>🎮 SliqGames</h1>
+<p id="heroText">Spiele kostenlose Browser-Games direkt im Browser.</p>
+</section>
+
+<div class="container">
+
+<div class="section-title" id="popular">🔥 Beliebte Spiele</div>
+
+<div class="games">
+
+<div class="game">
+<div class="game-image">🏹</div>
+<div class="game-info">
+<div class="game-name">Archer Hero</div>
+<div class="game-description" data-de="Besiege deine Gegner mit deinem Bogen." data-en="Defeat your enemies with your bow.">Besiege deine Gegner mit deinem Bogen.</div>
+<a class="play" href="/game/archer-hero" data-de="Spielen" data-en="Play">Spielen</a>
+</div>
+</div>
+
+<div class="game">
+<div class="game-image">🟦</div>
+<div class="game-info">
+<div class="game-name">BlockBlast</div>
+<div class="game-description" data-de="Platziere Blöcke und erreiche den Highscore." data-en="Place blocks and reach the high score.">Platziere Blöcke und erreiche den Highscore.</div>
+<a class="play" href="/game/blockblast" data-de="Spielen" data-en="Play">Spielen</a>
+</div>
+</div>
+
+<div class="game">
+<div class="game-image">🎨</div>
+<div class="game-info">
+<div class="game-name" id="drawingName">Zeichen Spielen</div>
+<div class="game-description" data-de="Zeichne und errate verschiedene Begriffe." data-en="Draw and guess different words.">Zeichne und errate verschiedene Begriffe.</div>
+<a class="play" href="/game/zeichnen" data-de="Spielen" data-en="Play">Spielen</a>
+</div>
+</div>
+
+<div class="game">
+<div class="game-image">😂</div>
+<div class="game-info">
+<div class="game-name" id="funName">Lustige Spiele</div>
+<div class="game-description" data-de="Eine Sammlung verrückter und lustiger Games." data-en="A collection of funny and crazy games.">Eine Sammlung verrückter und lustiger Games.</div>
+<a class="play" href="/game/lustig" data-de="Spielen" data-en="Play">Spielen</a>
+</div>
+</div>
+
+<div class="game">
+<div class="game-image">⚡</div>
+<div class="game-info">
+<div class="game-name">Coming Soon</div>
+<div class="game-description" data-de="Weitere Spiele kommen bald." data-en="More games are coming soon.">Weitere Spiele kommen bald.</div>
+<a class="play" href="#" data-de="Bald verfügbar" data-en="Coming soon">Bald verfügbar</a>
+</div>
+</div>
+
+</div>
+</div>
+
+<footer>© 2026 SliqGames</footer>
+
+<script>
+const language=document.getElementById("language");
+
+const translations={
+de:{
+account:"Anmelden",
+hero:"Spiele kostenlose Browser-Games direkt im Browser.",
+popular:"🔥 Beliebte Spiele",
+drawing:"Zeichen Spielen",
+fun:"Lustige Spiele"
+},
+en:{
+account:"Login",
+hero:"Play free browser games directly in your browser.",
+popular:"🔥 Popular Games",
+drawing:"Drawing Games",
+fun:"Funny Games"
+}
+};
+
+function changeLanguage(lang){
+localStorage.setItem("sliqgames_language",lang);
+const t=translations[lang];
+
+document.getElementById("accountButton").textContent=t.account;
+document.getElementById("heroText").textContent=t.hero;
+document.getElementById("popular").textContent=t.popular;
+document.getElementById("drawingName").textContent=t.drawing;
+document.getElementById("funName").textContent=t.fun;
+
+document.querySelectorAll("[data-"+lang+"]").forEach(element=>{
+element.textContent=element.getAttribute("data-"+lang);
+});
+}
+
+language.addEventListener("change",()=>changeLanguage(language.value));
+
+const savedLanguage=localStorage.getItem("sliqgames_language")||"de";
+language.value=savedLanguage;
+changeLanguage(savedLanguage);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1178 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SliqGames</title>
+
+<style>
+*{box-sizing:border-box}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+margin:0;
+font-family:Inter,Segoe UI,Arial,sans-serif;
+background:#07111f;
+color:#eaf2ff;
+min-height:100vh;
+}
+
+header{
+height:72px;
+background:#0b1829;
+border-bottom:1px solid rgba(255,255,255,.07);
+display:flex;
+align-items:center;
+padding:0 25px;
+gap:15px;
+position:sticky;
+top:0;
+z-index:10;
+}
+
+.logo{
+width:44px;
+height:44px;
+border-radius:12px;
+background:linear-gradient(135deg,#2563eb,#60a5fa);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+font-size:20px;
+}
+
+.brandButton{
+background:none;
+border:0;
+color:white;
+font-size:21px;
+font-weight:900;
+cursor:pointer;
+padding:0;
+}
+
+.spacer{
+flex:1;
+}
+
+select{
+background:#101f34;
+border:1px solid rgba(255,255,255,.08);
+color:white;
+padding:10px 12px;
+border-radius:10px;
+outline:none;
+cursor:pointer;
+}
+
+.login{
+background:#2563eb;
+border:0;
+color:white;
+font-weight:700;
+padding:11px 17px;
+border-radius:11px;
+cursor:pointer;
+}
+
+main{
+max-width:1250px;
+margin:auto;
+padding:30px 20px 60px;
+}
+
+.hero{
+padding:35px;
+border-radius:25px;
+background:linear-gradient(135deg,#102b52,#0b1829);
+border:1px solid rgba(255,255,255,.07);
+margin-bottom:30px;
+}
+
+.hero h1{
+font-size:42px;
+margin:0 0 10px;
+}
+
+.hero p{
+color:#9fb0c7;
+margin:0;
+font-size:16px;
+}
+
+.search{
+margin-top:22px;
+width:100%;
+padding:14px 17px;
+border-radius:13px;
+border:1px solid rgba(255,255,255,.08);
+background:#07111f;
+color:white;
+outline:none;
+font-size:15px;
+}
+
+.section{
+margin-top:35px;
+}
+
+.section h2{
+font-size:22px;
+margin-bottom:15px;
+}
+
+.games{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+gap:17px;
+}
+
+.game{
+background:#0d1b2d;
+border:1px solid rgba(255,255,255,.06);
+border-radius:18px;
+padding:15px;
+cursor:pointer;
+transition:.2s;
+}
+
+.game:hover{
+transform:translateY(-5px);
+border-color:rgba(96,165,250,.35);
+box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+.gameicon{
+height:145px;
+border-radius:13px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:55px;
+background:linear-gradient(135deg,#172c48,#102238);
+margin-bottom:13px;
+}
+
+.game h3{
+margin:0 0 5px;
+font-size:16px;
+}
+
+.game p{
+margin:0;
+font-size:12px;
+color:#718096;
+}
+
+.recent{
+display:flex;
+gap:12px;
+overflow:auto;
+padding-bottom:5px;
+}
+
+.recent .game{
+min-width:190px;
+}
+
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.65);
+backdrop-filter:blur(7px);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:50;
+}
+
+.modal.open{
+display:flex;
+}
+
+.box{
+width:min(420px,92%);
+background:#0d192b;
+border:1px solid rgba(255,255,255,.08);
+border-radius:20px;
+padding:25px;
+box-shadow:0 30px 90px rgba(0,0,0,.5);
+}
+
+.box h2{
+margin-top:0;
+}
+
+.box input{
+width:100%;
+padding:13px;
+margin:7px 0;
+border-radius:11px;
+border:1px solid rgba(255,255,255,.08);
+background:#07111f;
+color:white;
+outline:none;
+}
+
+.box button{
+width:100%;
+padding:13px;
+margin-top:8px;
+border:0;
+border-radius:11px;
+background:#2563eb;
+color:white;
+font-weight:700;
+cursor:pointer;
+}
+
+.close{
+background:#18283d!important;
+}
+
+#gameScreen{
+position:fixed;
+inset:0;
+background:#07111f;
+display:none;
+z-index:100;
+}
+
+.gameTop{
+height:65px;
+background:#0b1829;
+display:flex;
+align-items:center;
+padding:0 20px;
+border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.back{
+background:#18283d;
+border:0;
+color:white;
+padding:10px 15px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.gameTitle{
+margin-left:15px;
+font-weight:800;
+}
+
+.gameArea{
+height:calc(100vh - 65px);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:50px;
+}
+
+footer{
+text-align:center;
+color:#53657c;
+padding:30px;
+}
+
+@media(max-width:600px){
+
+header{
+padding:0 12px;
+}
+
+.brandButton{
+font-size:18px;
+}
+
+.hero{
+padding:25px;
+}
+
+.hero h1{
+font-size:30px;
+}
+
+.games{
+grid-template-columns:repeat(2,1fr);
+}
+
+.gameicon{
+height:110px;
+}
+
+.login{
+padding:10px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">S</div>
+
+<button class="brandButton" onclick="goHome()">
+SliqGames
+</button>
+
+<div class="spacer"></div>
+
+<select id="language" onchange="changeLanguage()">
+
+<option value="de">🇩🇪 Deutsch</option>
+<option value="en">🇬🇧 English</option>
+<option value="fr">🇫🇷 Français</option>
+<option value="es">🇪🇸 Español</option>
+<option value="it">🇮🇹 Italiano</option>
+<option value="nl">🇳🇱 Nederlands</option>
+<option value="tr">🇹🇷 Türkçe</option>
+<option value="pl">🇵🇱 Polski</option>
+
+</select>
+
+<button class="login" onclick="openLogin()" id="loginButton">
+Anmelden / Registrieren
+</button>
+
+</header>
+
+<main id="home">
+
+<section class="hero">
+
+<h1 id="welcome">
+Willkommen bei SliqGames 🎮
+</h1>
+
+<p id="subtitle">
+Spiele kostenlose Spiele direkt im Browser.
+</p>
+
+<input
+class="search"
+id="search"
+placeholder="Spiele suchen..."
+oninput="searchGames()"
+>
+
+</section>
+
+<section class="section">
+
+<h2 id="recentTitle">
+Zuletzt gespielt
+</h2>
+
+<div class="recent" id="recent"></div>
+
+</section>
+
+<section class="section">
+
+<h2 id="archerCategory">
+🏹 Archer Hero
+</h2>
+
+<div class="games">
+
+<div class="game"
+onclick="playGame('Archer Hero')"
+data-game="archer">
+
+<div class="gameicon">
+🏹
+</div>
+
+<h3 id="archerName">
+Archer Hero
+</h3>
+
+<p id="archerDesc">
+Besiege deine Gegner!
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2 id="blockCategory">
+🧱 Block Blast
+</h2>
+
+<div class="games">
+
+<div class="game"
+onclick="playGame('Block Blast')"
+data-game="block">
+
+<div class="gameicon">
+🧱
+</div>
+
+<h3 id="blockName">
+Block Blast
+</h3>
+
+<p id="blockDesc">
+Baue Reihen und sammle Punkte!
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2 id="drawCategory">
+✏️ Zeichen-Spiele
+</h2>
+
+<div class="games">
+
+<div class="game"
+onclick="playGame('Draw Game')"
+data-game="draw">
+
+<div class="gameicon">
+🎨
+</div>
+
+<h3 id="drawName">
+Draw Game
+</h3>
+
+<p id="drawDesc">
+Zeichne und errate!
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2 id="funnyCategory">
+😂 Lustige Spiele
+</h2>
+
+<div class="games">
+
+<div class="game"
+onclick="playGame('Funny Game')"
+data-game="funny">
+
+<div class="gameicon">
+😂
+</div>
+
+<h3 id="funnyName">
+Funny Game
+</h3>
+
+<p id="funnyDesc">
+Einfach Spaß haben!
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+SliqGames © 2026
+</footer>
+
+
+<div class="modal" id="loginModal">
+
+<div class="box">
+
+<h2 id="loginTitle">
+Anmelden
+</h2>
+
+<input
+id="username"
+placeholder="Benutzername"
+>
+
+<input
+id="password"
+type="password"
+placeholder="Passwort"
+>
+
+<button
+onclick="login()"
+id="loginAction"
+>
+Anmelden
+</button>
+
+<button
+onclick="register()"
+id="registerAction"
+>
+Registrieren
+</button>
+
+<button
+class="close"
+onclick="closeLogin()"
+id="closeButton"
+>
+Schließen
+</button>
+
+</div>
+
+</div>
+
+
+<div id="gameScreen">
+
+<div class="gameTop">
+
+<button
+class="back"
+onclick="closeGame()"
+id="backButton"
+>
+← Zurück
+</button>
+
+<div
+class="gameTitle"
+id="gameName"
+>
+</div>
+
+</div>
+
+<div
+class="gameArea"
+id="gameArea"
+>
+🎮
+</div>
+
+</div>
+
+
+<script>
+
+const translations={
+
+de:{
+welcome:"Willkommen bei SliqGames 🎮",
+subtitle:"Spiele kostenlose Spiele direkt im Browser.",
+search:"Spiele suchen...",
+recent:"Zuletzt gespielt",
+login:"Anmelden / Registrieren",
+loginTitle:"Anmelden",
+loginAction:"Anmelden",
+register:"Registrieren",
+close:"Schließen",
+back:"← Zurück",
+
+archerCategory:"🏹 Archer Hero",
+archerName:"Archer Hero",
+archerDesc:"Besiege deine Gegner!",
+
+blockCategory:"🧱 Block Blast",
+blockName:"Block Blast",
+blockDesc:"Baue Reihen und sammle Punkte!",
+
+drawCategory:"✏️ Zeichen-Spiele",
+drawName:"Zeichen-Spiel",
+drawDesc:"Zeichne und errate!",
+
+funnyCategory:"😂 Lustige Spiele",
+funnyName:"Lustiges Spiel",
+funnyDesc:"Einfach Spaß haben!",
+
+again:"Erneut spielen",
+none:"Noch keine Spiele gespielt."
+
+},
+
+en:{
+welcome:"Welcome to SliqGames 🎮",
+subtitle:"Play free games directly in your browser.",
+search:"Search games...",
+recent:"Recently played",
+login:"Login / Register",
+loginTitle:"Login",
+loginAction:"Login",
+register:"Register",
+close:"Close",
+back:"← Back",
+
+archerCategory:"🏹 Archer Hero",
+archerName:"Archer Hero",
+archerDesc:"Defeat your enemies!",
+
+blockCategory:"🧱 Block Blast",
+blockName:"Block Blast",
+blockDesc:"Build lines and score points!",
+
+drawCategory:"✏️ Drawing Games",
+drawName:"Drawing Game",
+drawDesc:"Draw and guess!",
+
+funnyCategory:"😂 Funny Games",
+funnyName:"Funny Game",
+funnyDesc:"Just have fun!",
+
+again:"Play again",
+none:"No games played yet."
+
+},
+
+fr:{
+welcome:"Bienvenue sur SliqGames 🎮",
+subtitle:"Jouez gratuitement directement dans votre navigateur.",
+search:"Rechercher des jeux...",
+recent:"Joués récemment",
+login:"Connexion / Inscription",
+loginTitle:"Connexion",
+loginAction:"Connexion",
+register:"Inscription",
+close:"Fermer",
+back:"← Retour",
+
+archerCategory:"🏹 Archer Hero",
+archerName:"Archer Hero",
+archerDesc:"Battez vos ennemis !",
+
+blockCategory:"🧱 Block Blast",
+blockName:"Block Blast",
+blockDesc:"Créez des lignes et gagnez des points !",
+
+drawCategory:"✏️ Jeux de dessin",
+drawName:"Jeu de dessin",
+drawDesc:"Dessinez et devinez !",
+
+funnyCategory:"😂 Jeux amusants",
+funnyName:"Jeu amusant",
+funnyDesc:"Amusez-vous !",
+
+again:"Rejouer",
+none:"Aucun jeu joué."
+
+},
+
+es:{
+welcome:"Bienvenido a SliqGames 🎮",
+subtitle:"Juega gratis directamente en tu navegador.",
+search:"Buscar juegos...",
+recent:"Jugados recientemente",
+login:"Iniciar sesión / Registrarse",
+loginTitle:"Iniciar sesión",
+loginAction:"Iniciar sesión",
+register:"Registrarse",
+close:"Cerrar",
+back:"← Volver",
+
+archerCategory:"🏹 Archer Hero",
+archerName:"Archer Hero",
+archerDesc:"¡Derrota a tus enemigos!",
+
+blockCategory:"🧱 Block Blast",
+blockName:"Block Blast",
+blockDesc:"¡Construye líneas y consigue puntos!",
+
+drawCategory:"✏️ Juegos de dibujo",
+drawName:"Juego de dibujo",
+drawDesc:"¡Dibuja y adivina!",
+
+funnyCategory:"😂 Juegos divertidos",
+funnyName:"Juego divertido",
+funnyDesc:"¡Diviértete!",
+
+again:"Jugar de nuevo",
+none:"Todavía no has jugado ningún juego."
+
+},
+
+it:{
+welcome:"Benvenuto su SliqGames 🎮",
+subtitle:"Gioca gratuitamente direttamente nel browser.",
+search:"Cerca giochi...",
+recent:"Giocati di recente",
+login:"Accedi / Registrati",
+loginTitle:"Accedi",
+loginAction:"Accedi",
+register:"Registrati",
+close:"Chiudi",
+back:"← Indietro",
+
+archerCategory:"🏹 Archer Hero",
+archerName:"Archer Hero",
+archerDesc:"Sconfiggi i tuoi nemici!",
+
+blockCategory:"🧱 Block Blast",
+blockName:"Block Blast",
+blockDesc:"Crea linee e guadagna punti!",
+
+drawCategory:"✏️ Giochi di disegno",
+drawName:"Gioco di disegno",
+drawDesc:"Disegna e indovina!",
+
+funnyCategory:"😂 Giochi divertenti",
+funnyName:"Gioco divertente",
+funnyDesc:"Divertiti!",
+
+again:"Gioca di nuovo",
+none:"Nessun gioco giocato."
+
+},
+
+nl:{
+welcome:"Welkom bij SliqGames 🎮",
+subtitle:"Speel gratis games direct in je browser.",
+search:"Games zoeken...",
+recent:"Recent gespeeld",
+login:"Inloggen / Registreren",
+loginTitle:"Inloggen",
+loginAction:"Inloggen",
+register:"Registreren",
+close:"Sluiten",
+back:"← Terug",
+
+archerCategory:"🏹 Archer Hero",
+archerName:"Archer Hero",
+archerDesc:"Versla je vijanden!",
+
+blockCategory:"🧱 Block Blast",
+blockName:"Block Blast",
+blockDesc:"Maak lijnen en verdien punten!",
+
+drawCategory:"✏️ Tekenspellen",
+drawName:"Tekenspel",
+drawDesc:"Teken en raad!",
+
+funnyCategory:"😂 Grappige spellen",
+funnyName:"Grappig spel",
+funnyDesc:"Veel plezier!",
+
+again:"Opnieuw spelen",
+none:"Nog geen games gespeeld."
+
+},
+
+tr:{
+welcome:"SliqGames'e hoş geldin 🎮",
+subtitle:"Ücretsiz oyunları doğrudan tarayıcında oyna.",
+search:"Oyun ara...",
+recent:"Son oynananlar",
+login:"Giriş / Kayıt",
+loginTitle:"Giriş",
+loginAction:"Giriş",
+register:"Kayıt",
+close:"Kapat",
+back:"← Geri",
+
+archerCategory:"🏹 Archer Hero",
+archerName:"Archer Hero",
+archerDesc:"Düşmanlarını yen!",
+
+blockCategory:"🧱 Block Blast",
+blockName:"Block Blast",
+blockDesc:"Satırlar oluştur ve puan kazan!",
+
+drawCategory:"✏️ Çizim Oyunları",
+drawName:"Çizim Oyunu",
+drawDesc:"Çiz ve tahmin et!",
+
+funnyCategory:"😂 Eğlenceli Oyunlar",
+funnyName:"Eğlenceli Oyun",
+funnyDesc:"Sadece eğlen!",
+
+again:"Tekrar oyna",
+none:"Henüz oyun oynanmadı."
+
+},
+
+pl:{
+welcome:"Witamy w SliqGames 🎮",
+subtitle:"Graj w darmowe gry bezpośrednio w przeglądarce.",
+search:"Szukaj gier...",
+recent:"Ostatnio grane",
+login:"Zaloguj / Zarejestruj",
+loginTitle:"Logowanie",
+loginAction:"Zaloguj",
+register:"Zarejestruj",
+close:"Zamknij",
+back:"← Wstecz",
+
+archerCategory:"🏹 Archer Hero",
+archerName:"Archer Hero",
+archerDesc:"Pokonaj swoich przeciwników!",
+
+blockCategory:"🧱 Block Blast",
+blockName:"Block Blast",
+blockDesc:"Twórz linie i zdobywaj punkty!",
+
+drawCategory:"✏️ Gry rysunkowe",
+drawName:"Gra rysunkowa",
+drawDesc:"Rysuj i zgaduj!",
+
+funnyCategory:"😂 Zabawne gry",
+funnyName:"Zabawna gra",
+funnyDesc:"Po prostu baw się dobrze!",
+
+again:"Zagraj ponownie",
+none:"Nie zagrano jeszcze w żadną grę."
+
+}
+
+};
+
+
+function changeLanguage(){
+
+const lang=document.getElementById("language").value;
+
+const t=translations[lang];
+
+document.documentElement.lang=lang;
+
+document.getElementById("welcome").textContent=t.welcome;
+
+document.getElementById("subtitle").textContent=t.subtitle;
+
+document.getElementById("search").placeholder=t.search;
+
+document.getElementById("recentTitle").textContent=t.recent;
+
+document.getElementById("loginButton").textContent=t.login;
+
+document.getElementById("loginTitle").textContent=t.loginTitle;
+
+document.getElementById("loginAction").textContent=t.loginAction;
+
+document.getElementById("registerAction").textContent=t.register;
+
+document.getElementById("closeButton").textContent=t.close;
+
+document.getElementById("backButton").textContent=t.back;
+
+
+document.getElementById("archerCategory").textContent=t.archerCategory;
+document.getElementById("archerName").textContent=t.archerName;
+document.getElementById("archerDesc").textContent=t.archerDesc;
+
+document.getElementById("blockCategory").textContent=t.blockCategory;
+document.getElementById("blockName").textContent=t.blockName;
+document.getElementById("blockDesc").textContent=t.blockDesc;
+
+document.getElementById("drawCategory").textContent=t.drawCategory;
+document.getElementById("drawName").textContent=t.drawName;
+document.getElementById("drawDesc").textContent=t.drawDesc;
+
+document.getElementById("funnyCategory").textContent=t.funnyCategory;
+document.getElementById("funnyName").textContent=t.funnyName;
+document.getElementById("funnyDesc").textContent=t.funnyDesc;
+
+localStorage.setItem("language",lang);
+
+loadRecent();
+
+}
+
+
+function goHome(){
+
+closeGame();
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+document.getElementById("home").scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+}
+
+
+function openLogin(){
+
+document.getElementById("loginModal").classList.add("open");
+
+}
+
+
+function closeLogin(){
+
+document.getElementById("loginModal").classList.remove("open");
+
+}
+
+
+function register(){
+
+const username=document.getElementById("username").value.trim();
+
+const password=document.getElementById("password").value;
+
+if(!username || !password){
+
+alert("Bitte Benutzername und Passwort eingeben.");
+
+return;
+
+}
+
+localStorage.setItem(
+"sliq_user",
+JSON.stringify({
+username:username,
+password:password
+})
+);
+
+alert("Account wurde lokal gespeichert!");
+
+closeLogin();
+
+}
+
+
+function login(){
+
+const username=document.getElementById("username").value.trim();
+
+const password=document.getElementById("password").value;
+
+const saved=JSON.parse(
+localStorage.getItem("sliq_user") || "null"
+);
+
+if(
+saved &&
+saved.username===username &&
+saved.password===password
+){
+
+alert("Erfolgreich angemeldet!");
+
+closeLogin();
+
+}else{
+
+alert("Benutzername oder Passwort falsch.");
+
+}
+
+}
+
+
+function playGame(name){
+
+let recent=JSON.parse(
+localStorage.getItem("recentGames") || "[]"
+);
+
+recent=recent.filter(x=>x!==name);
+
+recent.unshift(name);
+
+recent=recent.slice(0,6);
+
+localStorage.setItem(
+"recentGames",
+JSON.stringify(recent)
+);
+
+document.getElementById("gameName").textContent=name;
+
+document.getElementById("gameScreen").style.display="block";
+
+document.getElementById("gameArea").innerHTML="🎮";
+
+loadRecent();
+
+}
+
+
+function closeGame(){
+
+document.getElementById("gameScreen").style.display="none";
+
+}
+
+
+function getGameInfo(name){
+
+const lang=document.getElementById("language").value;
+
+const t=translations[lang];
+
+if(name==="Archer Hero"){
+
+return {
+name:t.archerName,
+icon:"🏹",
+desc:t.archerDesc
+};
+
+}
+
+if(name==="Block Blast"){
+
+return {
+name:t.blockName,
+icon:"🧱",
+desc:t.blockDesc
+};
+
+}
+
+if(name==="Draw Game"){
+
+return {
+name:t.drawName,
+icon:"🎨",
+desc:t.drawDesc
+};
+
+}
+
+if(name==="Funny Game"){
+
+return {
+name:t.funnyName,
+icon:"😂",
+desc:t.funnyDesc
+};
+
+}
+
+return {
+name:name,
+icon:"🎮",
+desc:t.again
+};
+
+}
+
+
+function loadRecent(){
+
+const recent=JSON.parse(
+localStorage.getItem("recentGames") || "[]"
+);
+
+const container=document.getElementById("recent");
+
+container.innerHTML="";
+
+const lang=document.getElementById("language").value;
+
+const t=translations[lang];
+
+if(!recent.length){
+
+container.innerHTML=
+"<span style='color:#718096'>"+t.none+"</span>";
+
+return;
+
+}
+
+recent.forEach(name=>{
+
+const info=getGameInfo(name);
+
+const div=document.createElement("div");
+
+div.className="game";
+
+div.onclick=()=>playGame(name);
+
+div.innerHTML=`
+
+<div class="gameicon">
+${info.icon}
+</div>
+
+<h3>
+${info.name}
+</h3>
+
+<p>
+${t.again}
+</p>
+
+`;
+
+container.appendChild(div);
+
+});
+
+}
+
+
+function searchGames(){
+
+const value=document
+.getElementById("search")
+.value
+.toLowerCase();
+
+document.querySelectorAll(
+"main .game"
+).forEach(game=>{
+
+const text=game.innerText.toLowerCase();
+
+game.style.display=
+text.includes(value) ? "" : "none";
+
+});
+
+}
+
+
+const savedLanguage=
+localStorage.getItem("language");
+
+if(savedLanguage){
+
+document.getElementById("language").value=
+savedLanguage;
+
+}
+
+changeLanguage();
+
+loadRecent();
+
+</script>
+
+</body>
+</html>
