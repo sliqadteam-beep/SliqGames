@@ -7,186 +7,296 @@
 
 <style>
 *{box-sizing:border-box}
+
 body{
-margin:0;
-font-family:Arial,Segoe UI,sans-serif;
-background:#07111f;
-color:white;
+    margin:0;
+    font-family:Arial,Segoe UI,sans-serif;
+    background:#07111f;
+    color:white;
 }
+
 header{
-height:72px;
-background:#0b1829;
-border-bottom:1px solid #1c3048;
-display:flex;
-align-items:center;
-padding:0 25px;
-gap:14px;
-position:sticky;
-top:0;
-z-index:10;
+    height:72px;
+    background:#0b1829;
+    border-bottom:1px solid #1c3048;
+    display:flex;
+    align-items:center;
+    padding:0 25px;
+    gap:14px;
+    position:sticky;
+    top:0;
+    z-index:10;
 }
+
 .logo{
-width:44px;
-height:44px;
-border-radius:12px;
-background:linear-gradient(135deg,#2563eb,#60a5fa);
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:900;
-font-size:20px;
+    width:44px;
+    height:44px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#2563eb,#60a5fa);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:900;
+    font-size:20px;
 }
+
 .brand{
-background:none;
-border:0;
-color:white;
-font-size:21px;
-font-weight:900;
-cursor:pointer;
+    background:none;
+    border:0;
+    color:white;
+    font-size:21px;
+    font-weight:900;
+    cursor:pointer;
 }
-.spacer{flex:1}
+
+.spacer{
+    flex:1;
+}
+
 select,input,textarea{
-background:#101f34;
-border:1px solid #243952;
-color:white;
-border-radius:10px;
-padding:11px;
+    background:#101f34;
+    border:1px solid #243952;
+    color:white;
+    border-radius:10px;
+    padding:11px;
 }
+
 button{
-cursor:pointer;
+    cursor:pointer;
 }
+
 .login,.uploadBtn{
-background:#2563eb;
-border:0;
-color:white;
-font-weight:700;
-padding:11px 16px;
-border-radius:10px;
+    background:#2563eb;
+    border:0;
+    color:white;
+    font-weight:700;
+    padding:11px 16px;
+    border-radius:10px;
 }
+
+.uploadBtn{
+    font-size:22px;
+    width:44px;
+    height:44px;
+    padding:0;
+}
+
 main{
-max-width:1250px;
-margin:auto;
-padding:30px 20px 60px;
+    max-width:1250px;
+    margin:auto;
+    padding:30px 20px 60px;
 }
+
 .hero{
-padding:35px;
-border-radius:25px;
-background:linear-gradient(135deg,#102b52,#0b1829);
-border:1px solid #203a59;
-margin-bottom:30px;
+    padding:35px;
+    border-radius:25px;
+    background:linear-gradient(135deg,#102b52,#0b1829);
+    border:1px solid #203a59;
+    margin-bottom:30px;
 }
+
 .hero h1{
-font-size:42px;
-margin:0 0 10px;
+    font-size:42px;
+    margin:0 0 10px;
 }
+
 .hero p{
-color:#9fb0c7;
+    color:#9fb0c7;
 }
+
 .search{
-width:100%;
-margin-top:15px;
-font-size:15px;
+    width:100%;
+    margin-top:15px;
+    font-size:15px;
 }
+
 .section{
-margin-top:35px;
+    margin-top:35px;
 }
+
 .section h2{
-font-size:22px;
+    font-size:22px;
+    margin-bottom:15px;
 }
+
 .games{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
-gap:17px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+    gap:17px;
 }
+
 .game{
-background:#0d1b2d;
-border:1px solid #1d3047;
-border-radius:18px;
-padding:15px;
-transition:.2s;
+    background:#0d1b2d;
+    border:1px solid #1d3047;
+    border-radius:18px;
+    padding:15px;
+    transition:.2s;
+    cursor:pointer;
 }
+
 .game:hover{
-transform:translateY(-4px);
-border-color:#3b82f6;
+    transform:translateY(-4px);
+    border-color:#3b82f6;
+    box-shadow:0 15px 35px rgba(0,0,0,.25);
 }
+
 .gameicon{
-height:145px;
-border-radius:13px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:55px;
-background:#172c48;
-margin-bottom:13px;
-overflow:hidden;
+    height:145px;
+    border-radius:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:55px;
+    background:#172c48;
+    margin-bottom:13px;
+    overflow:hidden;
 }
+
 .gameicon img{
-width:100%;
-height:100%;
-object-fit:cover;
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
+
 .game h3{
-margin:0 0 6px;
+    margin:0 0 6px;
 }
+
 .game p{
-margin:0;
-font-size:13px;
-color:#8ea0b8;
+    margin:0;
+    font-size:13px;
+    color:#8ea0b8;
 }
+
 .genre{
-display:inline-block;
-margin-top:10px;
-font-size:11px;
-background:#172c48;
-padding:5px 8px;
-border-radius:7px;
-color:#93c5fd;
+    display:inline-block;
+    margin-top:10px;
+    font-size:11px;
+    background:#172c48;
+    padding:5px 8px;
+    border-radius:7px;
+    color:#93c5fd;
 }
+
+.empty{
+    color:#718096;
+    padding:10px 0;
+}
+
 .modal{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.7);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:100;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.7);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
 }
-.modal.open{display:flex}
+
+.modal.open{
+    display:flex;
+}
+
 .box{
-width:min(500px,92%);
-background:#0d192b;
-border:1px solid #243952;
-border-radius:20px;
-padding:25px;
+    width:min(500px,92%);
+    max-height:90vh;
+    overflow:auto;
+    background:#0d192b;
+    border:1px solid #243952;
+    border-radius:20px;
+    padding:25px;
 }
-.box h2{margin-top:0}
-.box input,.box textarea,.box select{
-width:100%;
-margin:7px 0;
+
+.box h2{
+    margin-top:0;
 }
+
+.box input,
+.box textarea,
+.box select{
+    width:100%;
+    margin:7px 0;
+}
+
+.box textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
 .box button{
-width:100%;
-padding:13px;
-margin-top:8px;
-border:0;
-border-radius:10px;
-background:#2563eb;
-color:white;
-font-weight:bold;
+    width:100%;
+    padding:13px;
+    margin-top:8px;
+    border:0;
+    border-radius:10px;
+    background:#2563eb;
+    color:white;
+    font-weight:bold;
 }
+
 .close{
-background:#18283d!important;
+    background:#18283d!important;
 }
+
+.fileLabel{
+    display:block;
+    margin-top:12px;
+    margin-bottom:4px;
+    color:#9fb0c7;
+    font-size:14px;
+}
+
+.fileInput{
+    padding:10px!important;
+}
+
 footer{
-text-align:center;
-padding:30px;
-color:#53657c;
+    text-align:center;
+    padding:30px;
+    color:#53657c;
 }
-@media(max-width:600px){
-header{padding:0 10px}
-.brand{font-size:18px}
-.hero{padding:25px}
-.hero h1{font-size:30px}
+
+@media(max-width:700px){
+
+    header{
+        padding:0 10px;
+        gap:7px;
+    }
+
+    .brand{
+        font-size:18px;
+    }
+
+    header select{
+        max-width:115px;
+    }
+
+    .login{
+        font-size:0;
+        padding:11px;
+    }
+
+    .login::after{
+        content:"👤";
+        font-size:18px;
+    }
+
+    .hero{
+        padding:25px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .games{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .gameicon{
+        height:110px;
+        font-size:42px;
+    }
 }
 </style>
 </head>
@@ -197,7 +307,9 @@ header{padding:0 10px}
 
 <div class="logo">S</div>
 
-<button class="brand" onclick="goHome()">SliqGames</button>
+<button class="brand" onclick="goHome()">
+SliqGames
+</button>
 
 <div class="spacer"></div>
 
@@ -220,7 +332,7 @@ header{padding:0 10px}
 Anmelden / Registrieren
 </button>
 
-<button class="uploadBtn" onclick="openUpload()">
+<button class="uploadBtn" onclick="openUpload()" title="Spiel hinzufügen">
 +
 </button>
 
@@ -229,8 +341,14 @@ Anmelden / Registrieren
 <main id="home">
 
 <section class="hero">
-<h1 id="welcome">Willkommen bei SliqGames 🎮</h1>
-<p id="subtitle">Spiele kostenlose Spiele direkt im Browser.</p>
+
+<h1 id="welcome">
+Willkommen bei SliqGames 🎮
+</h1>
+
+<p id="subtitle">
+Spiele kostenlose Spiele direkt im Browser.
+</p>
 
 <input
 class="search"
@@ -238,76 +356,174 @@ id="search"
 placeholder="Spiele suchen..."
 oninput="searchGames()"
 >
+
 </section>
+
+
+<!-- ZULETZT GESPIELT - NUR EINMAL -->
 
 <section class="section">
-<h2 id="recentTitle">Zuletzt gespielt</h2>
+
+<h2 id="recentTitle">
+Zuletzt gespielt
+</h2>
+
 <div class="games" id="recentGames"></div>
+
 </section>
 
+
+<!-- ARCHER HERO -->
 
 <section class="section">
-<h2 id="recentTitle">Zuletzt gespielt</h2>
-<div class="games" id="recentGames"></div>
+
+<h2 id="actionTitle">
+⚔️ Action
+</h2>
+
+<div class="games">
+
+<div
+class="game"
+onclick="playGame('Archer Hero')"
+data-game="Archer Hero"
+>
+
+<div class="gameicon">
+🏹
+</div>
+
+<h3>
+Archer Hero
+</h3>
+
+<p id="archerDesc">
+Besiege deine Gegner!
+</p>
+
+<span class="genre">
+Action
+</span>
+
+</div>
+
+</div>
+
 </section>
 
-<div id="genreContainer"></div>
+
+<!-- COMMUNITY SPIELE -->
+
+<section class="section">
+
+<h2 id="communityTitle">
+🎮 Community-Spiele
+</h2>
+
+<div class="games" id="communityGames"></div>
+
+</section>
+
 </main>
+
 
 <footer>
 SliqGames © 2026
 </footer>
 
+
+<!-- LOGIN -->
+
 <div class="modal" id="loginModal">
+
 <div class="box">
 
-<h2 id="loginTitle">Willkommen bei SliqGames 👋</h2>
+<h2 id="loginTitle">
+Anmelden
+</h2>
 
-<input id="username" placeholder="Benutzername" required>
-<input id="password" type="password" placeholder="Passwort" required>
+<input
+id="username"
+placeholder="Benutzername"
+>
 
-<button onclick="login()" id="loginAction">Anmelden</button>
-<button onclick="register()" id="registerAction">Konto erstellen</button>
+<input
+id="password"
+type="password"
+placeholder="Passwort"
+>
 
-<div style="text-align:center;margin:15px 0;color:#718096">oder</div>
-
-<button onclick="googleLogin()" style="background:white;color:#222">
-🇬 Google anmelden
+<button
+onclick="login()"
+id="loginAction"
+>
+Anmelden
 </button>
 
-<button class="close" onclick="closeLogin()" id="closeLoginButton">
+<button
+onclick="register()"
+id="registerAction"
+>
+Registrieren
+</button>
+
+<button
+class="close"
+onclick="closeLogin()"
+id="closeLoginButton"
+>
 Schließen
 </button>
 
 </div>
+
 </div>
 
+
+<!-- SPIEL HOCHLADEN -->
+
 <div class="modal" id="uploadModal">
+
 <div class="box">
 
-<h2 id="uploadTitle">🎮 Spiel hinzufügen</h2>
+<h2 id="uploadTitle">
+🎮 Spiel hinzufügen
+</h2>
 
-<form action="/upload" method="POST" enctype="multipart/form-data">
+<form
+action="/upload"
+method="POST"
+enctype="multipart/form-data"
+>
 
 <input
-name="name" required
+name="name"
 id="gameNameInput"
 placeholder="Spielname"
 required
 >
 
-<select name="genre" id="genre" required>
-<option value="">Genre auswählen</option>
-<option>Action</option>
-<option>Adventure</option>
-<option>Arcade</option>
-<option>Casual</option>
-<option>Horror</option>
-<option>Racing</option>
-<option>Sports</option>
-<option>Strategy</option>
-<option>Funny</option>
-<option>Other</option>
+<select
+name="genre"
+id="genre"
+required
+>
+
+<option value="" id="genrePlaceholder">
+Genre auswählen
+</option>
+
+<option value="Action">Action</option>
+<option value="Adventure">Adventure</option>
+<option value="Arcade">Arcade</option>
+<option value="Casual">Casual</option>
+<option value="Horror">Horror</option>
+<option value="Racing">Racing</option>
+<option value="Sports">Sports</option>
+<option value="Strategy">Strategy</option>
+<option value="Funny">Funny</option>
+<option value="Other">Other</option>
+
 </select>
 
 <textarea
@@ -317,22 +533,57 @@ placeholder="Spielbeschreibung"
 required
 ></textarea>
 
-<label>Spiel-Datei</label>
-<input type="file" name="game" accept=".html,.htm,.zip" required>
+<label
+class="fileLabel"
+id="gameFileLabel"
+>
+Spiel-Datei
+</label>
 
-<label>Thumbnail</label>
-<input type="file" name="thumbnail" accept="image/png,image/jpeg,image/webp" required>
+<input
+class="fileInput"
+type="file"
+name="game"
+accept=".html,.htm,.zip"
+required
+>
 
-<button type="submit" id="uploadButton">Spiel veröffentlichen</button>
+<label
+class="fileLabel"
+id="thumbnailLabel"
+>
+Thumbnail
+</label>
+
+<input
+class="fileInput"
+type="file"
+name="thumbnail"
+accept="image/png,image/jpeg,image/webp"
+required
+>
+
+<button
+type="submit"
+id="uploadButton"
+>
+Spiel veröffentlichen
+</button>
 
 </form>
 
-<button class="close" onclick="closeUpload()" id="closeUploadButton">
+<button
+class="close"
+onclick="closeUpload()"
+id="closeUploadButton"
+>
 Schließen
 </button>
 
 </div>
+
 </div>
+
 
 <script>
 
@@ -351,11 +602,15 @@ close:"Schließen",
 upload:"🎮 Spiel hinzufügen",
 publish:"Spiel veröffentlichen",
 community:"🎮 Community-Spiele",
+action:"⚔️ Action",
 archer:"Besiege deine Gegner!",
 genre:"Genre auswählen",
 gameName:"Spielname",
 description:"Spielbeschreibung",
-noRecent:"Noch keine Spiele gespielt."
+gameFile:"Spiel-Datei",
+thumbnail:"Thumbnail",
+noRecent:"Noch keine Spiele gespielt.",
+play:"▶ Spielen"
 },
 
 en:{
@@ -371,16 +626,20 @@ close:"Close",
 upload:"🎮 Add Game",
 publish:"Publish Game",
 community:"🎮 Community Games",
+action:"⚔️ Action",
 archer:"Defeat your enemies!",
 genre:"Select genre",
 gameName:"Game name",
 description:"Game description",
-noRecent:"No games played yet."
+gameFile:"Game file",
+thumbnail:"Thumbnail",
+noRecent:"No games played yet.",
+play:"▶ Play"
 },
 
 fr:{
 welcome:"Bienvenue sur SliqGames 🎮",
-subtitle:"Jouez gratuitement dans votre navigateur.",
+subtitle:"Jouez gratuitement directement dans votre navigateur.",
 search:"Rechercher des jeux...",
 recent:"Joués récemment",
 login:"Connexion / Inscription",
@@ -391,11 +650,15 @@ close:"Fermer",
 upload:"🎮 Ajouter un jeu",
 publish:"Publier le jeu",
 community:"🎮 Jeux de la communauté",
+action:"⚔️ Action",
 archer:"Battez vos ennemis !",
 genre:"Choisir un genre",
 gameName:"Nom du jeu",
 description:"Description du jeu",
-noRecent:"Aucun jeu joué."
+gameFile:"Fichier du jeu",
+thumbnail:"Miniature",
+noRecent:"Aucun jeu joué.",
+play:"▶ Jouer"
 },
 
 es:{
@@ -411,16 +674,20 @@ close:"Cerrar",
 upload:"🎮 Añadir juego",
 publish:"Publicar juego",
 community:"🎮 Juegos de la comunidad",
+action:"⚔️ Acción",
 archer:"¡Derrota a tus enemigos!",
 genre:"Seleccionar género",
 gameName:"Nombre del juego",
 description:"Descripción del juego",
-noRecent:"Todavía no has jugado."
+gameFile:"Archivo del juego",
+thumbnail:"Miniatura",
+noRecent:"Todavía no has jugado.",
+play:"▶ Jugar"
 },
 
 it:{
 welcome:"Benvenuto su SliqGames 🎮",
-subtitle:"Gioca gratuitamente nel browser.",
+subtitle:"Gioca gratuitamente direttamente nel browser.",
 search:"Cerca giochi...",
 recent:"Giocati di recente",
 login:"Accedi / Registrati",
@@ -431,16 +698,20 @@ close:"Chiudi",
 upload:"🎮 Aggiungi gioco",
 publish:"Pubblica gioco",
 community:"🎮 Giochi della community",
+action:"⚔️ Azione",
 archer:"Sconfiggi i tuoi nemici!",
 genre:"Scegli genere",
 gameName:"Nome del gioco",
 description:"Descrizione del gioco",
-noRecent:"Nessun gioco giocato."
+gameFile:"File del gioco",
+thumbnail:"Miniatura",
+noRecent:"Nessun gioco giocato.",
+play:"▶ Gioca"
 },
 
 nl:{
 welcome:"Welkom bij SliqGames 🎮",
-subtitle:"Speel gratis games in je browser.",
+subtitle:"Speel gratis games direct in je browser.",
 search:"Games zoeken...",
 recent:"Recent gespeeld",
 login:"Inloggen / Registreren",
@@ -451,16 +722,20 @@ close:"Sluiten",
 upload:"🎮 Game toevoegen",
 publish:"Game publiceren",
 community:"🎮 Community-games",
+action:"⚔️ Actie",
 archer:"Versla je vijanden!",
 genre:"Genre kiezen",
 gameName:"Naam van het spel",
 description:"Beschrijving van het spel",
-noRecent:"Nog geen games gespeeld."
+gameFile:"Gamebestand",
+thumbnail:"Miniatuur",
+noRecent:"Nog geen games gespeeld.",
+play:"▶ Spelen"
 },
 
 tr:{
 welcome:"SliqGames'e hoş geldin 🎮",
-subtitle:"Ücretsiz oyunları tarayıcıda oyna.",
+subtitle:"Ücretsiz oyunları doğrudan tarayıcında oyna.",
 search:"Oyun ara...",
 recent:"Son oynananlar",
 login:"Giriş / Kayıt",
@@ -471,16 +746,20 @@ close:"Kapat",
 upload:"🎮 Oyun ekle",
 publish:"Oyunu yayınla",
 community:"🎮 Topluluk oyunları",
+action:"⚔️ Aksiyon",
 archer:"Düşmanlarını yen!",
 genre:"Tür seç",
 gameName:"Oyun adı",
 description:"Oyun açıklaması",
-noRecent:"Henüz oyun oynanmadı."
+gameFile:"Oyun dosyası",
+thumbnail:"Küçük resim",
+noRecent:"Henüz oyun oynanmadı.",
+play:"▶ Oyna"
 },
 
 pl:{
 welcome:"Witamy w SliqGames 🎮",
-subtitle:"Graj w darmowe gry w przeglądarce.",
+subtitle:"Graj w darmowe gry bezpośrednio w przeglądarce.",
 search:"Szukaj gier...",
 recent:"Ostatnio grane",
 login:"Zaloguj / Zarejestruj",
@@ -491,11 +770,15 @@ close:"Zamknij",
 upload:"🎮 Dodaj grę",
 publish:"Opublikuj grę",
 community:"🎮 Gry społeczności",
-archer:"Pokonaj przeciwników!",
+action:"⚔️ Akcja",
+archer:"Pokonaj swoich przeciwników!",
 genre:"Wybierz gatunek",
 gameName:"Nazwa gry",
 description:"Opis gry",
-noRecent:"Nie zagrano jeszcze."
+gameFile:"Plik gry",
+thumbnail:"Miniatura",
+noRecent:"Nie zagrano jeszcze.",
+play:"▶ Graj"
 },
 
 pt:{
@@ -511,11 +794,15 @@ close:"Fechar",
 upload:"🎮 Adicionar jogo",
 publish:"Publicar jogo",
 community:"🎮 Jogos da comunidade",
+action:"⚔️ Ação",
 archer:"Derrote os seus inimigos!",
 genre:"Escolher género",
 gameName:"Nome do jogo",
 description:"Descrição do jogo",
-noRecent:"Nenhum jogo jogado."
+gameFile:"Ficheiro do jogo",
+thumbnail:"Miniatura",
+noRecent:"Nenhum jogo jogado.",
+play:"▶ Jogar"
 },
 
 ru:{
@@ -531,11 +818,15 @@ close:"Закрыть",
 upload:"🎮 Добавить игру",
 publish:"Опубликовать игру",
 community:"🎮 Игры сообщества",
+action:"⚔️ Экшен",
 archer:"Победите своих врагов!",
 genre:"Выберите жанр",
 gameName:"Название игры",
 description:"Описание игры",
-noRecent:"Игр ещё нет."
+gameFile:"Файл игры",
+thumbnail:"Миниатюра",
+noRecent:"Игр ещё нет.",
+play:"▶ Играть"
 },
 
 uk:{
@@ -551,11 +842,15 @@ close:"Закрити",
 upload:"🎮 Додати гру",
 publish:"Опублікувати гру",
 community:"🎮 Ігри спільноти",
+action:"⚔️ Екшен",
 archer:"Переможіть своїх ворогів!",
 genre:"Виберіть жанр",
 gameName:"Назва гри",
 description:"Опис гри",
-noRecent:"Ігор ще немає."
+gameFile:"Файл гри",
+thumbnail:"Мініатюра",
+noRecent:"Ігор ще немає.",
+play:"▶ Грати"
 },
 
 sv:{
@@ -571,18 +866,30 @@ close:"Stäng",
 upload:"🎮 Lägg till spel",
 publish:"Publicera spel",
 community:"🎮 Community-spel",
+action:"⚔️ Action",
 archer:"Besegra dina fiender!",
 genre:"Välj genre",
 gameName:"Spelnamn",
 description:"Spelbeskrivning",
-noRecent:"Inga spel spelade."
+gameFile:"Spelfil",
+thumbnail:"Miniatyr",
+noRecent:"Inga spel spelade.",
+play:"▶ Spela"
 }
 
 };
 
+
+function getLanguage(){
+
+return document.getElementById("language").value;
+
+}
+
+
 function changeLanguage(){
 
-const lang=document.getElementById("language").value;
+const lang=getLanguage();
 const t=translations[lang];
 
 localStorage.setItem("language",lang);
@@ -592,130 +899,242 @@ document.documentElement.lang=lang;
 document.getElementById("welcome").textContent=t.welcome;
 document.getElementById("subtitle").textContent=t.subtitle;
 document.getElementById("search").placeholder=t.search;
+
 document.getElementById("recentTitle").textContent=t.recent;
+
 document.getElementById("loginButton").textContent=t.login;
 document.getElementById("loginTitle").textContent=t.loginTitle;
 document.getElementById("loginAction").textContent=t.loginAction;
 document.getElementById("registerAction").textContent=t.register;
+
 document.getElementById("closeLoginButton").textContent=t.close;
+
 document.getElementById("uploadTitle").textContent=t.upload;
 document.getElementById("uploadButton").textContent=t.publish;
+document.getElementById("closeUploadButton").textContent=t.close;
+
 document.getElementById("communityTitle").textContent=t.community;
+document.getElementById("actionTitle").textContent=t.action;
+
 document.getElementById("archerDesc").textContent=t.archer;
 
 document.getElementById("gameNameInput").placeholder=t.gameName;
 document.getElementById("description").placeholder=t.description;
 
+document.getElementById("genrePlaceholder").textContent=t.genre;
+
+document.getElementById("gameFileLabel").textContent=t.gameFile;
+document.getElementById("thumbnailLabel").textContent=t.thumbnail;
+
 loadRecent();
 
+loadCommunityGames();
+
 }
+
 
 function goHome(){
-window.scrollTo({top:0,behavior:"smooth"});
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
 }
+
 
 function openLogin(){
-document.getElementById("loginModal").classList.add("open");
+
+document
+.getElementById("loginModal")
+.classList.add("open");
+
 }
+
 
 function closeLogin(){
-document.getElementById("loginModal").classList.remove("open");
+
+document
+.getElementById("loginModal")
+.classList.remove("open");
+
 }
+
 
 function openUpload(){
-document.getElementById("uploadModal").classList.add("open");
+
+document
+.getElementById("uploadModal")
+.classList.add("open");
+
 }
 
+
 function closeUpload(){
-document.getElementById("uploadModal").classList.remove("open");
+
+document
+.getElementById("uploadModal")
+.classList.remove("open");
+
 }
+
 
 function register(){
 
-const username=document.getElementById("username").value.trim();
-const password=document.getElementById("password").value;
+const username=
+document.getElementById("username")
+.value
+.trim();
+
+const password=
+document.getElementById("password")
+.value;
 
 if(!username || !password){
+
 alert("Bitte Benutzername und Passwort eingeben.");
+
 return;
+
 }
 
-localStorage.setItem("sliq_user",JSON.stringify({
+localStorage.setItem(
+"sliq_user",
+JSON.stringify({
 username:username,
 password:password
-}));
+})
+);
 
 alert("Account wurde gespeichert!");
+
 closeLogin();
 
 }
+
 
 function login(){
 
-const username=document.getElementById("username").value.trim();
-const password=document.getElementById("password").value;
+const username=
+document.getElementById("username")
+.value
+.trim();
 
-const saved=JSON.parse(
+const password=
+document.getElementById("password")
+.value;
+
+const saved=
+JSON.parse(
 localStorage.getItem("sliq_user") || "null"
 );
 
-if(saved && saved.username===username && saved.password===password){
+if(
+saved &&
+saved.username===username &&
+saved.password===password
+){
+
 alert("Erfolgreich angemeldet!");
+
 closeLogin();
+
 }else{
+
 alert("Benutzername oder Passwort falsch.");
+
 }
 
 }
+
 
 function playGame(name){
 
-let recent=JSON.parse(
+let recent=
+JSON.parse(
 localStorage.getItem("recentGames") || "[]"
 );
 
-recent=recent.filter(x=>x!==name);
+recent=
+recent.filter(
+x=>x!==name
+);
+
 recent.unshift(name);
-recent=recent.slice(0,6);
 
-localStorage.setItem("recentGames",JSON.stringify(recent));
+recent=
+recent.slice(0,6);
 
-if(name==="Archer Hero"){
-alert("Archer Hero wird bald verfügbar sein! 🏹");
-}
+localStorage.setItem(
+"recentGames",
+JSON.stringify(recent)
+);
 
 loadRecent();
 
+if(name==="Archer Hero"){
+
+alert(
+"Archer Hero wird bald verfügbar sein! 🏹"
+);
+
 }
+
+}
+
 
 function loadRecent(){
 
-const recent=JSON.parse(
+const recent=
+JSON.parse(
 localStorage.getItem("recentGames") || "[]"
 );
 
-const container=document.getElementById("recentGames");
+const container=
+document.getElementById("recentGames");
 
 container.innerHTML="";
 
+const lang=getLanguage();
+
+const t=translations[lang];
+
 if(!recent.length){
 
-const lang=document.getElementById("language").value;
-container.innerHTML="<p style='color:#718096'>"+translations[lang].noRecent+"</p>";
+container.innerHTML=
+`<p class="empty">${t.noRecent}</p>`;
+
 return;
 
 }
 
 recent.forEach(name=>{
 
-const div=document.createElement("div");
+const div=
+document.createElement("div");
+
 div.className="game";
-div.onclick=()=>playGame(name);
+
+div.onclick=()=>{
+playGame(name);
+};
+
+let icon="🎮";
+
+if(name==="Archer Hero"){
+icon="🏹";
+}
 
 div.innerHTML=`
-<div class="gameicon">🎮</div>
-<h3>${name}</h3>
-<p>▶ Play</p>
+
+<div class="gameicon">
+${icon}
+</div>
+
+<h3>${escapeHtml(name)}</h3>
+
+<p>${t.play}</p>
+
 `;
 
 container.appendChild(div);
@@ -728,168 +1147,145 @@ container.appendChild(div);
 function loadCommunityGames(){
 
 fetch("/games.json")
-.then(r => r.json())
-.then(games => {
 
-    const container = document.getElementById("genreContainer");
-    container.innerHTML = "";
+.then(response=>{
 
-    const allGames = [
-        {
-            name: "Archer Hero",
-            description: translations[
-                document.getElementById("language").value
-            ].archer,
-            genre: "Action",
-            thumbnail: null,
-            builtin: true
-        },
-        ...games
-    ];
+if(!response.ok){
+throw new Error("games.json not found");
+}
 
-    const genres = [
-        "Action",
-        "Adventure",
-        "Arcade",
-        "Casual",
-        "Horror",
-        "Racing",
-        "Sports",
-        "Strategy",
-        "Funny",
-        "Other"
-    ];
-
-    genres.forEach(genre => {
-
-        const genreGames = allGames.filter(
-            game => game.genre === genre
-        );
-
-        if (!genreGames.length) return;
-
-        const section = document.createElement("section");
-        section.className = "section";
-
-        const title = document.createElement("h2");
-        title.textContent = genre;
-
-        const grid = document.createElement("div");
-        grid.className = "games";
-
-        genreGames.forEach(game => {
-
-            const card = document.createElement("div");
-            card.className = "game";
-
-            card.onclick = () => {
-
-                playGame(game.name);
-
-                if (game.builtin) {
-                    alert("Archer Hero wird bald verfügbar sein! 🏹");
-                    return;
-                }
-
-                window.location.href =
-                    "/uploads/games/" +
-                    encodeURIComponent(game.game);
-            };
-
-            let icon = "🎮";
-
-            if (game.name === "Archer Hero") {
-                icon = "🏹";
-            }
-
-            const image = game.thumbnail
-                ? `<img src="/uploads/thumbnails/${encodeURIComponent(game.thumbnail)}">`
-                : icon;
-
-            card.innerHTML = `
-                <div class="gameicon">
-                    ${image}
-                </div>
-
-                <h3>${escapeHtml(game.name)}</h3>
-
-                <p>${escapeHtml(game.description)}</p>
-            `;
-
-            grid.appendChild(card);
-        });
-
-        section.appendChild(title);
-        section.appendChild(grid);
-        container.appendChild(section);
-    });
+return response.json();
 
 })
-.catch(() => {
 
-    const container = document.getElementById("genreContainer");
+.then(games=>{
 
-    container.innerHTML = `
-        <section class="section">
-            <h2>Action</h2>
+const container=
+document.getElementById("communityGames");
 
-            <div class="games">
+container.innerHTML="";
 
-                <div class="game" onclick="playGame('Archer Hero')">
+if(!games.length){
 
-                    <div class="gameicon">
-                        🏹
-                    </div>
+container.innerHTML=
+`<p class="empty">Noch keine Community-Spiele.</p>`;
 
-                    <h3>Archer Hero</h3>
+return;
 
-                    <p>Besiege deine Gegner!</p>
+}
 
-                </div>
+games.forEach(game=>{
 
-            </div>
-        </section>
-    `;
+const div=
+document.createElement("div");
+
+div.className="game";
+
+div.onclick=()=>{
+
+window.location.href=
+"/uploads/games/"
++
+encodeURIComponent(game.game);
+
+};
+
+div.innerHTML=`
+
+<div class="gameicon">
+
+<img
+src="/uploads/thumbnails/${encodeURIComponent(game.thumbnail)}"
+alt=""
+>
+
+</div>
+
+<h3>
+${escapeHtml(game.name)}
+</h3>
+
+<p>
+${escapeHtml(game.description)}
+</p>
+
+<span class="genre">
+${escapeHtml(game.genre)}
+</span>
+
+`;
+
+container.appendChild(div);
+
+});
+
+})
+
+.catch(error=>{
+
+console.log(
+"Community-Spiele konnten nicht geladen werden:",
+error
+);
+
 });
 
 }
 
-function escapeHtml(text){
-
-    const div = document.createElement("div");
-    div.textContent = text || "";
-    return div.innerHTML;
-
-}
-
-function googleLogin(){
-
-    window.location.href = "/auth/google";
-
-}
 
 function searchGames(){
 
-const value=document.getElementById("search").value.toLowerCase();
+const value=
+document
+.getElementById("search")
+.value
+.toLowerCase()
+.trim();
 
-document.querySelectorAll(".game").forEach(game=>{
+document
+.querySelectorAll(".game")
+.forEach(game=>{
 
-const text=game.innerText.toLowerCase();
+const text=
+game.innerText.toLowerCase();
 
-game.style.display=text.includes(value) ? "" : "none";
+game.style.display=
+text.includes(value)
+? ""
+: "none";
 
 });
 
 }
 
-const savedLanguage=localStorage.getItem("language");
 
-if(savedLanguage){
-document.getElementById("language").value=savedLanguage;
+function escapeHtml(value){
+
+return String(value)
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+
+const savedLanguage=
+localStorage.getItem("language");
+
+if(savedLanguage &&
+translations[savedLanguage]){
+
+document.getElementById("language").value=
+savedLanguage;
+
 }
 
 changeLanguage();
+
 loadRecent();
+
 loadCommunityGames();
 
 </script>
