@@ -10,29 +10,27 @@
 
 body{
 margin:0;
-font-family:Arial,Segoe UI,sans-serif;
-background:#030712;
+background:#050b14;
 color:white;
+font-family:Arial,sans-serif;
 overflow:hidden;
 }
 
 .top{
-height:68px;
-background:#07111f;
-border-bottom:1px solid #263b56;
+height:65px;
+background:#0b1829;
+border-bottom:1px solid #20344d;
 display:flex;
 align-items:center;
 padding:0 20px;
-z-index:20;
-position:relative;
 }
 
 .top button{
 background:#2563eb;
-border:0;
 color:white;
-padding:11px 17px;
-border-radius:11px;
+border:0;
+border-radius:10px;
+padding:10px 16px;
 font-weight:bold;
 cursor:pointer;
 }
@@ -40,56 +38,59 @@ cursor:pointer;
 .title{
 flex:1;
 text-align:center;
-font-size:23px;
+font-size:22px;
 font-weight:900;
 }
 
 #game{
-height:calc(100vh - 68px);
 position:relative;
+width:100vw;
+height:calc(100vh - 65px);
 overflow:hidden;
-background:linear-gradient(#071426,#02050a);
+background:
+linear-gradient(#142238,#07111f);
 }
 
 .road{
 position:absolute;
 left:50%;
 transform:translateX(-50%);
-width:min(520px,90vw);
+width:min(540px,90vw);
 height:100%;
 background:
 repeating-linear-gradient(
-to bottom,
+90deg,
 #242424 0px,
 #242424 80px,
 #292929 80px,
 #292929 160px
 );
-border-left:9px solid #e5e7eb;
-border-right:9px solid #e5e7eb;
-box-shadow:0 0 80px rgba(37,99,235,.15);
+border-left:8px solid #eee;
+border-right:8px solid #eee;
+overflow:hidden;
+box-shadow:0 0 50px rgba(0,0,0,.7);
 }
 
 .line{
 position:absolute;
-left:50%;
-width:12px;
+width:10px;
 height:90px;
-background:white;
+background:#fff;
+left:50%;
 transform:translateX(-50%);
-border-radius:5px;
+box-shadow:0 0 10px white;
 }
 
 .car{
 position:absolute;
-bottom:60px;
-left:50%;
-transform:translateX(-50%);
 width:58px;
 height:100px;
-border-radius:16px;
 background:linear-gradient(#60a5fa,#2563eb);
-box-shadow:0 0 25px rgba(37,99,235,.8);
+border-radius:14px;
+bottom:45px;
+left:50%;
+transform:translateX(-50%);
+box-shadow:0 0 25px #2563eb;
 z-index:5;
 }
 
@@ -98,19 +99,30 @@ content:"";
 position:absolute;
 width:38px;
 height:38px;
+background:#bfe2ff;
+border-radius:9px;
 left:10px;
-top:12px;
-border-radius:10px;
-background:#bfdbfe;
+top:10px;
+}
+
+.car:after{
+content:"";
+position:absolute;
+width:8px;
+height:20px;
+background:#111;
+left:7px;
+bottom:10px;
+box-shadow:36px 0 #111;
 }
 
 .enemy{
 position:absolute;
 width:58px;
 height:100px;
-border-radius:16px;
-background:linear-gradient(#fb7185,#dc2626);
-box-shadow:0 0 20px rgba(239,68,68,.7);
+background:linear-gradient(#ff7777,#ef2222);
+border-radius:14px;
+box-shadow:0 0 20px #ef4444;
 z-index:4;
 }
 
@@ -119,23 +131,23 @@ content:"";
 position:absolute;
 width:38px;
 height:38px;
+background:#ffc0c0;
+border-radius:9px;
 left:10px;
-top:12px;
-border-radius:10px;
-background:#fecaca;
+top:10px;
 }
 
 .hud{
 position:absolute;
-top:18px;
-left:18px;
+top:15px;
+left:15px;
 z-index:20;
-background:rgba(3,7,18,.9);
-border:1px solid #334b69;
+background:rgba(5,11,20,.9);
+border:1px solid #304966;
 border-radius:14px;
 padding:13px 17px;
 font-weight:bold;
-line-height:1.8;
+line-height:1.7;
 }
 
 .controls{
@@ -150,14 +162,13 @@ z-index:30;
 
 .controls button{
 width:75px;
-height:58px;
+height:60px;
 border:0;
 border-radius:15px;
 background:#172c48;
 color:white;
-font-size:25px;
+font-size:27px;
 font-weight:bold;
-cursor:pointer;
 }
 
 .gameover{
@@ -166,29 +177,29 @@ inset:0;
 display:none;
 align-items:center;
 justify-content:center;
-background:rgba(0,0,0,.75);
+background:rgba(0,0,0,.78);
 z-index:50;
 }
 
 .gameoverBox{
 background:#0d192b;
-border:1px solid #334b69;
+border:1px solid #304966;
 border-radius:22px;
 padding:30px;
-width:min(420px,90%);
 text-align:center;
+width:min(400px,90%);
 }
 
 .gameoverBox button{
 width:100%;
 padding:13px;
-margin-top:9px;
 border:0;
-border-radius:11px;
+border-radius:10px;
 background:#2563eb;
 color:white;
 font-weight:bold;
 cursor:pointer;
+margin-top:10px;
 }
 
 @media(min-width:800px){
@@ -209,7 +220,7 @@ cursor:pointer;
 <div class="hud">
 🏁 Punkte: <span id="score">0</span><br>
 ⚡ Geschwindigkeit: <span id="speed">5</span><br>
-🏆 Highscore: <span id="highscore">0</span>
+🏆 Rekord: <span id="highscore">0</span>
 </div>
 
 <div class="road" id="road">
@@ -235,14 +246,11 @@ cursor:pointer;
 
 <h1>💥 Unfall!</h1>
 
-<p>Deine Punktzahl</p>
+<p>Deine Punktzahl:</p>
 <h2 id="finalScore">0</h2>
 
 <button onclick="restart()">🔄 Nochmal fahren</button>
-
-<button onclick="location.href='/'">
-← Zurück zu SliqGames
-</button>
+<button onclick="location.href='/'">← Zurück zu SliqGames</button>
 
 </div>
 
@@ -255,6 +263,13 @@ cursor:pointer;
 const road=document.getElementById("road");
 const car=document.getElementById("car");
 
+const scoreElement=document.getElementById("score");
+const speedElement=document.getElementById("speed");
+const highscoreElement=document.getElementById("highscore");
+
+const gameover=document.getElementById("gameover");
+const finalScore=document.getElementById("finalScore");
+
 let carX=50;
 let score=0;
 let speed=5;
@@ -264,15 +279,15 @@ let enemies=[];
 let highscore=
 parseInt(localStorage.getItem("racingHighScore")||"0");
 
-document.getElementById("highscore").textContent=highscore;
+highscoreElement.textContent=highscore;
 
 function moveLeft(){
 
 if(!running)return;
 
-carX-=7;
+carX-=6;
 
-if(carX<8)carX=8;
+if(carX<10)carX=10;
 
 car.style.left=carX+"%";
 
@@ -282,9 +297,9 @@ function moveRight(){
 
 if(!running)return;
 
-carX+=7;
+carX+=6;
 
-if(carX>92)carX=92;
+if(carX>90)carX=90;
 
 car.style.left=carX+"%";
 
@@ -292,11 +307,17 @@ car.style.left=carX+"%";
 
 document.addEventListener("keydown",e=>{
 
-if(e.key==="ArrowLeft"||e.key.toLowerCase()==="a"){
+if(
+e.key==="ArrowLeft"||
+e.key.toLowerCase()==="a"
+){
 moveLeft();
 }
 
-if(e.key==="ArrowRight"||e.key.toLowerCase()==="d"){
+if(
+e.key==="ArrowRight"||
+e.key.toLowerCase()==="d"
+){
 moveRight();
 }
 
@@ -310,7 +331,9 @@ const enemy=document.createElement("div");
 
 enemy.className="enemy";
 
-enemy.style.left=(10+Math.random()*80)+"%";
+enemy.style.left=
+(10+Math.random()*80)+"%";
+
 enemy.style.top="-120px";
 
 road.appendChild(enemy);
@@ -340,7 +363,9 @@ function endGame(){
 
 running=false;
 
-document.getElementById("finalScore").textContent=score;
+finalScore.textContent=score;
+
+gameover.style.display="flex";
 
 if(score>highscore){
 
@@ -351,11 +376,9 @@ localStorage.setItem(
 highscore
 );
 
+highscoreElement.textContent=highscore;
+
 }
-
-document.getElementById("highscore").textContent=highscore;
-
-document.getElementById("gameover").style.display="flex";
 
 }
 
@@ -363,17 +386,23 @@ function gameLoop(){
 
 if(!running)return;
 
-for(let i=enemies.length-1;i>=0;i--){
+for(
+let i=enemies.length-1;
+i>=0;
+i--
+){
 
 const enemy=enemies[i];
 
 enemy.y+=speed;
 
-enemy.element.style.top=enemy.y+"px";
+enemy.element.style.top=
+enemy.y+"px";
 
 if(collision(car,enemy.element)){
 
 endGame();
+
 return;
 
 }
@@ -386,13 +415,13 @@ enemies.splice(i,1);
 
 score++;
 
-document.getElementById("score").textContent=score;
+scoreElement.textContent=score;
 
-if(score%10===0){
+if(score%8===0){
 
-speed+=.5;
+speed+=.6;
 
-document.getElementById("speed").textContent=
+speedElement.textContent=
 Math.floor(speed);
 
 }
@@ -420,16 +449,16 @@ running=true;
 
 car.style.left="50%";
 
-document.getElementById("score").textContent="0";
-document.getElementById("speed").textContent="5";
+scoreElement.textContent="0";
+speedElement.textContent="5";
 
-document.getElementById("gameover").style.display="none";
+gameover.style.display="none";
 
 gameLoop();
 
 }
 
-setInterval(createEnemy,900);
+setInterval(createEnemy,850);
 
 gameLoop();
 

@@ -10,248 +10,178 @@
 
 body{
 margin:0;
-font-family:Arial,Segoe UI,sans-serif;
-background:
-radial-gradient(circle at top,#18345c,#07111f 60%);
+font-family:Arial,sans-serif;
+background:#07111f;
 color:white;
-overflow:hidden;
 }
 
-.top{
-height:68px;
-background:rgba(7,17,31,.95);
-border-bottom:1px solid #263e5d;
+header{
+height:70px;
+background:#0b1829;
+border-bottom:1px solid #243952;
 display:flex;
 align-items:center;
 padding:0 20px;
-position:relative;
-z-index:20;
+gap:15px;
 }
 
-.top button{
+header button{
 background:#2563eb;
 border:0;
 color:white;
-padding:11px 17px;
-border-radius:11px;
+padding:10px 15px;
+border-radius:10px;
 font-weight:bold;
 cursor:pointer;
 }
 
 .title{
+font-size:22px;
+font-weight:900;
 flex:1;
 text-align:center;
-font-size:23px;
-font-weight:900;
 }
 
-#game{
-position:relative;
-width:100vw;
-height:calc(100vh - 68px);
-overflow:hidden;
-background:
-linear-gradient(#102b48,#081321);
+.game{
+max-width:1100px;
+margin:auto;
+padding:20px;
 }
 
-.sky{
-position:absolute;
-inset:0;
-background:
-radial-gradient(circle at 20% 20%,rgba(96,165,250,.18),transparent 20%),
-radial-gradient(circle at 80% 15%,rgba(147,197,253,.12),transparent 25%);
-}
-
-.hud{
-position:absolute;
-top:18px;
-left:18px;
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-z-index:15;
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+margin-bottom:20px;
 }
 
 .stat{
-background:rgba(7,17,31,.88);
-border:1px solid #315071;
-border-radius:12px;
-padding:10px 14px;
-font-weight:bold;
-box-shadow:0 8px 30px rgba(0,0,0,.25);
+background:#0d1b2d;
+border:1px solid #20344d;
+border-radius:15px;
+padding:15px;
+text-align:center;
+}
+
+.stat b{
+display:block;
+font-size:22px;
+margin-top:5px;
 }
 
 .arena{
-position:absolute;
-inset:0;
-}
-
-.player{
-position:absolute;
-width:74px;
-height:74px;
-left:50%;
-bottom:90px;
-transform:translateX(-50%);
-font-size:55px;
-display:flex;
-align-items:center;
-justify-content:center;
-filter:drop-shadow(0 0 12px #60a5fa);
-z-index:10;
+position:relative;
+height:430px;
+background:
+radial-gradient(circle at center,#183452,#091525);
+border:1px solid #294561;
+border-radius:25px;
+overflow:hidden;
 }
 
 .enemy{
 position:absolute;
-width:65px;
-height:65px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:48px;
-z-index:7;
+font-size:65px;
+cursor:pointer;
+user-select:none;
+transition:.1s;
 }
 
-.arrow{
+.enemy:hover{
+transform:scale(1.12);
+}
+
+.hero{
 position:absolute;
-width:8px;
-height:30px;
-background:#f8fafc;
-border-radius:5px;
-z-index:8;
-box-shadow:0 0 10px #93c5fd;
-}
-
-.coin{
-position:absolute;
-font-size:25px;
-z-index:8;
-}
-
-.damage{
-position:absolute;
-color:#fca5a5;
-font-size:22px;
-font-weight:900;
-z-index:20;
-animation:damage .5s forwards;
-}
-
-@keyframes damage{
-0%{transform:translateY(0);opacity:1}
-100%{transform:translateY(-35px);opacity:0}
-}
-
-.bottom{
-position:absolute;
-bottom:18px;
+bottom:25px;
 left:50%;
 transform:translateX(-50%);
-z-index:20;
-display:flex;
-gap:10px;
+font-size:90px;
+filter:drop-shadow(0 0 15px #60a5fa);
 }
 
-.control{
-width:62px;
-height:55px;
-border:0;
-border-radius:14px;
-background:#172c48;
-color:white;
-font-size:24px;
-font-weight:bold;
-cursor:pointer;
+.cooldown{
+position:absolute;
+bottom:10px;
+left:50%;
+transform:translateX(-50%);
+height:6px;
+width:200px;
+background:#18283d;
+border-radius:10px;
+overflow:hidden;
 }
 
-.shoot{
-background:#2563eb;
+.cooldown div{
+height:100%;
+width:100%;
+background:#60a5fa;
+transform-origin:left;
 }
 
 .upgrades{
-position:absolute;
-right:18px;
-top:18px;
-z-index:30;
-width:250px;
-background:rgba(7,17,31,.95);
-border:1px solid #315071;
-border-radius:18px;
-padding:18px;
-display:none;
-}
-
-.upgrades.open{
-display:block;
-}
-
-.upgrades h2{
-margin-top:0;
+margin-top:20px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
 }
 
 .upgrade{
+background:#0d1b2d;
+border:1px solid #20344d;
+border-radius:16px;
+padding:18px;
+}
+
+.upgrade h3{
+margin:0 0 8px;
+}
+
+.upgrade p{
+color:#8ea0b8;
+font-size:13px;
+min-height:35px;
+}
+
+.upgrade button{
 width:100%;
-padding:11px;
-margin:6px 0;
 border:0;
 border-radius:10px;
-background:#172c48;
-color:white;
-font-weight:bold;
-cursor:pointer;
-text-align:left;
-}
-
-.upgrade:hover{
-background:#23466e;
-}
-
-.gameover{
-position:absolute;
-inset:0;
-display:none;
-align-items:center;
-justify-content:center;
-background:rgba(0,0,0,.75);
-z-index:50;
-}
-
-.gameoverBox{
-width:min(430px,90%);
-background:#0d192b;
-border:1px solid #315071;
-border-radius:22px;
-padding:30px;
-text-align:center;
-}
-
-.gameoverBox button{
-width:100%;
-padding:13px;
-margin-top:9px;
-border:0;
-border-radius:11px;
+padding:11px;
 background:#2563eb;
 color:white;
 font-weight:bold;
 cursor:pointer;
 }
 
-@media(min-width:850px){
-.bottom .move{
-display:none;
-}
+.upgrade button:disabled{
+background:#27364a;
+color:#738198;
+cursor:not-allowed;
 }
 
-@media(max-width:700px){
+.message{
+text-align:center;
+margin:15px;
+height:22px;
+color:#93c5fd;
+}
+
+@media(max-width:800px){
+.stats{
+grid-template-columns:repeat(2,1fr);
+}
 .upgrades{
-width:220px;
-right:10px;
-top:75px;
+grid-template-columns:repeat(2,1fr);
+}
+.arena{
+height:400px;
+}
 }
 
-.title{
-font-size:18px;
+@media(max-width:500px){
+.upgrades{
+grid-template-columns:1fr;
 }
 }
 </style>
@@ -259,77 +189,85 @@ font-size:18px;
 
 <body>
 
-<div class="top">
+<header>
 <button onclick="location.href='/'">← SliqGames</button>
 <div class="title">🏹 Archer Hero</div>
+</header>
+
+<div class="game">
+
+<div class="stats">
+
+<div class="stat">
+💰 Gold
+<b id="gold">0</b>
 </div>
 
-<div id="game">
+<div class="stat">
+❤️ Leben
+<b id="health">100</b>
+</div>
 
-<div class="sky"></div>
+<div class="stat">
+🏹 Schaden
+<b id="damage">10</b>
+</div>
 
-<div class="hud">
-<div class="stat">❤️ <span id="health">100</span></div>
-<div class="stat">💰 <span id="coins">0</span></div>
-<div class="stat">🏹 Welle <span id="wave">1</span></div>
-<div class="stat">⭐ <span id="score">0</span></div>
+<div class="stat">
+⚡ Cooldown
+<b id="cooldownText">1000ms</b>
+</div>
+
 </div>
 
 <div class="arena" id="arena">
 
-<div class="player" id="player">🏹</div>
+<div class="hero">🏹</div>
+
+<div class="cooldown">
+<div id="cooldownBar"></div>
+</div>
 
 </div>
 
-<div class="upgrades" id="upgradePanel">
+<div class="message" id="message">
+Klicke auf die Gegner, um sie zu besiegen!
+</div>
 
 <h2>⬆️ Upgrades</h2>
 
-<p>💰 Münzen: <span id="upgradeCoins">0</span></p>
+<div class="upgrades">
 
-<button class="upgrade" onclick="upgradeDamage()">
-🏹 Schaden +5 — <span id="damageCost">10</span> 💰
+<div class="upgrade">
+<h3>💰 Gold-Multiplikator</h3>
+<p>Verdiene mehr Gold pro besiegtem Gegner.</p>
+<button id="goldButton" onclick="upgradeGold()">
+Upgrade
 </button>
-
-<button class="upgrade" onclick="upgradeSpeed()">
-⚡ Angriffsgeschwindigkeit — <span id="speedCost">15</span> 💰
-</button>
-
-<button class="upgrade" onclick="upgradeHealth()">
-❤️ Max. Leben +20 — <span id="healthCost">20</span> 💰
-</button>
-
-<button class="upgrade" onclick="healPlayer()">
-💚 Heilen — 10 💰
-</button>
-
 </div>
 
-<div class="bottom">
-
-<button class="control move" onclick="moveLeft()">←</button>
-<button class="control shoot" onclick="shoot()">🏹</button>
-<button class="control move" onclick="moveRight()">→</button>
-<button class="control" onclick="toggleUpgrades()">⬆️</button>
-
+<div class="upgrade">
+<h3>⚡ Schnellere Schüsse</h3>
+<p>Verringert deinen Schuss-Cooldown.</p>
+<button id="speedButton" onclick="upgradeSpeed()">
+Upgrade
+</button>
 </div>
 
-<div class="gameover" id="gameover">
-
-<div class="gameoverBox">
-
-<h1>💀 Besiegt!</h1>
-
-<p>Du hast <b><span id="finalScore">0</span></b> Punkte erreicht.</p>
-
-<p>Du hast <b><span id="finalCoins">0</span></b> Münzen gesammelt.</p>
-
-<button onclick="restart()">🔄 Nochmal spielen</button>
-
-<button onclick="location.href='/'">
-← Zurück zu SliqGames
+<div class="upgrade">
+<h3>🏹 Pfeilschaden</h3>
+<p>Erhöhe den Schaden deiner Pfeile.</p>
+<button id="damageButton" onclick="upgradeDamage()">
+Upgrade
 </button>
+</div>
 
+<div class="upgrade">
+<h3>❤️ Mehr Leben</h3>
+<p>Erhöhe deine maximale Lebensenergie.</p>
+<button id="healthButton" onclick="upgradeHealth()">
+Upgrade
+</button>
 </div>
 
 </div>
@@ -339,389 +277,298 @@ font-size:18px;
 <script>
 
 const arena=document.getElementById("arena");
-const player=document.getElementById("player");
 
-let playerX=50;
+let data=JSON.parse(
+localStorage.getItem("archerHeroSave")||"null"
+);
 
-let health=100;
-let maxHealth=100;
+if(!data){
 
-let coins=0;
-let score=0;
-let wave=1;
-
-let damage=20;
-let shootDelay=600;
-
-let damageCost=10;
-let speedCost=15;
-let healthCost=20;
-
-let enemies=[];
-let arrows=[];
-
-let running=true;
-
-function updateHUD(){
-
-document.getElementById("health").textContent=health;
-document.getElementById("coins").textContent=coins;
-document.getElementById("upgradeCoins").textContent=coins;
-document.getElementById("wave").textContent=wave;
-document.getElementById("score").textContent=score;
-
-document.getElementById("damageCost").textContent=damageCost;
-document.getElementById("speedCost").textContent=speedCost;
-document.getElementById("healthCost").textContent=healthCost;
+data={
+gold:0,
+health:100,
+maxHealth:100,
+damage:10,
+cooldown:1000,
+goldMultiplier:1,
+goldLevel:0,
+speedLevel:0,
+damageLevel:0,
+healthLevel:0
+};
 
 }
 
-function moveLeft(){
+let canShoot=true;
 
-if(!running)return;
+function save(){
+localStorage.setItem(
+"archerHeroSave",
+JSON.stringify(data)
+);
+}
 
-playerX-=5;
+function updateUI(){
 
-if(playerX<8)playerX=8;
+document.getElementById("gold").textContent=
+Math.floor(data.gold);
 
-player.style.left=playerX+"%";
+document.getElementById("health").textContent=
+data.health+"/"+data.maxHealth;
+
+document.getElementById("damage").textContent=
+data.damage;
+
+document.getElementById("cooldownText").textContent=
+data.cooldown+"ms";
+
+document.getElementById("goldButton").textContent=
+"💰 "+goldCost()+" Gold";
+
+document.getElementById("speedButton").textContent=
+"⚡ "+speedCost()+" Gold";
+
+document.getElementById("damageButton").textContent=
+"🏹 "+damageCost()+" Gold";
+
+document.getElementById("healthButton").textContent=
+"❤️ "+healthCost()+" Gold";
 
 }
 
-function moveRight(){
-
-if(!running)return;
-
-playerX+=5;
-
-if(playerX>92)playerX=92;
-
-player.style.left=playerX+"%";
-
+function goldCost(){
+return Math.floor(50*Math.pow(1.65,data.goldLevel));
 }
 
-document.addEventListener("keydown",e=>{
-
-if(e.key==="ArrowLeft"||e.key.toLowerCase()==="a"){
-moveLeft();
+function speedCost(){
+return Math.floor(75*Math.pow(1.7,data.speedLevel));
 }
 
-if(e.key==="ArrowRight"||e.key.toLowerCase()==="d"){
-moveRight();
+function damageCost(){
+return Math.floor(100*Math.pow(1.8,data.damageLevel));
 }
 
-if(e.code==="Space"){
-shoot();
+function healthCost(){
+return Math.floor(80*Math.pow(1.7,data.healthLevel));
 }
 
-if(e.key.toLowerCase()==="u"){
-toggleUpgrades();
+function message(text){
+document.getElementById("message").textContent=text;
 }
 
-});
+function spend(cost){
 
-let lastShot=0;
+if(data.gold<cost){
+message("❌ Nicht genug Gold!");
+return false;
+}
 
-function shoot(){
+data.gold-=cost;
+return true;
+}
 
-if(!running)return;
+function upgradeGold(){
 
-const now=Date.now();
+const cost=goldCost();
 
-if(now-lastShot<shootDelay)return;
+if(!spend(cost))return;
 
-lastShot=now;
+data.goldMultiplier+=0.5;
+data.goldLevel++;
 
-const arrow=document.createElement("div");
+message("💰 Gold-Multiplikator verbessert!");
 
-arrow.className="arrow";
+save();
+updateUI();
+}
 
-arrow.style.left=playerX+"%";
-arrow.style.bottom="155px";
+function upgradeSpeed(){
 
-arena.appendChild(arrow);
+const cost=speedCost();
 
-arrows.push({
-element:arrow,
-x:playerX,
-y:155
-});
+if(!spend(cost))return;
 
+data.cooldown=Math.max(
+250,
+data.cooldown-100
+);
+
+data.speedLevel++;
+
+message("⚡ Du schießt jetzt schneller!");
+
+save();
+updateUI();
+}
+
+function upgradeDamage(){
+
+const cost=damageCost();
+
+if(!spend(cost))return;
+
+data.damage+=5;
+data.damageLevel++;
+
+message("🏹 Dein Pfeilschaden wurde erhöht!");
+
+save();
+updateUI();
+}
+
+function upgradeHealth(){
+
+const cost=healthCost();
+
+if(!spend(cost))return;
+
+data.maxHealth+=25;
+data.health=data.maxHealth;
+data.healthLevel++;
+
+message("❤️ Maximales Leben erhöht!");
+
+save();
+updateUI();
 }
 
 function createEnemy(){
-
-if(!running)return;
 
 const enemy=document.createElement("div");
 
 enemy.className="enemy";
 
-enemy.textContent=
-Math.random()>.5 ? "👹" : "👾";
+const types=[
+"👹",
+"👺",
+"👾",
+"🧟",
+"🐲"
+];
 
-const x=10+Math.random()*80;
+enemy.textContent=
+types[Math.floor(Math.random()*types.length)];
+
+const x=
+20+Math.random()*60;
+
+const y=
+40+Math.random()*250;
 
 enemy.style.left=x+"%";
-enemy.style.top="-70px";
+enemy.style.top=y+"px";
+
+let hp=
+10+
+Math.floor(
+(data.damage/10)*5
+);
+
+hp+=
+Math.floor(
+Math.random()*10
+);
+
+enemy.dataset.hp=hp;
+
+enemy.onclick=function(e){
+
+e.stopPropagation();
+
+if(!canShoot)return;
+
+canShoot=false;
+
+const currentHp=
+parseInt(enemy.dataset.hp);
+
+const newHp=
+currentHp-data.damage;
+
+enemy.dataset.hp=newHp;
+
+enemy.style.transform="scale(.9)";
+
+setTimeout(()=>{
+enemy.style.transform="";
+},100);
+
+if(newHp<=0){
+
+const reward=
+Math.floor(
+10*data.goldMultiplier
+);
+
+data.gold+=reward;
+
+message(
+"🏹 Gegner besiegt! +"+reward+" Gold"
+);
+
+enemy.remove();
+
+save();
+updateUI();
+
+}else{
+
+message(
+"🏹 Treffer! Noch "+newHp+" HP"
+);
+
+}
+
+const bar=
+document.getElementById("cooldownBar");
+
+bar.style.transition=
+"none";
+
+bar.style.transform="scaleX(1)";
+
+setTimeout(()=>{
+
+bar.style.transition=
+"transform "+data.cooldown+"ms linear";
+
+bar.style.transform="scaleX(0)";
+
+},20);
+
+setTimeout(()=>{
+
+canShoot=true;
+
+},data.cooldown);
+
+};
 
 arena.appendChild(enemy);
 
-enemies.push({
-element:enemy,
-x:x,
-y:-70,
-hp:20+wave*5,
-speed:1.2+wave*.12
-});
+setTimeout(()=>{
+
+if(enemy.parentNode){
+
+enemy.remove();
 
 }
 
-function damageEnemy(enemy){
-
-enemy.hp-=damage;
-
-const text=document.createElement("div");
-
-text.className="damage";
-text.textContent="-"+damage;
-
-text.style.left=enemy.x+"%";
-text.style.top=enemy.y+"px";
-
-arena.appendChild(text);
-
-setTimeout(()=>text.remove(),500);
-
-if(enemy.hp<=0){
-
-enemy.element.remove();
-
-enemies=enemies.filter(e=>e!==enemy);
-
-coins+=2;
-score+=10;
-
-if(score%100===0){
-wave++;
-}
-
-updateHUD();
+},5000);
 
 }
 
+setInterval(()=>{
+
+createEnemy();
+
+},1400);
+
+updateUI();
+
+for(let i=0;i<2;i++){
+setTimeout(createEnemy,i*500);
 }
-
-function update(){
-
-if(!running)return;
-
-for(let i=arrows.length-1;i>=0;i--){
-
-const arrow=arrows[i];
-
-arrow.y+=10;
-
-arrow.element.style.bottom=arrow.y+"px";
-
-if(arrow.y>window.innerHeight){
-
-arrow.element.remove();
-arrows.splice(i,1);
-continue;
-
-}
-
-for(const enemy of enemies){
-
-const a=arrow.element.getBoundingClientRect();
-const b=enemy.element.getBoundingClientRect();
-
-if(
-a.left<b.right &&
-a.right>b.left &&
-a.top<b.bottom &&
-a.bottom>b.top
-){
-
-damageEnemy(enemy);
-
-arrow.element.remove();
-arrows.splice(i,1);
-
-break;
-
-}
-
-}
-
-}
-
-for(let i=enemies.length-1;i>=0;i--){
-
-const enemy=enemies[i];
-
-enemy.y+=enemy.speed;
-
-enemy.element.style.top=enemy.y+"px";
-
-const p=player.getBoundingClientRect();
-const e=enemy.element.getBoundingClientRect();
-
-if(
-p.left<e.right &&
-p.right>e.left &&
-p.top<e.bottom &&
-p.bottom>e.top
-){
-
-health-=10;
-
-enemy.element.remove();
-
-enemies.splice(i,1);
-
-if(health<=0){
-
-health=0;
-endGame();
-
-}
-
-updateHUD();
-
-}
-
-if(enemy.y>window.innerHeight){
-
-enemy.element.remove();
-
-enemies.splice(i,1);
-
-}
-
-}
-
-requestAnimationFrame(update);
-
-}
-
-function upgradeDamage(){
-
-if(coins<damageCost)return;
-
-coins-=damageCost;
-
-damage+=5;
-
-damageCost=Math.floor(damageCost*1.7);
-
-updateHUD();
-
-}
-
-function upgradeSpeed(){
-
-if(coins<speedCost)return;
-
-coins-=speedCost;
-
-shootDelay=Math.max(150,shootDelay-80);
-
-speedCost=Math.floor(speedCost*1.7);
-
-updateHUD();
-
-}
-
-function upgradeHealth(){
-
-if(coins<healthCost)return;
-
-coins-=healthCost;
-
-maxHealth+=20;
-health=maxHealth;
-
-healthCost=Math.floor(healthCost*1.7);
-
-updateHUD();
-
-}
-
-function healPlayer(){
-
-if(coins<10)return;
-
-coins-=10;
-
-health=Math.min(maxHealth,health+30);
-
-updateHUD();
-
-}
-
-function toggleUpgrades(){
-
-document
-.getElementById("upgradePanel")
-.classList.toggle("open");
-
-}
-
-function endGame(){
-
-running=false;
-
-document.getElementById("finalScore").textContent=score;
-document.getElementById("finalCoins").textContent=coins;
-
-document.getElementById("gameover").style.display="flex";
-
-}
-
-function restart(){
-
-document
-.querySelectorAll(".enemy,.arrow,.damage")
-.forEach(e=>e.remove());
-
-enemies=[];
-arrows=[];
-
-playerX=50;
-
-health=100;
-maxHealth=100;
-
-coins=0;
-score=0;
-wave=1;
-
-damage=20;
-shootDelay=600;
-
-damageCost=10;
-speedCost=15;
-healthCost=20;
-
-running=true;
-
-player.style.left="50%";
-
-document
-.getElementById("gameover")
-.style.display="none";
-
-updateHUD();
-
-}
-
-setInterval(createEnemy,900);
-
-updateHUD();
-
-update();
 
 </script>
 

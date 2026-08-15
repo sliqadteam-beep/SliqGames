@@ -7,14 +7,12 @@
 
 <style>
 *{box-sizing:border-box}
-
 body{
 margin:0;
 font-family:Arial,Segoe UI,sans-serif;
 background:#07111f;
 color:white;
 }
-
 header{
 height:72px;
 background:#0b1829;
@@ -27,7 +25,6 @@ position:sticky;
 top:0;
 z-index:10;
 }
-
 .logo{
 width:44px;
 height:44px;
@@ -39,7 +36,6 @@ justify-content:center;
 font-weight:900;
 font-size:20px;
 }
-
 .brand{
 background:none;
 border:0;
@@ -48,9 +44,7 @@ font-size:21px;
 font-weight:900;
 cursor:pointer;
 }
-
 .spacer{flex:1}
-
 select,input,textarea{
 background:#101f34;
 border:1px solid #243952;
@@ -58,9 +52,7 @@ color:white;
 border-radius:10px;
 padding:11px;
 }
-
 button{cursor:pointer}
-
 .login,.uploadBtn{
 background:#2563eb;
 border:0;
@@ -69,13 +61,11 @@ font-weight:700;
 padding:11px 16px;
 border-radius:10px;
 }
-
 main{
 max-width:1250px;
 margin:auto;
 padding:30px 20px 60px;
 }
-
 .hero{
 padding:35px;
 border-radius:25px;
@@ -83,34 +73,20 @@ background:linear-gradient(135deg,#102b52,#0b1829);
 border:1px solid #203a59;
 margin-bottom:30px;
 }
-
-.hero h1{
-font-size:42px;
-margin:0 0 10px;
-}
-
+.hero h1{font-size:42px;margin:0 0 10px}
 .hero p{color:#9fb0c7}
-
 .search{
 width:100%;
 margin-top:15px;
 font-size:15px;
 }
-
-.section{
-margin-top:35px;
-}
-
-.section h2{
-font-size:22px;
-}
-
+.section{margin-top:35px}
+.section h2{font-size:22px}
 .games{
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
 gap:17px;
 }
-
 .game{
 background:#0d1b2d;
 border:1px solid #1d3047;
@@ -119,13 +95,11 @@ padding:15px;
 transition:.2s;
 cursor:pointer;
 }
-
 .game:hover{
 transform:translateY(-5px);
 border-color:#3b82f6;
-box-shadow:0 12px 35px rgba(0,0,0,.25);
+box-shadow:0 10px 30px rgba(0,0,0,.25);
 }
-
 .gameicon{
 height:145px;
 border-radius:13px;
@@ -133,27 +107,21 @@ display:flex;
 align-items:center;
 justify-content:center;
 font-size:55px;
-background:linear-gradient(135deg,#172c48,#10233c);
+background:#172c48;
 margin-bottom:13px;
 overflow:hidden;
 }
-
 .gameicon img{
 width:100%;
 height:100%;
 object-fit:cover;
 }
-
-.game h3{
-margin:0 0 6px;
-}
-
+.game h3{margin:0 0 6px}
 .game p{
 margin:0;
 font-size:13px;
 color:#8ea0b8;
 }
-
 .genre{
 display:inline-block;
 margin-top:10px;
@@ -163,11 +131,10 @@ padding:5px 8px;
 border-radius:7px;
 color:#93c5fd;
 }
-
-.recentEmpty{
+.empty{
 color:#718096;
+padding:10px 0;
 }
-
 .modal{
 position:fixed;
 inset:0;
@@ -177,9 +144,7 @@ align-items:center;
 justify-content:center;
 z-index:100;
 }
-
 .modal.open{display:flex}
-
 .box{
 width:min(500px,92%);
 background:#0d192b;
@@ -187,14 +152,11 @@ border:1px solid #243952;
 border-radius:20px;
 padding:25px;
 }
-
 .box h2{margin-top:0}
-
 .box input,.box textarea,.box select{
 width:100%;
 margin:7px 0;
 }
-
 .box button{
 width:100%;
 padding:13px;
@@ -205,36 +167,17 @@ background:#2563eb;
 color:white;
 font-weight:bold;
 }
-
-.close{
-background:#18283d!important;
-}
-
+.close{background:#18283d!important}
 footer{
 text-align:center;
 padding:30px;
 color:#53657c;
 }
-
 @media(max-width:600px){
-
 header{padding:0 10px}
-
 .brand{font-size:18px}
-
 .hero{padding:25px}
-
 .hero h1{font-size:30px}
-
-header select{
-max-width:100px;
-}
-
-.login{
-padding:9px;
-font-size:12px;
-}
-
 }
 </style>
 </head>
@@ -242,11 +185,8 @@ font-size:12px;
 <body>
 
 <header>
-
 <div class="logo">S</div>
-
 <button class="brand" onclick="goHome()">SliqGames</button>
-
 <div class="spacer"></div>
 
 <select id="language" onchange="changeLanguage()">
@@ -269,145 +209,89 @@ Anmelden / Registrieren
 </button>
 
 <button class="uploadBtn" onclick="openUpload()">+</button>
-
 </header>
 
 <main>
 
 <section class="hero">
-
 <h1 id="welcome">Willkommen bei SliqGames 🎮</h1>
-
-<p id="subtitle">
-Spiele kostenlose Spiele direkt im Browser.
-</p>
+<p id="subtitle">Spiele kostenlose Spiele direkt im Browser.</p>
 
 <input
 class="search"
 id="search"
 placeholder="Spiele suchen..."
-oninput="searchGames()"
->
-
+oninput="searchGames()">
 </section>
 
-<!-- IMMER GANZ OBEN -->
-
+<!-- ZULETZT GESPIELT IMMER GANZ OBEN -->
 <section class="section">
-
-<h2 id="recentTitle">Zuletzt gespielt</h2>
-
+<h2 id="recentTitle">🕘 Zuletzt gespielt</h2>
 <div class="games" id="recentGames"></div>
-
 </section>
 
-
 <section class="section">
-
 <h2>🏹 Action</h2>
 
 <div class="games">
 
-<div class="game" onclick="playArcher()">
-
+<div class="game" onclick="playGame('Archer Hero')">
 <div class="gameicon">🏹</div>
-
 <h3>Archer Hero</h3>
-
-<p>Besiege Gegner, sammle Münzen und verbessere deinen Helden.</p>
-
+<p>Besiege Gegner, verdiene Gold und verbessere deinen Helden!</p>
 <span class="genre">Action</span>
-
 </div>
 
 </div>
-
 </section>
 
-
 <section class="section">
-
 <h2>🏎️ Racing</h2>
 
 <div class="games">
 
 <div class="game" onclick="playRacing()">
-
 <div class="gameicon">🏎️</div>
-
 <h3>Neon Racing</h3>
-
-<p>Rase über die Straße und weiche immer schnelleren Gegnern aus.</p>
-
+<p>Rase durch den Verkehr und stelle neue Rekorde auf!</p>
 <span class="genre">Racing</span>
-
 </div>
 
 </div>
-
 </section>
 
-
 <section class="section">
-
 <h2 id="communityTitle">🎮 Community-Spiele</h2>
-
 <div class="games" id="communityGames"></div>
-
 </section>
 
 </main>
 
-<footer>
-SliqGames © 2026
-</footer>
-
+<footer>SliqGames © 2026</footer>
 
 <div class="modal" id="loginModal">
-
 <div class="box">
-
-<h2>Anmelden / Registrieren</h2>
-
+<h2>Anmelden</h2>
 <input id="username" placeholder="Benutzername">
-
-<input
-id="password"
-type="password"
-placeholder="Passwort"
->
+<input id="password" type="password" placeholder="Passwort">
 
 <button onclick="login()">Anmelden</button>
-
 <button onclick="register()">Registrieren</button>
-
-<button class="close" onclick="closeLogin()">
-Schließen
-</button>
-
+<button class="close" onclick="closeLogin()">Schließen</button>
 </div>
-
 </div>
-
 
 <div class="modal" id="uploadModal">
-
 <div class="box">
 
 <h2>🎮 Spiel hinzufügen</h2>
 
 <form action="/upload" method="POST" enctype="multipart/form-data">
 
-<input
-name="name"
-placeholder="Spielname"
-required
->
+<input name="name" placeholder="Spielname" required>
 
 <select name="genre" required>
-
 <option value="">Genre auswählen</option>
-
 <option>Action</option>
 <option>Adventure</option>
 <option>Arcade</option>
@@ -418,49 +302,142 @@ required
 <option>Strategy</option>
 <option>Funny</option>
 <option>Other</option>
-
 </select>
 
-<textarea
-name="description"
-placeholder="Spielbeschreibung"
-required
-></textarea>
+<textarea name="description" placeholder="Spielbeschreibung" required></textarea>
 
 <label>Spiel-Datei</label>
-
-<input
-type="file"
-name="game"
-accept=".html,.htm,.zip"
-required
->
+<input type="file" name="game" accept=".html,.htm,.zip" required>
 
 <label>Thumbnail</label>
+<input type="file" name="thumbnail" accept="image/png,image/jpeg,image/webp" required>
 
-<input
-type="file"
-name="thumbnail"
-accept="image/png,image/jpeg,image/webp"
-required
->
-
-<button type="submit">
-Spiel veröffentlichen
-</button>
+<button type="submit">Spiel veröffentlichen</button>
 
 </form>
 
-<button class="close" onclick="closeUpload()">
-Schließen
-</button>
+<button class="close" onclick="closeUpload()">Schließen</button>
 
 </div>
-
 </div>
-
 
 <script>
+
+const translations={
+de:{
+welcome:"Willkommen bei SliqGames 🎮",
+subtitle:"Spiele kostenlose Spiele direkt im Browser.",
+search:"Spiele suchen...",
+recent:"🕘 Zuletzt gespielt",
+community:"🎮 Community-Spiele",
+noRecent:"Noch keine Spiele gespielt."
+},
+en:{
+welcome:"Welcome to SliqGames 🎮",
+subtitle:"Play free games directly in your browser.",
+search:"Search games...",
+recent:"🕘 Recently played",
+community:"🎮 Community Games",
+noRecent:"No games played yet."
+},
+fr:{
+welcome:"Bienvenue sur SliqGames 🎮",
+subtitle:"Jouez gratuitement dans votre navigateur.",
+search:"Rechercher des jeux...",
+recent:"🕘 Joués récemment",
+community:"🎮 Jeux de la communauté",
+noRecent:"Aucun jeu joué."
+},
+es:{
+welcome:"Bienvenido a SliqGames 🎮",
+subtitle:"Juega gratis directamente en tu navegador.",
+search:"Buscar juegos...",
+recent:"🕘 Jugados recientemente",
+community:"🎮 Juegos de la comunidad",
+noRecent:"Todavía no has jugado."
+},
+it:{
+welcome:"Benvenuto su SliqGames 🎮",
+subtitle:"Gioca gratuitamente nel browser.",
+search:"Cerca giochi...",
+recent:"🕘 Giocati di recente",
+community:"🎮 Giochi della community",
+noRecent:"Nessun gioco giocato."
+},
+nl:{
+welcome:"Welkom bij SliqGames 🎮",
+subtitle:"Speel gratis games in je browser.",
+search:"Games zoeken...",
+recent:"🕘 Recent gespeeld",
+community:"🎮 Community-games",
+noRecent:"Nog geen games gespeeld."
+},
+tr:{
+welcome:"SliqGames'e hoş geldin 🎮",
+subtitle:"Ücretsiz oyunları tarayıcıda oyna.",
+search:"Oyun ara...",
+recent:"🕘 Son oynananlar",
+community:"🎮 Topluluk oyunları",
+noRecent:"Henüz oyun oynanmadı."
+},
+pl:{
+welcome:"Witamy w SliqGames 🎮",
+subtitle:"Graj w darmowe gry w przeglądarce.",
+search:"Szukaj gier...",
+recent:"🕘 Ostatnio grane",
+community:"🎮 Gry społeczności",
+noRecent:"Nie zagrano jeszcze."
+},
+pt:{
+welcome:"Bem-vindo ao SliqGames 🎮",
+subtitle:"Jogue jogos grátis diretamente no navegador.",
+search:"Pesquisar jogos...",
+recent:"🕘 Jogados recentemente",
+community:"🎮 Jogos da comunidade",
+noRecent:"Nenhum jogo jogado."
+},
+ru:{
+welcome:"Добро пожаловать в SliqGames 🎮",
+subtitle:"Играйте бесплатно прямо в браузере.",
+search:"Поиск игр...",
+recent:"🕘 Недавно сыгранные",
+community:"🎮 Игры сообщества",
+noRecent:"Игр ещё нет."
+},
+uk:{
+welcome:"Ласкаво просимо до SliqGames 🎮",
+subtitle:"Грайте у безкоштовні ігри прямо у браузері.",
+search:"Пошук ігор...",
+recent:"🕘 Нещодавно зіграні",
+community:"🎮 Ігри спільноти",
+noRecent:"Ігор ще немає."
+},
+sv:{
+welcome:"Välkommen till SliqGames 🎮",
+subtitle:"Spela gratis spel direkt i webbläsaren.",
+search:"Sök spel...",
+recent:"🕘 Senast spelade",
+community:"🎮 Community-spel",
+noRecent:"Inga spel spelade."
+}
+};
+
+function changeLanguage(){
+
+const lang=document.getElementById("language").value;
+const t=translations[lang];
+
+localStorage.setItem("language",lang);
+document.documentElement.lang=lang;
+
+document.getElementById("welcome").textContent=t.welcome;
+document.getElementById("subtitle").textContent=t.subtitle;
+document.getElementById("search").placeholder=t.search;
+document.getElementById("recentTitle").textContent=t.recent;
+document.getElementById("communityTitle").textContent=t.community;
+
+loadRecent();
+}
 
 function goHome(){
 window.scrollTo({top:0,behavior:"smooth"});
@@ -482,125 +459,83 @@ function closeUpload(){
 document.getElementById("uploadModal").classList.remove("open");
 }
 
-
 function register(){
 
-const username=
-document.getElementById("username").value.trim();
-
-const password=
-document.getElementById("password").value;
+const username=document.getElementById("username").value.trim();
+const password=document.getElementById("password").value;
 
 if(!username||!password){
-
 alert("Bitte Benutzername und Passwort eingeben.");
-
 return;
-
 }
 
-localStorage.setItem(
-"sliq_user",
-JSON.stringify({
+localStorage.setItem("sliq_user",JSON.stringify({
 username:username,
 password:password
-})
-);
+}));
 
 alert("Account wurde gespeichert!");
-
 closeLogin();
-
 }
-
 
 function login(){
 
-const username=
-document.getElementById("username").value.trim();
+const username=document.getElementById("username").value.trim();
+const password=document.getElementById("password").value;
 
-const password=
-document.getElementById("password").value;
+const saved=JSON.parse(localStorage.getItem("sliq_user")||"null");
 
-const saved=JSON.parse(
-localStorage.getItem("sliq_user")||"null"
-);
-
-if(
-saved &&
-saved.username===username &&
-saved.password===password
-){
-
+if(saved&&saved.username===username&&saved.password===password){
 alert("Erfolgreich angemeldet!");
-
 closeLogin();
-
 }else{
-
 alert("Benutzername oder Passwort falsch.");
-
 }
-
 }
-
 
 function saveRecent(name){
 
-let recent=JSON.parse(
-localStorage.getItem("recentGames")||"[]"
-);
+let recent=JSON.parse(localStorage.getItem("recentGames")||"[]");
 
 recent=recent.filter(x=>x!==name);
-
 recent.unshift(name);
-
 recent=recent.slice(0,6);
 
-localStorage.setItem(
-"recentGames",
-JSON.stringify(recent)
-);
-
+localStorage.setItem("recentGames",JSON.stringify(recent));
 }
 
+function playGame(name){
 
-function playArcher(){
+saveRecent(name);
 
-saveRecent("Archer Hero");
-
+if(name==="Archer Hero"){
 window.location.href="/archer";
-
 }
 
+}
 
 function playRacing(){
 
 saveRecent("Neon Racing");
 
 window.location.href="/racing";
-
 }
-
 
 function loadRecent(){
 
-const recent=JSON.parse(
-localStorage.getItem("recentGames")||"[]"
-);
-
-const container=
-document.getElementById("recentGames");
+const recent=JSON.parse(localStorage.getItem("recentGames")||"[]");
+const container=document.getElementById("recentGames");
 
 container.innerHTML="";
 
 if(!recent.length){
 
+const lang=document.getElementById("language").value;
+
 container.innerHTML=
-"<p class='recentEmpty'>Noch keine Spiele gespielt.</p>";
+"<p class='empty'>"+translations[lang].noRecent+"</p>";
 
 return;
-
 }
 
 recent.forEach(name=>{
@@ -611,32 +546,24 @@ div.className="game";
 
 if(name==="Archer Hero"){
 
-div.onclick=playArcher;
+div.onclick=()=>playGame("Archer Hero");
 
 div.innerHTML=`
 <div class="gameicon">🏹</div>
 <h3>Archer Hero</h3>
-<p>Action</p>
+<p>Action • Upgrades</p>
 <span class="genre">Action</span>
 `;
 
 }else if(name==="Neon Racing"){
 
-div.onclick=playRacing;
+div.onclick=()=>playRacing();
 
 div.innerHTML=`
 <div class="gameicon">🏎️</div>
 <h3>Neon Racing</h3>
-<p>Racing</p>
+<p>Racing • Highscore</p>
 <span class="genre">Racing</span>
-`;
-
-}else{
-
-div.innerHTML=`
-<div class="gameicon">🎮</div>
-<h3>${name}</h3>
-<p>Community</p>
 `;
 
 }
@@ -644,9 +571,7 @@ div.innerHTML=`
 container.appendChild(div);
 
 });
-
 }
-
 
 function loadCommunityGames(){
 
@@ -654,8 +579,7 @@ fetch("/games.json")
 .then(r=>r.json())
 .then(games=>{
 
-const container=
-document.getElementById("communityGames");
+const container=document.getElementById("communityGames");
 
 container.innerHTML="";
 
@@ -666,31 +590,17 @@ const div=document.createElement("div");
 div.className="game";
 
 div.onclick=()=>{
-
-saveRecent(game.name);
-
 window.location.href=
-"/uploads/games/"+
-encodeURIComponent(game.game);
-
+"/uploads/games/"+encodeURIComponent(game.game);
 };
 
 div.innerHTML=`
-
 <div class="gameicon">
-
-<img
-src="/uploads/thumbnails/${encodeURIComponent(game.thumbnail)}"
->
-
+<img src="/uploads/thumbnails/${encodeURIComponent(game.thumbnail)}">
 </div>
-
 <h3>${game.name}</h3>
-
 <p>${game.description}</p>
-
 <span class="genre">${game.genre}</span>
-
 `;
 
 container.appendChild(div);
@@ -699,50 +609,32 @@ container.appendChild(div);
 
 })
 .catch(()=>{});
-
 }
-
 
 function searchGames(){
 
 const value=
 document.getElementById("search").value.toLowerCase();
 
-document
-.querySelectorAll(".game")
-.forEach(game=>{
+document.querySelectorAll(".game").forEach(game=>{
 
-const text=
-game.innerText.toLowerCase();
+const text=game.innerText.toLowerCase();
 
 game.style.display=
-text.includes(value) ? "" : "none";
+text.includes(value)?"":"none";
 
 });
 
 }
 
-
-function changeLanguage(){
-
-const lang=
-document.getElementById("language").value;
-
-localStorage.setItem("language",lang);
-
-}
-
-
 const savedLanguage=
 localStorage.getItem("language");
 
 if(savedLanguage){
-
-document.getElementById("language").value=
-savedLanguage;
-
+document.getElementById("language").value=savedLanguage;
 }
 
+changeLanguage();
 loadRecent();
 loadCommunityGames();
 
