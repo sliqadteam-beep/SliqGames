@@ -403,9 +403,15 @@ def game_file(filename):
         filename
     )
 
+
+@app.route('/racing')
+def racing():
+    return render_template('racing.html')
+
 if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
         port=int(os.environ.get("PORT", 5000))
     )
+
 

@@ -1094,6 +1094,16 @@ JSON.stringify(recent)
 }
 
 
+
+function playRacing(){
+let recent=JSON.parse(localStorage.getItem('recentGames')||'[]');
+recent=recent.filter(x=>x!=='Neon Racing');
+recent.unshift('Neon Racing');
+recent=recent.slice(0,6);
+localStorage.setItem('recentGames',JSON.stringify(recent));
+window.location.href='/racing';
+}
+
 function playGame(name){
 
 saveRecent(name);
@@ -1944,4 +1954,5 @@ loadCommunityGames();
 
 </body>
 </html>
+
 
