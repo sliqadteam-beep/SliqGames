@@ -245,26 +245,13 @@ oninput="searchGames()"
 <div class="games" id="recentGames"></div>
 </section>
 
-<section class="section">
-<h2 id="archerTitle">🏹 Archer Hero</h2>
-
-<div class="games">
-
-<div class="game" onclick="playGame('Archer Hero')">
-<div class="gameicon">🏹</div>
-<h3>Archer Hero</h3>
-<p id="archerDesc">Besiege deine Gegner!</p>
-<span class="genre">Action</span>
-</div>
-
-</div>
-</section>
 
 <section class="section">
-<h2 id="communityTitle">🎮 Community-Spiele</h2>
-<div class="games" id="communityGames"></div>
+<h2 id="recentTitle">Zuletzt gespielt</h2>
+<div class="games" id="recentGames"></div>
 </section>
 
+<div id="genreContainer"></div>
 </main>
 
 <footer>
@@ -274,14 +261,23 @@ SliqGames © 2026
 <div class="modal" id="loginModal">
 <div class="box">
 
-<h2 id="loginTitle">Anmelden</h2>
+<h2 id="loginTitle">Willkommen bei SliqGames 👋</h2>
 
-<input id="username" placeholder="Benutzername">
-<input id="password" type="password" placeholder="Passwort">
+<input id="username" placeholder="Benutzername" required>
+<input id="password" type="password" placeholder="Passwort" required>
 
 <button onclick="login()" id="loginAction">Anmelden</button>
-<button onclick="register()" id="registerAction">Registrieren</button>
-<button class="close" onclick="closeLogin()" id="closeLoginButton">Schließen</button>
+<button onclick="register()" id="registerAction">Konto erstellen</button>
+
+<div style="text-align:center;margin:15px 0;color:#718096">oder</div>
+
+<button onclick="googleLogin()" style="background:white;color:#222">
+🇬 Google anmelden
+</button>
+
+<button class="close" onclick="closeLogin()" id="closeLoginButton">
+Schließen
+</button>
 
 </div>
 </div>
@@ -294,7 +290,7 @@ SliqGames © 2026
 <form action="/upload" method="POST" enctype="multipart/form-data">
 
 <input
-name="name"
+name="name" required
 id="gameNameInput"
 placeholder="Spielname"
 required
@@ -728,37 +724,147 @@ container.appendChild(div);
 
 }
 
+
 function loadCommunityGames(){
 
 fetch("/games.json")
-.then(r=>r.json())
-.then(games=>{
+.then(r => r.json())
+.then(games => {
 
-const container=document.getElementById("communityGames");
-container.innerHTML="";
+    const container = document.getElementById("genreContainer");
+    container.innerHTML = "";
 
-games.forEach(game=>{
+    const allGames = [
+        {
+            name: "Archer Hero",
+            description: translations[
+                document.getElementById("language").value
+            ].archer,
+            genre: "Action",
+            thumbnail: null,
+            builtin: true
+        },
+        ...games
+    ];
 
-const div=document.createElement("div");
-div.className="game";
+    const genres = [
+        "Action",
+        "Adventure",
+        "Arcade",
+        "Casual",
+        "Horror",
+        "Racing",
+        "Sports",
+        "Strategy",
+        "Funny",
+        "Other"
+    ];
 
-div.onclick=()=>window.location.href="/uploads/games/"+encodeURIComponent(game.game);
+    genres.forEach(genre => {
 
-div.innerHTML=`
-<div class="gameicon">
-<img src="/uploads/thumbnails/${encodeURIComponent(game.thumbnail)}">
-</div>
-<h3>${game.name}</h3>
-<p>${game.description}</p>
-<span class="genre">${game.genre}</span>
-`;
+        const genreGames = allGames.filter(
+            game => game.genre === genre
+        );
 
-container.appendChild(div);
+        if (!genreGames.length) return;
 
-});
+        const section = document.createElement("section");
+        section.className = "section";
+
+        const title = document.createElement("h2");
+        title.textContent = genre;
+
+        const grid = document.createElement("div");
+        grid.className = "games";
+
+        genreGames.forEach(game => {
+
+            const card = document.createElement("div");
+            card.className = "game";
+
+            card.onclick = () => {
+
+                playGame(game.name);
+
+                if (game.builtin) {
+                    alert("Archer Hero wird bald verfügbar sein! 🏹");
+                    return;
+                }
+
+                window.location.href =
+                    "/uploads/games/" +
+                    encodeURIComponent(game.game);
+            };
+
+            let icon = "🎮";
+
+            if (game.name === "Archer Hero") {
+                icon = "🏹";
+            }
+
+            const image = game.thumbnail
+                ? `<img src="/uploads/thumbnails/${encodeURIComponent(game.thumbnail)}">`
+                : icon;
+
+            card.innerHTML = `
+                <div class="gameicon">
+                    ${image}
+                </div>
+
+                <h3>${escapeHtml(game.name)}</h3>
+
+                <p>${escapeHtml(game.description)}</p>
+            `;
+
+            grid.appendChild(card);
+        });
+
+        section.appendChild(title);
+        section.appendChild(grid);
+        container.appendChild(section);
+    });
 
 })
-.catch(()=>{});
+.catch(() => {
+
+    const container = document.getElementById("genreContainer");
+
+    container.innerHTML = `
+        <section class="section">
+            <h2>Action</h2>
+
+            <div class="games">
+
+                <div class="game" onclick="playGame('Archer Hero')">
+
+                    <div class="gameicon">
+                        🏹
+                    </div>
+
+                    <h3>Archer Hero</h3>
+
+                    <p>Besiege deine Gegner!</p>
+
+                </div>
+
+            </div>
+        </section>
+    `;
+});
+
+}
+
+function escapeHtml(text){
+
+    const div = document.createElement("div");
+    div.textContent = text || "";
+    return div.innerHTML;
+
+}
+
+function googleLogin(){
+
+    window.location.href = "/auth/google";
 
 }
 
