@@ -1,0 +1,763 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Archer Hero - SliqGames</title>
+
+<style>
+*{box-sizing:border-box}
+
+html,body{
+margin:0;
+width:100%;
+height:100%;
+overflow:hidden;
+font-family:Arial,sans-serif;
+background:#07111f;
+}
+
+#game{
+position:relative;
+width:100vw;
+height:100vh;
+overflow:hidden;
+background:linear-gradient(#7dd3fc 0%,#bae6fd 48%,#65a30d 48%,#365314 100%);
+}
+
+.mountains{
+position:absolute;
+bottom:35%;
+width:100%;
+height:30%;
+background:#4d7c0f;
+clip-path:polygon(0 100%,10% 55%,20% 75%,32% 35%,45% 72%,55% 25%,68% 70%,80% 40%,92% 72%,100% 30%,100% 100%);
+}
+
+.ground{
+position:absolute;
+bottom:0;
+width:100%;
+height:37%;
+background:linear-gradient(#65a30d,#365314);
+border-top:5px solid #84cc16;
+}
+
+.topbar{
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:68px;
+background:rgba(7,17,31,.88);
+backdrop-filter:blur(8px);
+display:flex;
+align-items:center;
+gap:10px;
+padding:0 15px;
+z-index:100;
+color:white;
+}
+
+.title{
+font-weight:900;
+font-size:20px;
+}
+
+.stat{
+background:#101f34;
+border:1px solid #29405c;
+padding:8px 10px;
+border-radius:9px;
+font-weight:bold;
+font-size:14px;
+}
+
+.spacer{flex:1}
+
+.back{
+background:#2563eb;
+color:white;
+border:0;
+padding:10px 14px;
+border-radius:9px;
+font-weight:bold;
+cursor:pointer;
+}
+
+#player{
+position:absolute;
+left:12%;
+bottom:18%;
+width:75px;
+height:100px;
+z-index:20;
+}
+
+.head{
+position:absolute;
+left:20px;
+top:0;
+width:42px;
+height:42px;
+background:#f5cfa0;
+border:3px solid #422006;
+border-radius:50%;
+}
+
+.body{
+position:absolute;
+left:23px;
+top:40px;
+width:38px;
+height:58px;
+background:#2563eb;
+border-radius:10px;
+}
+
+.bow{
+position:absolute;
+left:57px;
+top:30px;
+width:20px;
+height:70px;
+border-left:5px solid #78350f;
+border-radius:50%;
+transform:rotate(-15deg);
+}
+
+.enemy{
+position:absolute;
+width:65px;
+height:90px;
+z-index:15;
+}
+
+.enemyHead{
+position:absolute;
+left:12px;
+top:0;
+width:40px;
+height:40px;
+background:#ef4444;
+border:3px solid #7f1d1d;
+border-radius:50%;
+}
+
+.enemyBody{
+position:absolute;
+left:8px;
+top:38px;
+width:50px;
+height:50px;
+background:#991b1b;
+border-radius:10px;
+}
+
+.hp{
+position:absolute;
+top:-10px;
+left:0;
+width:65px;
+height:7px;
+background:#111827;
+border-radius:5px;
+overflow:hidden;
+}
+
+.hpbar{
+height:100%;
+width:100%;
+background:#22c55e;
+}
+
+.arrow{
+position:absolute;
+height:4px;
+background:#111;
+border-radius:3px;
+z-index:50;
+transform-origin:left center;
+}
+
+.hit{
+position:absolute;
+font-size:24px;
+font-weight:900;
+color:#facc15;
+z-index:200;
+pointer-events:none;
+animation:hit .6s forwards;
+}
+
+@keyframes hit{
+from{opacity:1;transform:translateY(0) scale(1)}
+to{opacity:0;transform:translateY(-50px) scale(1.3)}
+}
+
+.overlay{
+position:absolute;
+inset:0;
+background:rgba(0,0,0,.65);
+backdrop-filter:blur(7px);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:300;
+}
+
+.panel{
+width:min(450px,90%);
+background:#0b1829;
+color:white;
+padding:30px;
+border-radius:22px;
+border:1px solid #29405c;
+text-align:center;
+}
+
+.panel h1{
+font-size:38px;
+margin:0 0 10px;
+}
+
+.panel p{
+color:#a9b8cb;
+line-height:1.5;
+}
+
+.start{
+width:100%;
+padding:15px;
+border:0;
+border-radius:11px;
+background:#2563eb;
+color:white;
+font-weight:900;
+font-size:16px;
+cursor:pointer;
+margin-top:10px;
+}
+
+.hidden{display:none}
+
+#message{
+position:absolute;
+top:100px;
+left:50%;
+transform:translateX(-50%);
+font-size:35px;
+font-weight:900;
+color:white;
+z-index:250;
+text-shadow:0 3px 10px #000;
+}
+
+@media(max-width:600px){
+
+.topbar{
+height:60px;
+padding:0 7px;
+}
+
+.title{
+font-size:14px;
+}
+
+.stat{
+font-size:10px;
+padding:6px;
+}
+
+.back{
+font-size:10px;
+padding:8px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div id="game">
+
+<div class="mountains"></div>
+<div class="ground"></div>
+
+<div class="topbar">
+
+<div class="title">🏹 Archer Hero</div>
+
+<div class="stat">❤️ <span id="health">100</span></div>
+<div class="stat">⭐ <span id="score">0</span></div>
+<div class="stat">🪙 <span id="coins">0</span></div>
+<div class="stat">🌊 <span id="wave">1</span></div>
+
+<div class="spacer"></div>
+
+<button class="back" onclick="backHome()">← SliqGames</button>
+
+</div>
+
+<div id="player">
+<div class="head"></div>
+<div class="body"></div>
+<div class="bow"></div>
+</div>
+
+<div id="message"></div>
+
+<div id="menu" class="overlay">
+
+<div class="panel">
+
+<h1>🏹 Archer Hero</h1>
+
+<p>
+Besiege deine Gegner mit deinem Bogen,
+sammle Punkte und überlebe möglichst viele Wellen.
+</p>
+
+<button class="start" onclick="startGame()">
+▶ SPIEL STARTEN
+</button>
+
+</div>
+
+</div>
+
+<div id="gameover" class="overlay hidden">
+
+<div class="panel">
+
+<h1 id="endTitle">💀 Game Over</h1>
+
+<p>
+⭐ Punkte: <b id="finalScore">0</b><br>
+🪙 Münzen: <b id="finalCoins">0</b><br>
+🌊 Welle: <b id="finalWave">1</b>
+</p>
+
+<button class="start" onclick="startGame()">
+🔄 NOCHMAL SPIELEN
+</button>
+
+<button class="start" onclick="backHome()">
+← SLIQGAMES
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let running=false;
+let health=100;
+let score=0;
+let coins=0;
+let wave=1;
+
+let enemies=[];
+let arrows=[];
+
+function startGame(){
+
+running=true;
+
+health=100;
+score=0;
+coins=0;
+wave=1;
+
+enemies.forEach(e=>e.el.remove());
+arrows.forEach(a=>a.el.remove());
+
+enemies=[];
+arrows=[];
+
+document.getElementById("menu").classList.add("hidden");
+document.getElementById("gameover").classList.add("hidden");
+
+document.getElementById("endTitle").textContent="💀 Game Over";
+
+updateUI();
+
+showWave();
+
+spawnWave();
+
+}
+
+function updateUI(){
+
+document.getElementById("health").textContent=health;
+document.getElementById("score").textContent=score;
+document.getElementById("coins").textContent=coins;
+document.getElementById("wave").textContent=wave;
+
+}
+
+function showWave(){
+
+const message=document.getElementById("message");
+
+message.textContent="WELLE "+wave;
+
+setTimeout(()=>{
+message.textContent="";
+},1200);
+
+}
+
+function spawnWave(){
+
+if(!running)return;
+
+const amount=Math.min(3+wave,12);
+
+for(let i=0;i<amount;i++){
+
+setTimeout(()=>{
+if(running)spawnEnemy();
+},i*500);
+
+}
+
+}
+
+function spawnEnemy(){
+
+const el=document.createElement("div");
+
+el.className="enemy";
+
+el.innerHTML=`
+<div class="hp"><div class="hpbar"></div></div>
+<div class="enemyHead"></div>
+<div class="enemyBody"></div>
+`;
+
+el.style.left=(60+Math.random()*30)+"%";
+el.style.top=(25+Math.random()*30)+"%";
+
+document.getElementById("game").appendChild(el);
+
+const hp=100+(wave-1)*25;
+
+enemies.push({
+el:el,
+hp:hp,
+maxHp:hp,
+speed:.008+wave*.001,
+lastAttack:Date.now()
+});
+
+}
+
+function shoot(x,y){
+
+if(!running)return;
+
+const player=document.getElementById("player");
+
+const rect=player.getBoundingClientRect();
+
+const startX=rect.left+rect.width/2;
+const startY=rect.top+rect.height/2;
+
+const dx=x-startX;
+const dy=y-startY;
+
+const distance=Math.sqrt(dx*dx+dy*dy);
+
+const arrow=document.createElement("div");
+
+arrow.className="arrow";
+
+arrow.style.left=startX+"px";
+arrow.style.top=startY+"px";
+arrow.style.width=distance+"px";
+arrow.style.transform=
+"rotate("+Math.atan2(dy,dx)*180/Math.PI+"deg)";
+
+document.getElementById("game").appendChild(arrow);
+
+arrows.push({
+el:arrow,
+x:startX,
+y:startY,
+dx:dx/distance*16,
+dy:dy/distance*16
+});
+
+}
+
+document.getElementById("game").addEventListener("click",e=>{
+
+if(!running)return;
+
+if(e.target.closest(".topbar"))return;
+
+shoot(e.clientX,e.clientY);
+
+});
+
+document.getElementById("game").addEventListener("touchend",e=>{
+
+if(!running)return;
+
+const t=e.changedTouches[0];
+
+shoot(t.clientX,t.clientY);
+
+});
+
+function update(){
+
+if(!running){
+requestAnimationFrame(update);
+return;
+}
+
+const player=document.getElementById("player");
+const playerRect=player.getBoundingClientRect();
+
+for(let i=enemies.length-1;i>=0;i--){
+
+const enemy=enemies[i];
+
+const rect=enemy.el.getBoundingClientRect();
+
+const dx=playerRect.left-rect.left;
+const dy=playerRect.top-rect.top;
+
+const distance=Math.sqrt(dx*dx+dy*dy);
+
+if(distance<120){
+
+if(Date.now()-enemy.lastAttack>1000){
+
+enemy.lastAttack=Date.now();
+
+health-=Math.min(15,5+wave);
+
+if(health<=0){
+
+health=0;
+updateUI();
+gameOver();
+return;
+
+}
+
+updateUI();
+
+}
+
+}else{
+
+const left=parseFloat(enemy.el.style.left);
+const top=parseFloat(enemy.el.style.top);
+
+enemy.el.style.left=
+(left+dx/(distance||1)*enemy.speed)+"%";
+
+enemy.el.style.top=
+(top+dy/(distance||1)*enemy.speed)+"%";
+
+}
+
+}
+
+for(let i=arrows.length-1;i>=0;i--){
+
+const arrow=arrows[i];
+
+arrow.x+=arrow.dx;
+arrow.y+=arrow.dy;
+
+arrow.el.style.left=arrow.x+"px";
+arrow.el.style.top=arrow.y+"px";
+
+let hit=false;
+
+for(let j=enemies.length-1;j>=0;j--){
+
+const enemy=enemies[j];
+const rect=enemy.el.getBoundingClientRect();
+
+const centerX=rect.left+rect.width/2;
+const centerY=rect.top+rect.height/2;
+
+const distance=
+Math.sqrt(
+(arrow.x-centerX)**2+
+(arrow.y-centerY)**2
+);
+
+if(distance<45){
+
+const head=
+enemy.el.querySelector(".enemyHead").getBoundingClientRect();
+
+const headDistance=
+Math.sqrt(
+(arrow.x-(head.left+20))**2+
+(arrow.y-(head.top+20))**2
+);
+
+const damage=headDistance<25?60:30;
+
+enemy.hp-=damage;
+
+enemy.el.querySelector(".hpbar").style.width=
+Math.max(0,enemy.hp/enemy.maxHp*100)+"%";
+
+showHit(
+damage===60?"HEADSHOT!":"-"+damage,
+arrow.x,
+arrow.y
+);
+
+arrow.el.remove();
+
+arrows.splice(i,1);
+
+hit=true;
+
+if(enemy.hp<=0){
+
+score+=10*wave;
+coins+=1;
+
+enemy.el.remove();
+
+enemies.splice(j,1);
+
+updateUI();
+
+if(enemies.length===0){
+
+wave++;
+
+if(wave>20){
+
+winGame();
+return;
+
+}
+
+setTimeout(()=>{
+
+if(running){
+showWave();
+spawnWave();
+}
+
+},1200);
+
+}
+
+}
+
+break;
+
+}
+
+}
+
+if(hit)continue;
+
+if(
+arrow.x<-100 ||
+arrow.x>innerWidth+100 ||
+arrow.y<-100 ||
+arrow.y>innerHeight+100
+){
+
+arrow.el.remove();
+arrows.splice(i,1);
+
+}
+
+}
+
+requestAnimationFrame(update);
+
+}
+
+function showHit(text,x,y){
+
+const hit=document.createElement("div");
+
+hit.className="hit";
+hit.textContent=text;
+hit.style.left=x+"px";
+hit.style.top=y+"px";
+
+document.getElementById("game").appendChild(hit);
+
+setTimeout(()=>hit.remove(),600);
+
+}
+
+function gameOver(){
+
+running=false;
+
+document.getElementById("finalScore").textContent=score;
+document.getElementById("finalCoins").textContent=coins;
+document.getElementById("finalWave").textContent=wave;
+
+saveHighscore();
+
+document.getElementById("gameover").classList.remove("hidden");
+
+}
+
+function winGame(){
+
+running=false;
+
+document.getElementById("endTitle").textContent="🏆 GEWONNEN!";
+
+document.getElementById("finalScore").textContent=score;
+document.getElementById("finalCoins").textContent=coins;
+document.getElementById("finalWave").textContent=wave;
+
+saveHighscore();
+
+document.getElementById("gameover").classList.remove("hidden");
+
+}
+
+function saveHighscore(){
+
+const old=parseInt(
+localStorage.getItem("archerHighscore")||"0"
+);
+
+if(score>old){
+
+localStorage.setItem("archerHighscore",score);
+
+}
+
+}
+
+function backHome(){
+
+window.location.href="/";
+
+}
+
+update();
+
+</script>
+
+</body>
+</html>
