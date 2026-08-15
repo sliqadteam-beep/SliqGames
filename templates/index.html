@@ -9,294 +9,319 @@
 *{box-sizing:border-box}
 
 body{
-    margin:0;
-    font-family:Arial,Segoe UI,sans-serif;
-    background:#07111f;
-    color:white;
+margin:0;
+font-family:Arial,Segoe UI,sans-serif;
+background:#07111f;
+color:white;
 }
 
 header{
-    height:72px;
-    background:#0b1829;
-    border-bottom:1px solid #1c3048;
-    display:flex;
-    align-items:center;
-    padding:0 25px;
-    gap:14px;
-    position:sticky;
-    top:0;
-    z-index:10;
+height:72px;
+background:#0b1829;
+border-bottom:1px solid #1c3048;
+display:flex;
+align-items:center;
+padding:0 25px;
+gap:14px;
+position:sticky;
+top:0;
+z-index:10;
 }
 
 .logo{
-    width:44px;
-    height:44px;
-    border-radius:12px;
-    background:linear-gradient(135deg,#2563eb,#60a5fa);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:900;
-    font-size:20px;
+width:44px;
+height:44px;
+border-radius:12px;
+background:linear-gradient(135deg,#2563eb,#60a5fa);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+font-size:20px;
 }
 
 .brand{
-    background:none;
-    border:0;
-    color:white;
-    font-size:21px;
-    font-weight:900;
-    cursor:pointer;
+background:none;
+border:0;
+color:white;
+font-size:21px;
+font-weight:900;
+cursor:pointer;
 }
 
-.spacer{
-    flex:1;
-}
+.spacer{flex:1}
 
 select,input,textarea{
-    background:#101f34;
-    border:1px solid #243952;
-    color:white;
-    border-radius:10px;
-    padding:11px;
+background:#101f34;
+border:1px solid #243952;
+color:white;
+border-radius:10px;
+padding:11px;
 }
 
 button{
-    cursor:pointer;
+cursor:pointer;
 }
 
 .login,.uploadBtn{
-    background:#2563eb;
-    border:0;
-    color:white;
-    font-weight:700;
-    padding:11px 16px;
-    border-radius:10px;
-}
-
-.uploadBtn{
-    font-size:22px;
-    width:44px;
-    height:44px;
-    padding:0;
+background:#2563eb;
+border:0;
+color:white;
+font-weight:700;
+padding:11px 16px;
+border-radius:10px;
 }
 
 main{
-    max-width:1250px;
-    margin:auto;
-    padding:30px 20px 60px;
+max-width:1250px;
+margin:auto;
+padding:30px 20px 60px;
 }
 
 .hero{
-    padding:35px;
-    border-radius:25px;
-    background:linear-gradient(135deg,#102b52,#0b1829);
-    border:1px solid #203a59;
-    margin-bottom:30px;
+padding:35px;
+border-radius:25px;
+background:linear-gradient(135deg,#102b52,#0b1829);
+border:1px solid #203a59;
+margin-bottom:30px;
 }
 
 .hero h1{
-    font-size:42px;
-    margin:0 0 10px;
+font-size:42px;
+margin:0 0 10px;
 }
 
 .hero p{
-    color:#9fb0c7;
+color:#9fb0c7;
 }
 
 .search{
-    width:100%;
-    margin-top:15px;
-    font-size:15px;
+width:100%;
+margin-top:15px;
+font-size:15px;
 }
 
 .section{
-    margin-top:35px;
+margin-top:35px;
 }
 
 .section h2{
-    font-size:22px;
-    margin-bottom:15px;
+font-size:22px;
 }
 
 .games{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
-    gap:17px;
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+gap:17px;
 }
 
 .game{
-    background:#0d1b2d;
-    border:1px solid #1d3047;
-    border-radius:18px;
-    padding:15px;
-    transition:.2s;
-    cursor:pointer;
+background:#0d1b2d;
+border:1px solid #1d3047;
+border-radius:18px;
+padding:15px;
+transition:.2s;
+cursor:pointer;
 }
 
 .game:hover{
-    transform:translateY(-4px);
-    border-color:#3b82f6;
-    box-shadow:0 15px 35px rgba(0,0,0,.25);
+transform:translateY(-4px);
+border-color:#3b82f6;
 }
 
 .gameicon{
-    height:145px;
-    border-radius:13px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:55px;
-    background:#172c48;
-    margin-bottom:13px;
-    overflow:hidden;
+height:145px;
+border-radius:13px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:55px;
+background:#172c48;
+margin-bottom:13px;
+overflow:hidden;
 }
 
 .gameicon img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
+width:100%;
+height:100%;
+object-fit:cover;
 }
 
 .game h3{
-    margin:0 0 6px;
+margin:0 0 6px;
 }
 
 .game p{
-    margin:0;
-    font-size:13px;
-    color:#8ea0b8;
+margin:0;
+font-size:13px;
+color:#8ea0b8;
 }
 
 .genre{
-    display:inline-block;
-    margin-top:10px;
-    font-size:11px;
-    background:#172c48;
-    padding:5px 8px;
-    border-radius:7px;
-    color:#93c5fd;
-}
-
-.empty{
-    color:#718096;
-    padding:10px 0;
+display:inline-block;
+margin-top:10px;
+font-size:11px;
+background:#172c48;
+padding:5px 8px;
+border-radius:7px;
+color:#93c5fd;
 }
 
 .modal{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.7);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    z-index:100;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.75);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:100;
 }
 
 .modal.open{
-    display:flex;
+display:flex;
 }
 
 .box{
-    width:min(500px,92%);
-    max-height:90vh;
-    overflow:auto;
-    background:#0d192b;
-    border:1px solid #243952;
-    border-radius:20px;
-    padding:25px;
+width:min(500px,92%);
+max-height:90vh;
+overflow:auto;
+background:#0d192b;
+border:1px solid #243952;
+border-radius:20px;
+padding:25px;
 }
 
 .box h2{
-    margin-top:0;
+margin-top:0;
 }
 
 .box input,
 .box textarea,
 .box select{
-    width:100%;
-    margin:7px 0;
-}
-
-.box textarea{
-    min-height:100px;
-    resize:vertical;
+width:100%;
+margin:7px 0;
 }
 
 .box button{
-    width:100%;
-    padding:13px;
-    margin-top:8px;
-    border:0;
-    border-radius:10px;
-    background:#2563eb;
-    color:white;
-    font-weight:bold;
+width:100%;
+padding:13px;
+margin-top:8px;
+border:0;
+border-radius:10px;
+background:#2563eb;
+color:white;
+font-weight:bold;
 }
 
 .close{
-    background:#18283d!important;
+background:#18283d!important;
 }
 
-.fileLabel{
-    display:block;
-    margin-top:12px;
-    margin-bottom:4px;
-    color:#9fb0c7;
-    font-size:14px;
+#gameModal{
+z-index:200;
 }
 
-.fileInput{
-    padding:10px!important;
+.archerGame{
+width:min(950px,96vw);
+background:#091522;
+border:1px solid #29435e;
+border-radius:20px;
+padding:15px;
+}
+
+.archerHeader{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-bottom:10px;
+gap:10px;
+}
+
+.archerStats{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.stat{
+background:#12243a;
+padding:8px 12px;
+border-radius:9px;
+font-weight:bold;
+}
+
+#archerCanvas{
+width:100%;
+height:auto;
+display:block;
+background:#172c48;
+border-radius:14px;
+border:1px solid #29435e;
+cursor:crosshair;
+touch-action:none;
+}
+
+.gameButtons{
+display:flex;
+gap:10px;
+margin-top:10px;
+}
+
+.gameButtons button{
+flex:1;
+padding:12px;
+border:0;
+border-radius:10px;
+color:white;
+font-weight:bold;
+background:#2563eb;
+}
+
+.gameButtons .secondary{
+background:#18283d;
 }
 
 footer{
-    text-align:center;
-    padding:30px;
-    color:#53657c;
+text-align:center;
+padding:30px;
+color:#53657c;
 }
 
 @media(max-width:700px){
 
-    header{
-        padding:0 10px;
-        gap:7px;
-    }
+header{
+padding:0 10px;
+}
 
-    .brand{
-        font-size:18px;
-    }
+.brand{
+font-size:18px;
+}
 
-    header select{
-        max-width:115px;
-    }
+header select{
+max-width:100px;
+}
 
-    .login{
-        font-size:0;
-        padding:11px;
-    }
+.login{
+padding:10px;
+font-size:12px;
+}
 
-    .login::after{
-        content:"👤";
-        font-size:18px;
-    }
+.uploadBtn{
+padding:10px 14px;
+}
 
-    .hero{
-        padding:25px;
-    }
+.hero{
+padding:25px;
+}
 
-    .hero h1{
-        font-size:30px;
-    }
+.hero h1{
+font-size:30px;
+}
 
-    .games{
-        grid-template-columns:repeat(2,1fr);
-    }
+.archerGame{
+padding:10px;
+}
 
-    .gameicon{
-        height:110px;
-        font-size:42px;
-    }
 }
 </style>
 </head>
@@ -307,9 +332,7 @@ footer{
 
 <div class="logo">S</div>
 
-<button class="brand" onclick="goHome()">
-SliqGames
-</button>
+<button class="brand" onclick="goHome()">SliqGames</button>
 
 <div class="spacer"></div>
 
@@ -342,9 +365,7 @@ Anmelden / Registrieren
 
 <section class="hero">
 
-<h1 id="welcome">
-Willkommen bei SliqGames 🎮
-</h1>
+<h1 id="welcome">Willkommen bei SliqGames 🎮</h1>
 
 <p id="subtitle">
 Spiele kostenlose Spiele direkt im Browser.
@@ -359,9 +380,6 @@ oninput="searchGames()"
 
 </section>
 
-
-<!-- ZULETZT GESPIELT - NUR EINMAL -->
-
 <section class="section">
 
 <h2 id="recentTitle">
@@ -372,21 +390,18 @@ Zuletzt gespielt
 
 </section>
 
-
-<!-- ARCHER HERO -->
-
 <section class="section">
 
-<h2 id="actionTitle">
-⚔️ Action
+<h2 id="archerTitle">
+🏹 Archer Hero
 </h2>
 
 <div class="games">
 
 <div
 class="game"
-onclick="playGame('Archer Hero')"
-data-game="Archer Hero"
+id="archerCard"
+onclick="startArcherHero()"
 >
 
 <div class="gameicon">
@@ -411,9 +426,6 @@ Action
 
 </section>
 
-
-<!-- COMMUNITY SPIELE -->
-
 <section class="section">
 
 <h2 id="communityTitle">
@@ -425,7 +437,6 @@ Action
 </section>
 
 </main>
-
 
 <footer>
 SliqGames © 2026
@@ -445,12 +456,14 @@ Anmelden
 <input
 id="username"
 placeholder="Benutzername"
+autocomplete="username"
 >
 
 <input
 id="password"
 type="password"
 placeholder="Passwort"
+autocomplete="current-password"
 >
 
 <button
@@ -480,7 +493,7 @@ Schließen
 </div>
 
 
-<!-- SPIEL HOCHLADEN -->
+<!-- UPLOAD -->
 
 <div class="modal" id="uploadModal">
 
@@ -509,20 +522,20 @@ id="genre"
 required
 >
 
-<option value="" id="genrePlaceholder">
+<option value="">
 Genre auswählen
 </option>
 
-<option value="Action">Action</option>
-<option value="Adventure">Adventure</option>
-<option value="Arcade">Arcade</option>
-<option value="Casual">Casual</option>
-<option value="Horror">Horror</option>
-<option value="Racing">Racing</option>
-<option value="Sports">Sports</option>
-<option value="Strategy">Strategy</option>
-<option value="Funny">Funny</option>
-<option value="Other">Other</option>
+<option>Action</option>
+<option>Adventure</option>
+<option>Arcade</option>
+<option>Casual</option>
+<option>Horror</option>
+<option>Racing</option>
+<option>Sports</option>
+<option>Strategy</option>
+<option>Funny</option>
+<option>Other</option>
 
 </select>
 
@@ -533,30 +546,18 @@ placeholder="Spielbeschreibung"
 required
 ></textarea>
 
-<label
-class="fileLabel"
-id="gameFileLabel"
->
-Spiel-Datei
-</label>
+<label>Spiel-Datei</label>
 
 <input
-class="fileInput"
 type="file"
 name="game"
 accept=".html,.htm,.zip"
 required
 >
 
-<label
-class="fileLabel"
-id="thumbnailLabel"
->
-Thumbnail
-</label>
+<label>Thumbnail</label>
 
 <input
-class="fileInput"
 type="file"
 name="thumbnail"
 accept="image/png,image/jpeg,image/webp"
@@ -575,10 +576,65 @@ Spiel veröffentlichen
 <button
 class="close"
 onclick="closeUpload()"
-id="closeUploadButton"
 >
 Schließen
 </button>
+
+</div>
+
+</div>
+
+
+<!-- ARCHER HERO -->
+
+<div class="modal" id="gameModal">
+
+<div class="archerGame">
+
+<div class="archerHeader">
+
+<h2>
+🏹 Archer Hero
+</h2>
+
+<div class="archerStats">
+
+<div class="stat">
+❤️ <span id="hpText">3</span>
+</div>
+
+<div class="stat">
+🏆 <span id="scoreText">0</span>
+</div>
+
+<div class="stat">
+🌊 <span id="waveText">1</span>
+</div>
+
+</div>
+
+</div>
+
+<canvas
+id="archerCanvas"
+width="900"
+height="500"
+></canvas>
+
+<div class="gameButtons">
+
+<button onclick="restartArcher()">
+🔄 Neustart
+</button>
+
+<button
+class="secondary"
+onclick="closeArcher()"
+>
+← Zurück
+</button>
+
+</div>
 
 </div>
 
@@ -602,15 +658,14 @@ close:"Schließen",
 upload:"🎮 Spiel hinzufügen",
 publish:"Spiel veröffentlichen",
 community:"🎮 Community-Spiele",
-action:"⚔️ Action",
 archer:"Besiege deine Gegner!",
-genre:"Genre auswählen",
 gameName:"Spielname",
 description:"Spielbeschreibung",
-gameFile:"Spiel-Datei",
-thumbnail:"Thumbnail",
 noRecent:"Noch keine Spiele gespielt.",
-play:"▶ Spielen"
+wrong:"Benutzername oder Passwort falsch.",
+empty:"Bitte Benutzername und Passwort eingeben.",
+registered:"Account wurde gespeichert!",
+success:"Erfolgreich angemeldet!"
 },
 
 en:{
@@ -626,20 +681,19 @@ close:"Close",
 upload:"🎮 Add Game",
 publish:"Publish Game",
 community:"🎮 Community Games",
-action:"⚔️ Action",
 archer:"Defeat your enemies!",
-genre:"Select genre",
 gameName:"Game name",
 description:"Game description",
-gameFile:"Game file",
-thumbnail:"Thumbnail",
 noRecent:"No games played yet.",
-play:"▶ Play"
+wrong:"Wrong username or password.",
+empty:"Please enter username and password.",
+registered:"Account saved!",
+success:"Successfully logged in!"
 },
 
 fr:{
 welcome:"Bienvenue sur SliqGames 🎮",
-subtitle:"Jouez gratuitement directement dans votre navigateur.",
+subtitle:"Jouez gratuitement dans votre navigateur.",
 search:"Rechercher des jeux...",
 recent:"Joués récemment",
 login:"Connexion / Inscription",
@@ -650,15 +704,14 @@ close:"Fermer",
 upload:"🎮 Ajouter un jeu",
 publish:"Publier le jeu",
 community:"🎮 Jeux de la communauté",
-action:"⚔️ Action",
 archer:"Battez vos ennemis !",
-genre:"Choisir un genre",
 gameName:"Nom du jeu",
 description:"Description du jeu",
-gameFile:"Fichier du jeu",
-thumbnail:"Miniature",
 noRecent:"Aucun jeu joué.",
-play:"▶ Jouer"
+wrong:"Nom d'utilisateur ou mot de passe incorrect.",
+empty:"Veuillez remplir tous les champs.",
+registered:"Compte enregistré !",
+success:"Connexion réussie !"
 },
 
 es:{
@@ -674,20 +727,19 @@ close:"Cerrar",
 upload:"🎮 Añadir juego",
 publish:"Publicar juego",
 community:"🎮 Juegos de la comunidad",
-action:"⚔️ Acción",
 archer:"¡Derrota a tus enemigos!",
-genre:"Seleccionar género",
 gameName:"Nombre del juego",
 description:"Descripción del juego",
-gameFile:"Archivo del juego",
-thumbnail:"Miniatura",
 noRecent:"Todavía no has jugado.",
-play:"▶ Jugar"
+wrong:"Usuario o contraseña incorrectos.",
+empty:"Completa todos los campos.",
+registered:"¡Cuenta guardada!",
+success:"¡Inicio de sesión correcto!"
 },
 
 it:{
 welcome:"Benvenuto su SliqGames 🎮",
-subtitle:"Gioca gratuitamente direttamente nel browser.",
+subtitle:"Gioca gratuitamente nel browser.",
 search:"Cerca giochi...",
 recent:"Giocati di recente",
 login:"Accedi / Registrati",
@@ -698,20 +750,19 @@ close:"Chiudi",
 upload:"🎮 Aggiungi gioco",
 publish:"Pubblica gioco",
 community:"🎮 Giochi della community",
-action:"⚔️ Azione",
 archer:"Sconfiggi i tuoi nemici!",
-genre:"Scegli genere",
 gameName:"Nome del gioco",
 description:"Descrizione del gioco",
-gameFile:"File del gioco",
-thumbnail:"Miniatura",
 noRecent:"Nessun gioco giocato.",
-play:"▶ Gioca"
+wrong:"Nome utente o password errati.",
+empty:"Compila tutti i campi.",
+registered:"Account salvato!",
+success:"Accesso riuscito!"
 },
 
 nl:{
 welcome:"Welkom bij SliqGames 🎮",
-subtitle:"Speel gratis games direct in je browser.",
+subtitle:"Speel gratis games in je browser.",
 search:"Games zoeken...",
 recent:"Recent gespeeld",
 login:"Inloggen / Registreren",
@@ -722,20 +773,19 @@ close:"Sluiten",
 upload:"🎮 Game toevoegen",
 publish:"Game publiceren",
 community:"🎮 Community-games",
-action:"⚔️ Actie",
 archer:"Versla je vijanden!",
-genre:"Genre kiezen",
 gameName:"Naam van het spel",
 description:"Beschrijving van het spel",
-gameFile:"Gamebestand",
-thumbnail:"Miniatuur",
 noRecent:"Nog geen games gespeeld.",
-play:"▶ Spelen"
+wrong:"Gebruikersnaam of wachtwoord fout.",
+empty:"Vul alle velden in.",
+registered:"Account opgeslagen!",
+success:"Succesvol ingelogd!"
 },
 
 tr:{
 welcome:"SliqGames'e hoş geldin 🎮",
-subtitle:"Ücretsiz oyunları doğrudan tarayıcında oyna.",
+subtitle:"Ücretsiz oyunları tarayıcıda oyna.",
 search:"Oyun ara...",
 recent:"Son oynananlar",
 login:"Giriş / Kayıt",
@@ -746,20 +796,19 @@ close:"Kapat",
 upload:"🎮 Oyun ekle",
 publish:"Oyunu yayınla",
 community:"🎮 Topluluk oyunları",
-action:"⚔️ Aksiyon",
 archer:"Düşmanlarını yen!",
-genre:"Tür seç",
 gameName:"Oyun adı",
 description:"Oyun açıklaması",
-gameFile:"Oyun dosyası",
-thumbnail:"Küçük resim",
 noRecent:"Henüz oyun oynanmadı.",
-play:"▶ Oyna"
+wrong:"Kullanıcı adı veya şifre yanlış.",
+empty:"Tüm alanları doldurun.",
+registered:"Hesap kaydedildi!",
+success:"Başarıyla giriş yapıldı!"
 },
 
 pl:{
 welcome:"Witamy w SliqGames 🎮",
-subtitle:"Graj w darmowe gry bezpośrednio w przeglądarce.",
+subtitle:"Graj w darmowe gry w przeglądarce.",
 search:"Szukaj gier...",
 recent:"Ostatnio grane",
 login:"Zaloguj / Zarejestruj",
@@ -770,15 +819,14 @@ close:"Zamknij",
 upload:"🎮 Dodaj grę",
 publish:"Opublikuj grę",
 community:"🎮 Gry społeczności",
-action:"⚔️ Akcja",
-archer:"Pokonaj swoich przeciwników!",
-genre:"Wybierz gatunek",
+archer:"Pokonaj przeciwników!",
 gameName:"Nazwa gry",
 description:"Opis gry",
-gameFile:"Plik gry",
-thumbnail:"Miniatura",
 noRecent:"Nie zagrano jeszcze.",
-play:"▶ Graj"
+wrong:"Nieprawidłowa nazwa użytkownika lub hasło.",
+empty:"Wypełnij wszystkie pola.",
+registered:"Konto zapisane!",
+success:"Zalogowano pomyślnie!"
 },
 
 pt:{
@@ -794,15 +842,14 @@ close:"Fechar",
 upload:"🎮 Adicionar jogo",
 publish:"Publicar jogo",
 community:"🎮 Jogos da comunidade",
-action:"⚔️ Ação",
 archer:"Derrote os seus inimigos!",
-genre:"Escolher género",
 gameName:"Nome do jogo",
 description:"Descrição do jogo",
-gameFile:"Ficheiro do jogo",
-thumbnail:"Miniatura",
 noRecent:"Nenhum jogo jogado.",
-play:"▶ Jogar"
+wrong:"Nome de utilizador ou palavra-passe incorretos.",
+empty:"Preencha todos os campos.",
+registered:"Conta guardada!",
+success:"Login efetuado!"
 },
 
 ru:{
@@ -818,15 +865,14 @@ close:"Закрыть",
 upload:"🎮 Добавить игру",
 publish:"Опубликовать игру",
 community:"🎮 Игры сообщества",
-action:"⚔️ Экшен",
 archer:"Победите своих врагов!",
-genre:"Выберите жанр",
 gameName:"Название игры",
 description:"Описание игры",
-gameFile:"Файл игры",
-thumbnail:"Миниатюра",
 noRecent:"Игр ещё нет.",
-play:"▶ Играть"
+wrong:"Неверное имя пользователя или пароль.",
+empty:"Заполните все поля.",
+registered:"Аккаунт сохранён!",
+success:"Успешный вход!"
 },
 
 uk:{
@@ -842,15 +888,14 @@ close:"Закрити",
 upload:"🎮 Додати гру",
 publish:"Опублікувати гру",
 community:"🎮 Ігри спільноти",
-action:"⚔️ Екшен",
 archer:"Переможіть своїх ворогів!",
-genre:"Виберіть жанр",
 gameName:"Назва гри",
 description:"Опис гри",
-gameFile:"Файл гри",
-thumbnail:"Мініатюра",
 noRecent:"Ігор ще немає.",
-play:"▶ Грати"
+wrong:"Неправильне ім'я користувача або пароль.",
+empty:"Заповніть усі поля.",
+registered:"Обліковий запис збережено!",
+success:"Успішний вхід!"
 },
 
 sv:{
@@ -866,30 +911,29 @@ close:"Stäng",
 upload:"🎮 Lägg till spel",
 publish:"Publicera spel",
 community:"🎮 Community-spel",
-action:"⚔️ Action",
 archer:"Besegra dina fiender!",
-genre:"Välj genre",
 gameName:"Spelnamn",
 description:"Spelbeskrivning",
-gameFile:"Spelfil",
-thumbnail:"Miniatyr",
 noRecent:"Inga spel spelade.",
-play:"▶ Spela"
+wrong:"Fel användarnamn eller lösenord.",
+empty:"Fyll i alla fält.",
+registered:"Kontot har sparats!",
+success:"Inloggningen lyckades!"
 }
 
 };
 
 
-function getLanguage(){
+function getLang(){
 
-return document.getElementById("language").value;
+return document.getElementById("language").value || "de";
 
 }
 
 
 function changeLanguage(){
 
-const lang=getLanguage();
+const lang=getLang();
 const t=translations[lang];
 
 localStorage.setItem("language",lang);
@@ -899,41 +943,27 @@ document.documentElement.lang=lang;
 document.getElementById("welcome").textContent=t.welcome;
 document.getElementById("subtitle").textContent=t.subtitle;
 document.getElementById("search").placeholder=t.search;
-
 document.getElementById("recentTitle").textContent=t.recent;
-
 document.getElementById("loginButton").textContent=t.login;
 document.getElementById("loginTitle").textContent=t.loginTitle;
 document.getElementById("loginAction").textContent=t.loginAction;
 document.getElementById("registerAction").textContent=t.register;
-
 document.getElementById("closeLoginButton").textContent=t.close;
-
 document.getElementById("uploadTitle").textContent=t.upload;
 document.getElementById("uploadButton").textContent=t.publish;
-document.getElementById("closeUploadButton").textContent=t.close;
-
 document.getElementById("communityTitle").textContent=t.community;
-document.getElementById("actionTitle").textContent=t.action;
-
 document.getElementById("archerDesc").textContent=t.archer;
-
 document.getElementById("gameNameInput").placeholder=t.gameName;
 document.getElementById("description").placeholder=t.description;
 
-document.getElementById("genrePlaceholder").textContent=t.genre;
-
-document.getElementById("gameFileLabel").textContent=t.gameFile;
-document.getElementById("thumbnailLabel").textContent=t.thumbnail;
-
 loadRecent();
-
-loadCommunityGames();
 
 }
 
 
 function goHome(){
+
+closeArcher();
 
 window.scrollTo({
 top:0,
@@ -945,55 +975,43 @@ behavior:"smooth"
 
 function openLogin(){
 
-document
-.getElementById("loginModal")
-.classList.add("open");
+document.getElementById("loginModal").classList.add("open");
 
 }
 
 
 function closeLogin(){
 
-document
-.getElementById("loginModal")
-.classList.remove("open");
+document.getElementById("loginModal").classList.remove("open");
 
 }
 
 
 function openUpload(){
 
-document
-.getElementById("uploadModal")
-.classList.add("open");
+document.getElementById("uploadModal").classList.add("open");
 
 }
 
 
 function closeUpload(){
 
-document
-.getElementById("uploadModal")
-.classList.remove("open");
+document.getElementById("uploadModal").classList.remove("open");
 
 }
 
 
 function register(){
 
-const username=
-document.getElementById("username")
-.value
-.trim();
+const username=document.getElementById("username").value.trim();
+const password=document.getElementById("password").value;
 
-const password=
-document.getElementById("password")
-.value;
+const lang=getLang();
+const t=translations[lang];
 
 if(!username || !password){
 
-alert("Bitte Benutzername und Passwort eingeben.");
-
+alert(t.empty);
 return;
 
 }
@@ -1006,7 +1024,7 @@ password:password
 })
 );
 
-alert("Account wurde gespeichert!");
+alert(t.registered);
 
 closeLogin();
 
@@ -1015,17 +1033,20 @@ closeLogin();
 
 function login(){
 
-const username=
-document.getElementById("username")
-.value
-.trim();
+const username=document.getElementById("username").value.trim();
+const password=document.getElementById("password").value;
 
-const password=
-document.getElementById("password")
-.value;
+const lang=getLang();
+const t=translations[lang];
 
-const saved=
-JSON.parse(
+if(!username || !password){
+
+alert(t.empty);
+return;
+
+}
+
+const saved=JSON.parse(
 localStorage.getItem("sliq_user") || "null"
 );
 
@@ -1035,73 +1056,77 @@ saved.username===username &&
 saved.password===password
 ){
 
-alert("Erfolgreich angemeldet!");
+localStorage.setItem(
+"sliq_logged_in",
+"true"
+);
+
+alert(t.success);
 
 closeLogin();
 
 }else{
 
-alert("Benutzername oder Passwort falsch.");
+alert(t.wrong);
 
 }
 
 }
 
 
-function playGame(name){
+function saveRecent(name){
 
-let recent =
-JSON.parse(
+let recent=JSON.parse(
 localStorage.getItem("recentGames") || "[]"
 );
 
-recent =
-recent.filter(
-x => x !== name
-);
+recent=recent.filter(x=>x!==name);
 
 recent.unshift(name);
 
-recent =
-recent.slice(0,6);
+recent=recent.slice(0,6);
 
 localStorage.setItem(
 "recentGames",
 JSON.stringify(recent)
 );
 
+}
+
+
+function playGame(name){
+
+saveRecent(name);
+
+if(name==="Archer Hero"){
+
+startArcherHero();
+
+}
+
 loadRecent();
-
-if(name === "Archer Hero"){
-    window.location.href = "/uploads/games/archer-hero.html";
-    return;
-}
-
-}
 
 }
 
 
 function loadRecent(){
 
-const recent=
-JSON.parse(
+const recent=JSON.parse(
 localStorage.getItem("recentGames") || "[]"
 );
 
-const container=
-document.getElementById("recentGames");
+const container=document.getElementById("recentGames");
 
 container.innerHTML="";
 
-const lang=getLanguage();
-
-const t=translations[lang];
+const t=translations[getLang()];
 
 if(!recent.length){
 
 container.innerHTML=
-`<p class="empty">${t.noRecent}</p>`;
+"<p style='color:#718096'>"+
+t.noRecent+
+"</p>";
 
 return;
 
@@ -1109,14 +1134,11 @@ return;
 
 recent.forEach(name=>{
 
-const div=
-document.createElement("div");
+const div=document.createElement("div");
 
 div.className="game";
 
-div.onclick=()=>{
-playGame(name);
-};
+div.onclick=()=>playGame(name);
 
 let icon="🎮";
 
@@ -1132,7 +1154,7 @@ ${icon}
 
 <h3>${escapeHtml(name)}</h3>
 
-<p>${t.play}</p>
+<p>▶ Play</p>
 
 `;
 
@@ -1143,48 +1165,47 @@ container.appendChild(div);
 }
 
 
-function loadCommunityGames(){
+function escapeHtml(text){
 
-fetch("/games.json")
+const div=document.createElement("div");
 
-.then(response=>{
+div.textContent=text;
 
-if(!response.ok){
-throw new Error("games.json not found");
+return div.innerHTML;
+
 }
 
-return response.json();
+
+function loadCommunityGames(){
+
+fetch("/games.json?"+Date.now())
+
+.then(r=>{
+
+if(!r.ok) throw new Error();
+
+return r.json();
 
 })
 
 .then(games=>{
 
-const container=
-document.getElementById("communityGames");
+const container=document.getElementById("communityGames");
 
 container.innerHTML="";
 
-if(!games.length){
-
-container.innerHTML=
-`<p class="empty">Noch keine Community-Spiele.</p>`;
-
-return;
-
-}
-
 games.forEach(game=>{
 
-const div=
-document.createElement("div");
+const div=document.createElement("div");
 
 div.className="game";
 
 div.onclick=()=>{
 
+saveRecent(game.name);
+
 window.location.href=
-"/uploads/games/"
-+
+"/uploads/games/"+
 encodeURIComponent(game.game);
 
 };
@@ -1200,13 +1221,9 @@ alt=""
 
 </div>
 
-<h3>
-${escapeHtml(game.name)}
-</h3>
+<h3>${escapeHtml(game.name)}</h3>
 
-<p>
-${escapeHtml(game.description)}
-</p>
+<p>${escapeHtml(game.description)}</p>
 
 <span class="genre">
 ${escapeHtml(game.genre)}
@@ -1220,14 +1237,7 @@ container.appendChild(div);
 
 })
 
-.catch(error=>{
-
-console.log(
-"Community-Spiele konnten nicht geladen werden:",
-error
-);
-
-});
+.catch(()=>{});
 
 }
 
@@ -1258,14 +1268,657 @@ text.includes(value)
 }
 
 
-function escapeHtml(value){
+/* =========================
+   ARCHER HERO
+========================= */
 
-return String(value)
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
+const canvas=
+document.getElementById("archerCanvas");
+
+const ctx=
+canvas.getContext("2d");
+
+let archer={
+running:false,
+score:0,
+hp:3,
+wave:1,
+player:{
+x:100,
+y:250,
+size:32
+},
+arrow:null,
+enemies:[],
+lastSpawn:0,
+spawnDelay:1300,
+keys:{}
+};
+
+
+function startArcherHero(){
+
+saveRecent("Archer Hero");
+
+document
+.getElementById("gameModal")
+.classList
+.add("open");
+
+restartArcher();
+
+}
+
+
+function closeArcher(){
+
+archer.running=false;
+
+document
+.getElementById("gameModal")
+.classList
+.remove("open");
+
+}
+
+
+function restartArcher(){
+
+archer.running=true;
+
+archer.score=0;
+archer.hp=3;
+archer.wave=1;
+archer.arrow=null;
+archer.enemies=[];
+archer.lastSpawn=performance.now();
+archer.spawnDelay=1300;
+
+updateArcherStats();
+
+requestAnimationFrame(archerLoop);
+
+}
+
+
+function updateArcherStats(){
+
+document.getElementById("hpText").textContent=
+archer.hp;
+
+document.getElementById("scoreText").textContent=
+archer.score;
+
+document.getElementById("waveText").textContent=
+archer.wave;
+
+}
+
+
+function spawnEnemy(){
+
+const y=
+40+
+Math.random()*
+(canvas.height-80);
+
+const size=
+28+
+Math.random()*18;
+
+archer.enemies.push({
+
+x:canvas.width+size,
+y:y,
+size:size,
+speed:1.5+
+archer.wave*.18+
+Math.random()*1.2
+
+});
+
+}
+
+
+function shootArrow(targetX,targetY){
+
+if(!archer.running){
+return;
+}
+
+if(archer.arrow){
+return;
+}
+
+const dx=
+targetX-archer.player.x;
+
+const dy=
+targetY-archer.player.y;
+
+const distance=
+Math.sqrt(dx*dx+dy*dy);
+
+archer.arrow={
+
+x:archer.player.x+25,
+y:archer.player.y,
+vx:(dx/distance)*10,
+vy:(dy/distance)*10
+
+};
+
+}
+
+
+canvas.addEventListener(
+"pointerdown",
+function(event){
+
+const rect=
+canvas.getBoundingClientRect();
+
+const scaleX=
+canvas.width/rect.width;
+
+const scaleY=
+canvas.height/rect.height;
+
+const x=
+(event.clientX-rect.left)*scaleX;
+
+const y=
+(event.clientY-rect.top)*scaleY;
+
+shootArrow(x,y);
+
+}
+);
+
+
+document.addEventListener(
+"keydown",
+function(event){
+
+archer.keys[event.key.toLowerCase()]=true;
+
+}
+);
+
+
+document.addEventListener(
+"keyup",
+function(event){
+
+archer.keys[event.key.toLowerCase()]=false;
+
+}
+);
+
+
+function updateArcher(){
+
+if(!archer.running){
+return;
+}
+
+const p=archer.player;
+
+if(
+archer.keys["w"] ||
+archer.keys["arrowup"]
+){
+
+p.y-=5;
+
+}
+
+if(
+archer.keys["s"] ||
+archer.keys["arrowdown"]
+){
+
+p.y+=5;
+
+}
+
+if(
+archer.keys["a"] ||
+archer.keys["arrowleft"]
+){
+
+p.x-=5;
+
+}
+
+if(
+archer.keys["d"] ||
+archer.keys["arrowright"]
+){
+
+p.x+=5;
+
+}
+
+p.x=
+Math.max(
+30,
+Math.min(canvas.width-30,p.x)
+);
+
+p.y=
+Math.max(
+30,
+Math.min(canvas.height-30,p.y)
+);
+
+
+if(
+performance.now()-archer.lastSpawn>
+archer.spawnDelay
+){
+
+spawnEnemy();
+
+archer.lastSpawn=
+performance.now();
+
+if(archer.spawnDelay>500){
+
+archer.spawnDelay-=15;
+
+}
+
+}
+
+
+if(archer.arrow){
+
+archer.arrow.x+=
+archer.arrow.vx;
+
+archer.arrow.y+=
+archer.arrow.vy;
+
+if(
+archer.arrow.x<0 ||
+archer.arrow.x>canvas.width ||
+archer.arrow.y<0 ||
+archer.arrow.y>canvas.height
+){
+
+archer.arrow=null;
+
+}
+
+}
+
+
+for(
+let i=archer.enemies.length-1;
+i>=0;
+i--
+){
+
+const enemy=
+archer.enemies[i];
+
+enemy.x-=enemy.speed;
+
+
+const dx=
+enemy.x-p.x;
+
+const dy=
+enemy.y-p.y;
+
+const dist=
+Math.sqrt(dx*dx+dy*dy);
+
+if(
+dist<
+enemy.size/2+p.size/2
+){
+
+archer.enemies.splice(i,1);
+
+archer.hp--;
+
+updateArcherStats();
+
+if(archer.hp<=0){
+
+gameOverArcher();
+
+return;
+
+}
+
+continue;
+
+}
+
+
+if(archer.arrow){
+
+const ax=
+enemy.x-archer.arrow.x;
+
+const ay=
+enemy.y-archer.arrow.y;
+
+const ad=
+Math.sqrt(ax*ax+ay*ay);
+
+if(ad<enemy.size){
+
+archer.enemies.splice(i,1);
+
+archer.arrow=null;
+
+archer.score++;
+
+archer.wave=
+1+
+Math.floor(archer.score/10);
+
+updateArcherStats();
+
+continue;
+
+}
+
+}
+
+
+if(enemy.x<-50){
+
+archer.enemies.splice(i,1);
+
+archer.hp--;
+
+updateArcherStats();
+
+if(archer.hp<=0){
+
+gameOverArcher();
+
+return;
+
+}
+
+}
+
+}
+
+}
+
+
+function drawArcher(){
+
+ctx.clearRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+
+/* background */
+
+const gradient=
+ctx.createLinearGradient(
+0,
+0,
+0,
+canvas.height
+);
+
+gradient.addColorStop(
+0,
+"#102b45"
+);
+
+gradient.addColorStop(
+1,
+"#07111f"
+);
+
+ctx.fillStyle=gradient;
+
+ctx.fillRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+
+/* ground */
+
+ctx.fillStyle="#12304a";
+
+ctx.fillRect(
+0,
+canvas.height-55,
+canvas.width,
+55
+);
+
+
+/* stars */
+
+ctx.fillStyle="rgba(255,255,255,.35)";
+
+for(let i=0;i<35;i++){
+
+const x=(i*97)%canvas.width;
+const y=(i*53)%(canvas.height-70);
+
+ctx.fillRect(x,y,2,2);
+
+}
+
+
+/* player */
+
+const p=archer.player;
+
+ctx.save();
+
+ctx.translate(
+p.x,
+p.y
+);
+
+ctx.fillStyle="#2563eb";
+
+ctx.beginPath();
+
+ctx.arc(
+0,
+0,
+p.size/2,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+ctx.fillStyle="#60a5fa";
+
+ctx.beginPath();
+
+ctx.arc(
+0,
+-22,
+13,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+ctx.strokeStyle="#d99a62";
+
+ctx.lineWidth=5;
+
+ctx.beginPath();
+
+ctx.arc(
+12,
+0,
+22,
+-Math.PI/2,
+Math.PI/2
+);
+
+ctx.stroke();
+
+ctx.restore();
+
+
+/* arrow */
+
+if(archer.arrow){
+
+ctx.save();
+
+ctx.translate(
+archer.arrow.x,
+archer.arrow.y
+);
+
+const angle=
+Math.atan2(
+archer.arrow.vy,
+archer.arrow.vx
+);
+
+ctx.rotate(angle);
+
+ctx.strokeStyle="#f1f5f9";
+
+ctx.lineWidth=3;
+
+ctx.beginPath();
+
+ctx.moveTo(-18,0);
+ctx.lineTo(15,0);
+
+ctx.stroke();
+
+ctx.fillStyle="#e2e8f0";
+
+ctx.beginPath();
+
+ctx.moveTo(15,0);
+ctx.lineTo(7,-5);
+ctx.lineTo(7,5);
+ctx.closePath();
+
+ctx.fill();
+
+ctx.restore();
+
+}
+
+
+/* enemies */
+
+archer.enemies.forEach(enemy=>{
+
+ctx.save();
+
+ctx.translate(
+enemy.x,
+enemy.y
+);
+
+ctx.fillStyle="#ef4444";
+
+ctx.beginPath();
+
+ctx.arc(
+0,
+0,
+enemy.size/2,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+ctx.fillStyle="#7f1d1d";
+
+ctx.beginPath();
+
+ctx.arc(
+0,
+0,
+enemy.size/2-7,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+ctx.fillStyle="white";
+
+ctx.beginPath();
+
+ctx.arc(-6,-3,4,0,Math.PI*2);
+
+ctx.arc(6,-3,4,0,Math.PI*2);
+
+ctx.fill();
+
+ctx.fillStyle="#111827";
+
+ctx.beginPath();
+
+ctx.arc(-6,-3,2,0,Math.PI*2);
+
+ctx.arc(6,-3,2,0,Math.PI*2);
+
+ctx.fill();
+
+ctx.restore();
+
+});
+
+}
+
+
+function archerLoop(){
+
+if(!archer.running){
+return;
+}
+
+updateArcher();
+
+drawArcher();
+
+requestAnimationFrame(archerLoop);
+
+}
+
+
+function gameOverArcher(){
+
+archer.running=false;
+
+setTimeout(function(){
+
+alert(
+"🏹 Game Over!\n\n"+
+"Score: "+
+archer.score+
+"\n\nKlicke auf Neustart."
+);
+
+},50);
 
 }
 
@@ -1291,5 +1944,3 @@ loadCommunityGames();
 
 </body>
 </html>
-
-
