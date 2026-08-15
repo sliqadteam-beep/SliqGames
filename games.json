@@ -1,0 +1,9 @@
+﻿[
+  {
+    "name": "Archer Hero",
+    "genre": "Action",
+    "description": "Besiege deine Gegner mit Pfeilen!",
+    "game": "archer-hero.html",
+    "thumbnail": "archer-hero.png"
+  }
+]

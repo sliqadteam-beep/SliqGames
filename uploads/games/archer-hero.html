@@ -1,0 +1,438 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Archer Hero - SliqGames</title>
+
+<style>
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+overflow:hidden;
+background:#07111f;
+font-family:Arial,Segoe UI,sans-serif;
+color:white;
+}
+
+#game{
+position:relative;
+width:100vw;
+height:100vh;
+background:
+linear-gradient(
+to bottom,
+#5eb7ff 0%,
+#bde8ff 55%,
+#69b84f 55%,
+#3f8f32 100%
+);
+}
+
+#top{
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:70px;
+background:rgba(7,17,31,.9);
+display:flex;
+align-items:center;
+padding:0 20px;
+z-index:10;
+}
+
+#back{
+background:#18283d;
+border:0;
+color:white;
+padding:10px 16px;
+border-radius:10px;
+font-weight:bold;
+cursor:pointer;
+}
+
+#title{
+margin-left:15px;
+font-size:20px;
+font-weight:bold;
+}
+
+#score{
+margin-left:auto;
+font-size:18px;
+font-weight:bold;
+}
+
+#player{
+position:absolute;
+bottom:90px;
+left:100px;
+font-size:65px;
+user-select:none;
+}
+
+.enemy{
+position:absolute;
+bottom:90px;
+right:100px;
+font-size:65px;
+user-select:none;
+}
+
+.arrow{
+position:absolute;
+font-size:35px;
+z-index:5;
+}
+
+#instructions{
+position:absolute;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:rgba(7,17,31,.85);
+padding:12px 20px;
+border-radius:12px;
+text-align:center;
+}
+
+#startScreen{
+position:absolute;
+inset:0;
+background:rgba(7,17,31,.92);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:100;
+}
+
+#startBox{
+background:#0d1b2d;
+border:1px solid #29405b;
+border-radius:20px;
+padding:35px;
+text-align:center;
+width:min(400px,90%);
+}
+
+#startBox h1{
+margin-top:0;
+font-size:35px;
+}
+
+#startButton{
+background:#2563eb;
+border:0;
+color:white;
+padding:14px 25px;
+border-radius:11px;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+}
+
+#message{
+position:absolute;
+top:100px;
+left:50%;
+transform:translateX(-50%);
+font-size:25px;
+font-weight:bold;
+z-index:20;
+display:none;
+}
+
+@media(max-width:600px){
+
+#player{
+left:40px;
+font-size:55px;
+}
+
+.enemy{
+right:40px;
+font-size:55px;
+}
+
+#instructions{
+font-size:12px;
+width:90%;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div id="game">
+
+<div id="top">
+
+<button id="back" onclick="goBack()">
+← SliqGames
+</button>
+
+<div id="title">
+🏹 Archer Hero
+</div>
+
+<div id="score">
+Punkte: <span id="scoreValue">0</span>
+</div>
+
+</div>
+
+<div id="player">
+🏹
+</div>
+
+<div id="enemy" class="enemy">
+👹
+</div>
+
+<div id="message"></div>
+
+<div id="instructions">
+Drücke <b>LEERTASTE</b> oder tippe auf den Bildschirm, um zu schießen!
+</div>
+
+<div id="startScreen">
+
+<div id="startBox">
+
+<h1>🏹 Archer Hero</h1>
+
+<p>
+Besiege die Gegner mit deinen Pfeilen!
+</p>
+
+<button id="startButton" onclick="startGame()">
+▶ Spielen
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+let playing=false;
+
+let score=0;
+
+let enemyTimer=null;
+
+const player=
+document.getElementById("player");
+
+const enemy=
+document.getElementById("enemy");
+
+const scoreValue=
+document.getElementById("scoreValue");
+
+const message=
+document.getElementById("message");
+
+
+function startGame(){
+
+playing=true;
+
+score=0;
+
+scoreValue.textContent=score;
+
+document.getElementById("startScreen")
+.style.display="none";
+
+enemy.style.right="100px";
+
+enemy.style.display="block";
+
+enemyTimer=setInterval(moveEnemy,1200);
+
+}
+
+
+function moveEnemy(){
+
+if(!playing)return;
+
+const random=
+Math.floor(
+Math.random()*70
+);
+
+enemy.style.bottom=
+(70+random)+"px";
+
+}
+
+
+function shoot(){
+
+if(!playing)return;
+
+const arrow=
+document.createElement("div");
+
+arrow.className="arrow";
+
+arrow.textContent="➡️";
+
+const playerRect=
+player.getBoundingClientRect();
+
+arrow.style.left=
+(playerRect.right-10)+"px";
+
+arrow.style.top=
+(playerRect.top+20)+"px";
+
+document.getElementById("game")
+.appendChild(arrow);
+
+let position=
+playerRect.right;
+
+const interval=
+setInterval(()=>{
+
+position+=15;
+
+arrow.style.left=
+position+"px";
+
+const arrowRect=
+arrow.getBoundingClientRect();
+
+const enemyRect=
+enemy.getBoundingClientRect();
+
+if(
+arrowRect.right>=enemyRect.left &&
+arrowRect.left<=enemyRect.right &&
+arrowRect.bottom>=enemyRect.top &&
+arrowRect.top<=enemyRect.bottom
+){
+
+clearInterval(interval);
+
+arrow.remove();
+
+hitEnemy();
+
+return;
+
+}
+
+if(position>window.innerWidth){
+
+clearInterval(interval);
+
+arrow.remove();
+
+}
+
+},20);
+
+}
+
+
+function hitEnemy(){
+
+score++;
+
+scoreValue.textContent=score;
+
+showMessage("🎯 Treffer!");
+
+enemy.style.display="none";
+
+setTimeout(()=>{
+
+if(!playing)return;
+
+enemy.style.right=
+(30+Math.random()*150)+"px";
+
+enemy.style.bottom=
+(70+Math.random()*80)+"px";
+
+enemy.style.display="block";
+
+},500);
+
+}
+
+
+function showMessage(text){
+
+message.textContent=text;
+
+message.style.display="block";
+
+setTimeout(()=>{
+
+message.style.display="none";
+
+},600);
+
+}
+
+
+function goBack(){
+
+window.location.href="/";
+
+}
+
+
+document.addEventListener(
+"keydown",
+event=>{
+
+if(
+event.code==="Space"
+){
+
+event.preventDefault();
+
+shoot();
+
+}
+
+}
+);
+
+
+document.getElementById("game")
+.addEventListener(
+"click",
+event=>{
+
+if(
+event.target.id!=="back" &&
+!event.target.closest("#startBox")
+){
+
+shoot();
+
+}
+
+}
+);
+
+</script>
+
+</body>
+</html>
