@@ -1,4 +1,4 @@
-﻿from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+﻿from flask import Flask, render_template, request, redirect, url_for
 import os
 import json
 from werkzeug.utils import secure_filename
@@ -23,20 +23,25 @@ if not os.path.exists(DATA_FILE):
 def home():
     return render_template("index.html")
 
-@app.route("/game/archer")
-def archer():
+@app.route("/archer-hero")
+def archer_hero():
     return render_template("archer.html")
 
 @app.route("/upload", methods=["POST"])
 def upload_game():
+
     name = request.form.get("name", "").strip()
     genre = request.form.get("genre", "").strip()
     description = request.form.get("description", "").strip()
+
     game_file = request.files.get("game")
     thumbnail = request.files.get("thumbnail")
 
     if not name or not genre or not description or not game_file or not thumbnail:
         return "Bitte ALLE Felder ausfüllen!", 400
+
+    if not game_file.filename or not thumbnail.filename:
+        return "Bitte alle Dateien auswählen!", 400
 
     game_filename = secure_filename(game_file.filename)
     thumb_filename = secure_filename(thumbnail.filename)
@@ -63,16 +68,14 @@ def upload_game():
 
     return redirect(url_for("home"))
 
-@app.route("/games.json")
-def games_json():
-    return send_from_directory(BASE_DIR, "games.json")
-
 @app.route("/uploads/thumbnails/<filename>")
 def thumbnail(filename):
+    from flask import send_from_directory
     return send_from_directory(THUMB_FOLDER, filename)
 
 @app.route("/uploads/games/<filename>")
 def game_file(filename):
+    from flask import send_from_directory
     return send_from_directory(GAME_FOLDER, filename)
 
 if __name__ == "__main__":
