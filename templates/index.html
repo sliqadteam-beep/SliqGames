@@ -1050,19 +1050,19 @@ alert("Benutzername oder Passwort falsch.");
 
 function playGame(name){
 
-let recent=
+let recent =
 JSON.parse(
 localStorage.getItem("recentGames") || "[]"
 );
 
-recent=
+recent =
 recent.filter(
-x=>x!==name
+x => x !== name
 );
 
 recent.unshift(name);
 
-recent=
+recent =
 recent.slice(0,6);
 
 localStorage.setItem(
@@ -1072,11 +1072,10 @@ JSON.stringify(recent)
 
 loadRecent();
 
-if(name==="Archer Hero"){
-
-alert(
-"Archer Hero wird bald verfügbar sein! 🏹"
-);
+if(name === "Archer Hero"){
+    window.location.href = "/uploads/games/archer-hero.html";
+    return;
+}
 
 }
 
