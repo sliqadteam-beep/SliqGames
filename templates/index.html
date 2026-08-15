@@ -469,108 +469,7 @@ alert("Bitte Benutzername und Passwort eingeben.");
 return;
 }
 
-localStorage.setItem("sliq_user",JSON.stringify({
-username:username,
-password:password
-}));
 
-alert("Account wurde gespeichert!");
-closeLogin();
-}
-
-function login(){
-
-const username=document.getElementById("username").value.trim();
-const password=document.getElementById("password").value;
-
-const saved=JSON.parse(localStorage.getItem("sliq_user")||"null");
-
-if(saved&&saved.username===username&&saved.password===password){
-alert("Erfolgreich angemeldet!");
-closeLogin();
-}else{
-alert("Benutzername oder Passwort falsch.");
-}
-}
-
-function saveRecent(name){
-
-let recent=JSON.parse(localStorage.getItem("recentGames")||"[]");
-
-recent=recent.filter(x=>x!==name);
-recent.unshift(name);
-recent=recent.slice(0,6);
-
-localStorage.setItem("recentGames",JSON.stringify(recent));
-}
-
-function playGame(name){
-
-saveRecent(name);
-
-if(name==="Archer Hero"){
-window.location.href="/archer";
-}
-
-}
-
-function playRacing(){
-
-saveRecent("Neon Racing");
-
-window.location.href="/racing";
-}
-
-function loadRecent(){
-
-const recent=JSON.parse(localStorage.getItem("recentGames")||"[]");
-const container=document.getElementById("recentGames");
-
-container.innerHTML="";
-
-if(!recent.length){
-
-const lang=document.getElementById("language").value;
-
-container.innerHTML=
-"<p class='empty'>"+translations[lang].noRecent+"</p>";
-
-return;
-}
-
-recent.forEach(name=>{
-
-const div=document.createElement("div");
-
-div.className="game";
-
-if(name==="Archer Hero"){
-
-div.onclick=()=>playGame("Archer Hero");
-
-div.innerHTML=`
-<div class="gameicon">🏹</div>
-<h3>Archer Hero</h3>
-<p>Action • Upgrades</p>
-<span class="genre">Action</span>
-`;
-
-}else if(name==="Neon Racing"){
-
-div.onclick=()=>playRacing();
-
-div.innerHTML=`
-<div class="gameicon">🏎️</div>
-<h3>Neon Racing</h3>
-<p>Racing • Highscore</p>
-<span class="genre">Racing</span>
-`;
-
-}
-
-container.appendChild(div);
-
-});
 }
 
 function loadCommunityGames(){
@@ -642,3 +541,4 @@ loadCommunityGames();
 
 </body>
 </html>
+
