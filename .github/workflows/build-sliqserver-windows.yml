@@ -7,6 +7,7 @@ on:
       - 'windows/SliqServer-v4.py.gz.b64'
       - 'tools/patch_sliqserver_address.py'
       - 'tools/apply_address_patch.py'
+      - 'tools/apply_server_branding_patch.py'
       - '.github/workflows/build-sliqserver-windows.yml'
   workflow_dispatch:
 
@@ -14,7 +15,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: sliqserver-windows-publish
+  group: sliqserver-publish
   cancel-in-progress: false
 
 jobs:
@@ -42,14 +43,20 @@ jobs:
           [IO.File]::WriteAllBytes('windows/sliqserver_v4.py',$output.ToArray())
           $output.Dispose()
 
+      - name: Validate patch tools
+        run: python -m py_compile tools/apply_address_patch.py tools/patch_sliqserver_address.py tools/apply_server_branding_patch.py
+
       - name: Apply easier custom-address setup
         run: python tools/apply_address_patch.py windows windows/sliqserver_v4.py
+
+      - name: Apply server logo and description
+        run: python tools/apply_server_branding_patch.py windows windows/sliqserver_v4.py
 
       - name: Validate Windows v4 source
         run: python -m py_compile windows/sliqserver_v4.py
 
       - name: Install build dependencies
-        run: python -m pip install --upgrade pip pyinstaller psutil
+        run: python -m pip install --upgrade pip pyinstaller psutil pillow
 
       - name: Build Windows EXE
         run: pyinstaller --noconfirm --clean --onefile --windowed --name SliqServer-Windows windows/sliqserver_v4.py
@@ -69,15 +76,21 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git fetch origin main
-          git reset --hard origin/main
-          New-Item -ItemType Directory -Force downloads | Out-Null
-          Copy-Item "$env:RUNNER_TEMP/SliqServer-Windows.exe" downloads/SliqServer-Windows.exe -Force
-          git add downloads/SliqServer-Windows.exe
-          $changes = git diff --cached --name-only
-          if (-not $changes) {
-            Write-Host "EXE unchanged"
-          } else {
+          for ($attempt = 1; $attempt -le 3; $attempt++) {
+            git fetch origin main
+            git reset --hard origin/main
+            New-Item -ItemType Directory -Force downloads | Out-Null
+            Copy-Item "$env:RUNNER_TEMP/SliqServer-Windows.exe" downloads/SliqServer-Windows.exe -Force
+            git add downloads/SliqServer-Windows.exe
+            $changes = git diff --cached --name-only
+            if (-not $changes) {
+              Write-Host "EXE unchanged"
+              exit 0
+            }
             git commit -m "Build SliqServer Windows v4"
             git push origin main
+            if ($LASTEXITCODE -eq 0) { exit 0 }
+            Write-Host "Publish race detected; retrying ($attempt/3)..."
+            Start-Sleep -Seconds 3
           }
+          throw "Could not publish EXE after 3 attempts"
