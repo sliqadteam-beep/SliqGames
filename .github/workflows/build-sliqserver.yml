@@ -12,7 +12,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: sliqserver-publish
+  group: sliqserver-android-publish
   cancel-in-progress: false
 
 jobs:
@@ -74,16 +74,25 @@ jobs:
 
       - name: Publish APK to GitHub Pages downloads
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git fetch origin main
-          git reset --hard origin/main
-          mkdir -p downloads
-          cp "$RUNNER_TEMP/SliqServer-Android.apk" downloads/SliqServer-Android.apk
-          git add downloads/SliqServer-Android.apk
-          if git diff --cached --quiet; then
-            echo "APK unchanged"
-          else
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            mkdir -p downloads
+            cp "$RUNNER_TEMP/SliqServer-Android.apk" downloads/SliqServer-Android.apk
+            git add downloads/SliqServer-Android.apk
+            if git diff --cached --quiet; then
+              echo "APK unchanged"
+              exit 0
+            fi
             git commit -m "Build SliqServer Android v3"
-            git push origin main
-          fi
+            if git push origin main; then
+              exit 0
+            fi
+            echo "Publish race detected; retrying ($attempt/3)..."
+            sleep 3
+          done
+          echo "Could not publish APK after 3 attempts"
+          exit 1
