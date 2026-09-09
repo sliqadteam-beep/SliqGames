@@ -22,18 +22,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Reconstruct Android v2 sources
+      - name: Prepare Android v3 sources
         run: |
           set -euo pipefail
           SRC="android/SliqServer/app/src/main/java/org/sliqado/sliqserver"
           decode_source() {
             tr -d '[:space:]' < "$1" | base64 -d | gzip -d > "$2"
           }
-          decode_source android/SliqServer/source/MainActivityV2.kt.gz.b64 "$SRC/MainActivityV2.kt"
           decode_source android/SliqServer/source/TermuxBridge.kt.gz.b64 "$SRC/TermuxBridge.kt"
           decode_source android/SliqServer/source/TermuxResultService.kt.gz.b64 "$SRC/TermuxResultService.kt"
-          rm -f "$SRC/MainActivity.kt"
-          test -s "$SRC/MainActivityV2.kt"
+          rm -f "$SRC/MainActivity.kt" "$SRC/MainActivityV2.kt"
+          test -s "$SRC/MainActivityV3.kt"
           test -s "$SRC/TermuxBridge.kt"
           test -s "$SRC/TermuxResultService.kt"
 
@@ -85,6 +84,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "APK unchanged"
           else
-            git commit -m "Build SliqServer Android v2"
+            git commit -m "Build SliqServer Android v3"
             git push origin main
           fi
