@@ -6,6 +6,7 @@ on:
     paths:
       - 'windows/SliqServer-v4.py.gz.b64'
       - 'tools/patch_sliqserver_address.py'
+      - 'tools/apply_address_patch.py'
       - '.github/workflows/build-sliqserver-windows.yml'
   workflow_dispatch:
 
@@ -42,7 +43,7 @@ jobs:
           $output.Dispose()
 
       - name: Apply easier custom-address setup
-        run: python tools/patch_sliqserver_address.py windows windows/sliqserver_v4.py
+        run: python tools/apply_address_patch.py windows windows/sliqserver_v4.py
 
       - name: Validate Windows v4 source
         run: python -m py_compile windows/sliqserver_v4.py
