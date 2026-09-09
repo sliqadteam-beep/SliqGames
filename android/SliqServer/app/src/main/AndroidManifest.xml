@@ -16,7 +16,7 @@
         <activity android:name=".AddonActivity" android:exported="false" />
         <service android:name=".TermuxResultService" android:exported="false" />
 
-        <activity android:name=".MainActivityV2" android:exported="true">
+        <activity android:name=".MainActivityV3" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
