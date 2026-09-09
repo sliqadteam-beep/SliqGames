@@ -13,7 +13,7 @@ permissions:
 
 concurrency:
   group: sliqserver-android-publish
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -22,17 +22,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Prepare Android v3 sources
+      - name: Prepare Android v4 sources
         run: |
           set -euo pipefail
           SRC="android/SliqServer/app/src/main/java/org/sliqado/sliqserver"
           decode_source() {
             tr -d '[:space:]' < "$1" | base64 -d | gzip -d > "$2"
           }
+          decode_source android/SliqServer/source/MainActivityV4.kt.gz.b64 "$SRC/MainActivityV4.kt"
           decode_source android/SliqServer/source/TermuxBridge.kt.gz.b64 "$SRC/TermuxBridge.kt"
           decode_source android/SliqServer/source/TermuxResultService.kt.gz.b64 "$SRC/TermuxResultService.kt"
-          rm -f "$SRC/MainActivity.kt" "$SRC/MainActivityV2.kt"
-          test -s "$SRC/MainActivityV3.kt"
+          rm -f "$SRC/MainActivity.kt" "$SRC/MainActivityV2.kt" "$SRC/MainActivityV3.kt"
+          test -s "$SRC/MainActivityV4.kt"
           test -s "$SRC/TermuxBridge.kt"
           test -s "$SRC/TermuxResultService.kt"
 
@@ -52,7 +53,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.android/debug.keystore
-          key: sliqserver-debug-keystore-v3
+          key: sliqserver-debug-keystore-v4
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
@@ -87,7 +88,7 @@ jobs:
               echo "APK unchanged"
               exit 0
             fi
-            git commit -m "Build SliqServer Android v3"
+            git commit -m "Build SliqServer Android v4"
             if git push origin main; then
               exit 0
             fi
