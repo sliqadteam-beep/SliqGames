@@ -6,6 +6,7 @@ on:
     paths:
       - 'android/SliqServer/**'
       - 'tools/patch_sliqserver_address.py'
+      - 'tools/apply_address_patch.py'
       - '.github/workflows/build-sliqserver.yml'
   workflow_dispatch:
 
@@ -39,7 +40,7 @@ jobs:
           test -s "$SRC/TermuxResultService.kt"
 
       - name: Apply easier custom-address setup
-        run: python3 tools/patch_sliqserver_address.py android android/SliqServer/app/src/main/java/org/sliqado/sliqserver/MainActivityV4.kt
+        run: python3 tools/apply_address_patch.py android android/SliqServer/app/src/main/java/org/sliqado/sliqserver/MainActivityV4.kt
 
       - name: Set up Java
         uses: actions/setup-java@v5
