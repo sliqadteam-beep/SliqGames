@@ -20,6 +20,8 @@ def regex_once(text: str, pattern: str, replacement: str, label: str) -> str:
 def patch_windows(path: Path) -> None:
     text = path.read_text(encoding="utf-8")
 
+    # Add a persistent description default. V4 creates its UI variables differently from V3,
+    # so the description uses its own StringVar rather than depending on self.vars internals.
     text = regex_once(
         text,
         r'^\s*"server_name":\s*"My Server",\s*$',
@@ -27,15 +29,11 @@ def patch_windows(path: Path) -> None:
         "Windows description default",
     )
 
-    text = replace_once(
-        text,
-        '        self.vars["server_name"] = tk.StringVar()\n',
-        '        self.vars["server_name"] = tk.StringVar()\n        self.vars["server_description"] = tk.StringVar()\n',
-        "Windows description variable",
-    )
-
     branding_block = r'''
         # Minecraft server-list branding.
+        self.server_description_var = tk.StringVar(
+            value=str(self.config_data.get("server_description") or self.config_data.get("server_name") or "A SliqServer Minecraft server")
+        )
         branding = tk.Frame(b, bg="#0d1b2d", highlightbackground="#1d3047", highlightthickness=1)
         branding.grid(row=98, column=0, columnspan=3, sticky="ew", padx=6, pady=(14, 4))
         branding.grid_columnconfigure(0, weight=1)
@@ -47,7 +45,7 @@ def patch_windows(path: Path) -> None:
         desc_wrap = tk.Frame(branding, bg="#0d1b2d")
         desc_wrap.grid(row=2, column=0, sticky="ew", padx=6, pady=2)
         desc_wrap.grid_columnconfigure(0, weight=1)
-        self._entry(desc_wrap, "Server description / MOTD", self.vars["server_description"], 0, 0)
+        self._entry(desc_wrap, "Server description / MOTD", self.server_description_var, 0, 0)
         tk.Label(branding, text="Shown under the server name in Minecraft. Keep it short so it fits well in the server list.",
                  fg="#8ea0b8", bg="#0d1b2d", font=("Segoe UI", 8)).grid(row=3, column=0, sticky="w", padx=12, pady=(0, 8))
 
@@ -135,14 +133,38 @@ def patch_windows(path: Path) -> None:
         raise SystemExit("Could not patch Windows branding UI: _section_access marker missing")
     text = text.replace(marker, '\n' + branding_block.rstrip() + marker, 1)
 
-    write_prefix = '    def _write_server_properties(self, c):\n        props = {\n'
-    write_replacement = '''    def _write_server_properties(self, c):
-        _server_desc = str(c.get("server_description") or c.get("server_name") or "A Minecraft server")
-        _server_desc = _server_desc.replace("\\r", " ").replace("\\n", "\\\\n")
-        props = {
-'''
-    text = replace_once(text, write_prefix, write_replacement, "Windows properties description prep")
-    text = replace_once(text, '            "motd": c["server_name"],\n', '            "motd": _server_desc,\n', "Windows MOTD")
+    # Add server_description to whatever current_config() implementation V4 currently uses.
+    config_match = re.search(r'(?ms)^    def current_config\(self\):\n(.*?)(?=^    def save_settings\(self\):)', text)
+    if not config_match:
+        raise SystemExit("Could not patch Windows current_config: method not found")
+    config_method = config_match.group(0)
+    new_config_method, count = re.subn(
+        r'(?m)^(\s*)return c\s*$',
+        lambda m: (
+            m.group(1) + 'c["server_description"] = self.server_description_var.get().strip() or str(c.get("server_name") or "My Server")\n' +
+            m.group(1) + 'return c'
+        ),
+        config_method,
+        count=1,
+    )
+    if count != 1:
+        raise SystemExit("Could not patch Windows current_config return")
+    text = text[:config_match.start()] + new_config_method + text[config_match.end():]
+
+    # Use the separate description as Minecraft's MOTD.
+    write_match = re.search(r'(?ms)^    def _write_server_properties\(self, c\):\n.*?(?=^    def \w+\()', text)
+    if not write_match:
+        raise SystemExit("Could not patch Windows server.properties writer")
+    writer = write_match.group(0)
+    motd_re = re.compile(r'(?m)^(\s*)"motd"\s*:\s*c\["server_name"\],\s*$')
+    writer, motd_count = motd_re.subn(
+        lambda m: m.group(1) + '"motd": str(c.get("server_description") or c.get("server_name") or "A Minecraft server").replace("\\r", " ").replace("\\n", "\\\\n"),',
+        writer,
+        count=1,
+    )
+    if motd_count != 1:
+        raise SystemExit(f"Could not patch Windows MOTD: expected 1 match, got {motd_count}")
+    text = text[:write_match.start()] + writer + text[write_match.end():]
 
     path.write_text(text, encoding="utf-8")
 
