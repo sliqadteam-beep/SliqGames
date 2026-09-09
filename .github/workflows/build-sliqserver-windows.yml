@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'windows/SliqServer-v2.py.gz.b64'
+      - 'windows/sliqserver_v3.py'
       - '.github/workflows/build-sliqserver-windows.yml'
   workflow_dispatch:
 
@@ -27,25 +27,14 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Reconstruct and validate Windows v2 source
-        shell: pwsh
-        run: |
-          $b64 = (Get-Content windows/SliqServer-v2.py.gz.b64 -Raw) -replace '\s',''
-          $compressed = [Convert]::FromBase64String($b64)
-          $input = New-Object IO.MemoryStream(,$compressed)
-          $gzip = New-Object IO.Compression.GZipStream($input,[IO.Compression.CompressionMode]::Decompress)
-          $output = New-Object IO.MemoryStream
-          $gzip.CopyTo($output)
-          $gzip.Dispose(); $input.Dispose()
-          [IO.File]::WriteAllBytes('windows/sliqserver_v2.py',$output.ToArray())
-          $output.Dispose()
-          python -m py_compile windows/sliqserver_v2.py
+      - name: Validate Windows v3 source
+        run: python -m py_compile windows/sliqserver_v3.py
 
-      - name: Install PyInstaller
-        run: python -m pip install --upgrade pip pyinstaller
+      - name: Install build dependencies
+        run: python -m pip install --upgrade pip pyinstaller psutil
 
       - name: Build Windows EXE
-        run: pyinstaller --noconfirm --clean --onefile --windowed --name SliqServer-Windows windows/sliqserver_v2.py
+        run: pyinstaller --noconfirm --clean --onefile --windowed --name SliqServer-Windows windows/sliqserver_v3.py
 
       - name: Stage EXE outside repository
         shell: pwsh
@@ -71,6 +60,6 @@ jobs:
           if (-not $changes) {
             Write-Host "EXE unchanged"
           } else {
-            git commit -m "Build SliqServer Windows v2"
+            git commit -m "Build SliqServer Windows v3"
             git push origin main
           }
