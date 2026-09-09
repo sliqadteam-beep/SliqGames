@@ -72,9 +72,64 @@ jobs:
             border-radius:10px;
             font-weight:800;
           }
+          .hero-server-link{
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            margin:10px 0 3px;
+            padding:12px 17px;
+            border-radius:11px;
+            background:#2563eb;
+            color:white;
+            text-decoration:none;
+            font-weight:800;
+            transition:.2s;
+          }
+          .hero-server-link:hover{
+            transform:translateY(-2px);
+            background:#3b82f6;
+          }
           '''
           if css_marker not in text:
               text = text.replace('</style>', css + '\n</style>', 1)
+          elif '.hero-server-link{' not in text:
+              text = text.replace(css_marker, css_marker + '''
+          .hero-server-link{
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            margin:10px 0 3px;
+            padding:12px 17px;
+            border-radius:11px;
+            background:#2563eb;
+            color:white;
+            text-decoration:none;
+            font-weight:800;
+            transition:.2s;
+          }
+          .hero-server-link:hover{
+            transform:translateY(-2px);
+            background:#3b82f6;
+          }
+          ''', 1)
+
+          button_start = '<!-- SLIQSERVER_HERO_BUTTON_START -->'
+          button_end = '<!-- SLIQSERVER_HERO_BUTTON_END -->'
+          button = r'''
+          <!-- SLIQSERVER_HERO_BUTTON_START -->
+          <a class="hero-server-link" href="#sliqserverDownloads">🖥️ Get SliqServer</a>
+          <!-- SLIQSERVER_HERO_BUTTON_END -->
+          '''
+          if button_start in text and button_end in text:
+              a = text.index(button_start)
+              b = text.index(button_end, a) + len(button_end)
+              text = text[:a] + button.strip() + text[b:]
+          else:
+              search_anchor = '<input\nclass="search"'
+              if search_anchor in text:
+                  text = text.replace(search_anchor, button + '\n\n<input\nclass="search"', 1)
+              else:
+                  text = text.replace('</section>', button + '\n</section>', 1)
 
           start = '<!-- SLIQSERVER_DOWNLOADS_START -->'
           end = '<!-- SLIQSERVER_DOWNLOADS_END -->'
@@ -121,7 +176,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "SliqServer download section already current"
           else
-            git commit -m "Update SliqServer download buttons"
+            git commit -m "Add SliqServer homepage button"
             git pull --rebase origin main
             git push origin main
           fi
