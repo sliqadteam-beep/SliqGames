@@ -1,0 +1,12 @@
+diff --git a/app/src/main/java/org/sliqado/sliqserver/MainActivity.kt b/app/src/main/java/org/sliqado/sliqserver/MainActivity.kt
+--- a/app/src/main/java/org/sliqado/sliqserver/MainActivity.kt
++++ b/app/src/main/java/org/sliqado/sliqserver/MainActivity.kt
+@@ -365,7 +365,7 @@
+         }, fullButtonParams())
+ 
+         content.addView(actionButton("CHANGE SERVER PICTURE", panel2) {
+-            val i = Intent(Intent.ACTION_OPEN_DOCUMENT).apply { type = "image/*"; addCategory(Intent.CATEGORY_OPENABLE) }
++            val i = Intent(Intent.ACTION_OPEN_DOCUMENT).apply { this.type = "image/*"; addCategory(Intent.CATEGORY_OPENABLE) }
+             startActivityForResult(i, 500)
+         }, fullButtonParams())
+         content.addView(text("Minecraft server icons are automatically converted to 64×64 PNG.", 12f, muted))
