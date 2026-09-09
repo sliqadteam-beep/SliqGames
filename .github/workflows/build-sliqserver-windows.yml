@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'windows/SliqServer-v4.py.gz.b64'
+      - 'tools/patch_sliqserver_address.py'
       - '.github/workflows/build-sliqserver-windows.yml'
   workflow_dispatch:
 
@@ -27,7 +28,7 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Reconstruct and validate Windows v4 source
+      - name: Reconstruct Windows v4 source
         shell: pwsh
         run: |
           $b64 = (Get-Content windows/SliqServer-v4.py.gz.b64 -Raw) -replace '\s',''
@@ -39,7 +40,12 @@ jobs:
           $gzip.Dispose(); $input.Dispose()
           [IO.File]::WriteAllBytes('windows/sliqserver_v4.py',$output.ToArray())
           $output.Dispose()
-          python -m py_compile windows/sliqserver_v4.py
+
+      - name: Apply easier custom-address setup
+        run: python tools/patch_sliqserver_address.py windows windows/sliqserver_v4.py
+
+      - name: Validate Windows v4 source
+        run: python -m py_compile windows/sliqserver_v4.py
 
       - name: Install build dependencies
         run: python -m pip install --upgrade pip pyinstaller psutil
