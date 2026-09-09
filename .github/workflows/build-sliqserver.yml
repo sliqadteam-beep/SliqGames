@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'android/SliqServer-source.b64.*'
+      - 'android/SliqServer-fixes/**'
       - '.github/workflows/build-sliqserver.yml'
   workflow_dispatch:
 
@@ -24,6 +25,10 @@ jobs:
           mkdir -p android/SliqServer
           cat android/SliqServer-source.b64.* | base64 -d > /tmp/SliqServer-source.zip
           unzip -q /tmp/SliqServer-source.zip -d android/SliqServer
+          for patch in android/SliqServer-fixes/*.patch; do
+            [ -e "$patch" ] || continue
+            (cd android/SliqServer && git apply "../../$patch")
+          done
 
       - name: Set up Java
         uses: actions/setup-java@v4
