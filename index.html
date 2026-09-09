@@ -190,6 +190,24 @@ header{padding:0 10px}
 }
 
 /* SLIQSERVER_DOWNLOADS_CSS */
+.hero-server-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin:10px 0 3px;
+  padding:12px 17px;
+  border-radius:11px;
+  background:#2563eb;
+  color:white;
+  text-decoration:none;
+  font-weight:800;
+  transition:.2s;
+}
+.hero-server-link:hover{
+  transform:translateY(-2px);
+  background:#3b82f6;
+}
+
 .sliqserver-panel{
   background:linear-gradient(135deg,#0d1b2d,#102b52);
   border:1px solid #25496f;
@@ -272,6 +290,12 @@ Anmelden / Registrieren
 <section class="hero">
 <h1 id="welcome">Willkommen bei SliqGames 🎮</h1>
 <p id="subtitle">Spiele kostenlose Spiele direkt im Browser.</p>
+
+
+<!-- SLIQSERVER_HERO_BUTTON_START -->
+<a class="hero-server-link" href="#sliqserverDownloads">🖥️ Get SliqServer</a>
+<!-- SLIQSERVER_HERO_BUTTON_END -->
+
 
 <input
 class="search"
