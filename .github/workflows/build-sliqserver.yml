@@ -12,8 +12,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: sliqserver-android
-  cancel-in-progress: true
+  group: sliqserver-publish
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -22,12 +22,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Apply source fixes
+      - name: Reconstruct Android v2 sources
         run: |
-          for patch_file in android/SliqServer/patches/*.patch; do
-            [ -e "$patch_file" ] || continue
-            patch -p1 -d android/SliqServer < "$patch_file"
-          done
+          set -euo pipefail
+          SRC="android/SliqServer/app/src/main/java/org/sliqado/sliqserver"
+          decode_source() {
+            tr -d '[:space:]' < "$1" | base64 -d | gzip -d > "$2"
+          }
+          decode_source android/SliqServer/source/MainActivityV2.kt.gz.b64 "$SRC/MainActivityV2.kt"
+          decode_source android/SliqServer/source/TermuxBridge.kt.gz.b64 "$SRC/TermuxBridge.kt"
+          decode_source android/SliqServer/source/TermuxResultService.kt.gz.b64 "$SRC/TermuxResultService.kt"
+          rm -f "$SRC/MainActivity.kt"
+          test -s "$SRC/MainActivityV2.kt"
+          test -s "$SRC/TermuxBridge.kt"
+          test -s "$SRC/TermuxResultService.kt"
 
       - name: Set up Java
         uses: actions/setup-java@v5
@@ -45,7 +53,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.android/debug.keystore
-          key: sliqserver-debug-keystore-v2
+          key: sliqserver-debug-keystore-v3
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
@@ -54,28 +62,29 @@ jobs:
 
       - name: Build APK
         working-directory: android/SliqServer
-        run: gradle --no-daemon assembleDebug
+        run: gradle --no-daemon clean assembleDebug
 
-      - name: Publish APK into GitHub Pages files
-        run: |
-          mkdir -p downloads
-          cp android/SliqServer/app/build/outputs/apk/debug/app-debug.apk downloads/SliqServer-Android.apk
+      - name: Stage APK outside repository
+        run: cp android/SliqServer/app/build/outputs/apk/debug/app-debug.apk "$RUNNER_TEMP/SliqServer-Android.apk"
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: SliqServer-Android-APK
-          path: downloads/SliqServer-Android.apk
+          path: android/SliqServer/app/build/outputs/apk/debug/app-debug.apk
 
-      - name: Commit APK to site
+      - name: Publish APK to GitHub Pages downloads
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git reset --hard origin/main
+          mkdir -p downloads
+          cp "$RUNNER_TEMP/SliqServer-Android.apk" downloads/SliqServer-Android.apk
           git add downloads/SliqServer-Android.apk
           if git diff --cached --quiet; then
             echo "APK unchanged"
           else
-            git commit -m "Build SliqServer Android APK"
-            git pull --rebase origin main
-            git push
+            git commit -m "Build SliqServer Android v2"
+            git push origin main
           fi
