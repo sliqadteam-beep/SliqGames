@@ -1,0 +1,76 @@
+name: Build SliqServer APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'android/SliqServer-source.b64.*'
+      - '.github/workflows/build-sliqserver.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Unpack SliqServer source
+        run: |
+          rm -rf android/SliqServer /tmp/SliqServer-source.zip
+          mkdir -p android/SliqServer
+          cat android/SliqServer-source.b64.* | base64 -d > /tmp/SliqServer-source.zip
+          unzip -q /tmp/SliqServer-source.zip -d android/SliqServer
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android 35 SDK
+        run: yes | sdkmanager "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Keep a stable debug signing key
+        uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: sliqserver-debug-keystore-v1
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.10.2'
+
+      - name: Build APK
+        working-directory: android/SliqServer
+        run: gradle --no-daemon assembleDebug
+
+      - name: Publish APK into GitHub Pages files
+        run: |
+          mkdir -p downloads
+          cp android/SliqServer/app/build/outputs/apk/debug/app-debug.apk downloads/SliqServer.apk
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SliqServer-APK
+          path: downloads/SliqServer.apk
+
+      - name: Commit APK to site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add downloads/SliqServer.apk
+          if git diff --cached --quiet; then
+            echo "APK unchanged"
+          else
+            git commit -m "Build SliqServer APK"
+            git push
+          fi
