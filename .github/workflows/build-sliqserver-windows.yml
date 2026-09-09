@@ -18,18 +18,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Reconstruct Windows source
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Reconstruct and validate Windows source
         shell: pwsh
         run: |
           $parts = Get-ChildItem windows/SliqServer-source.b64.* | Sort-Object Name
           $b64 = ($parts | ForEach-Object { Get-Content $_.FullName -Raw }) -join ''
           [IO.File]::WriteAllBytes('windows/sliqserver.py', [Convert]::FromBase64String($b64))
           python -m py_compile windows/sliqserver.py
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
 
       - name: Install PyInstaller
         run: python -m pip install --upgrade pip pyinstaller
