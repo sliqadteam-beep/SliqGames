@@ -11,6 +11,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: sliqserver-android
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,9 +24,9 @@ jobs:
 
       - name: Apply source fixes
         run: |
-          for patch in android/SliqServer/patches/*.patch; do
-            [ -e "$patch" ] || continue
-            (cd android/SliqServer && git apply "../../$patch")
+          for patch_file in android/SliqServer/patches/*.patch; do
+            [ -e "$patch_file" ] || continue
+            patch -p1 -d android/SliqServer < "$patch_file"
           done
 
       - name: Set up Java
