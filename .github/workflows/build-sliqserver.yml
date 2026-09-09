@@ -18,6 +18,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Apply source fixes
+        run: |
+          for patch in android/SliqServer/patches/*.patch; do
+            [ -e "$patch" ] || continue
+            (cd android/SliqServer && git apply "../../$patch")
+          done
+
       - name: Set up Java
         uses: actions/setup-java@v5
         with:
