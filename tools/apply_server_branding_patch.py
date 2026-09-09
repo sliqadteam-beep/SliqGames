@@ -20,10 +20,9 @@ def regex_once(text: str, pattern: str, replacement: str, label: str) -> str:
 def patch_windows(path: Path) -> None:
     text = path.read_text(encoding="utf-8")
 
-    # Persist a separate Minecraft server-list description instead of reusing the server name.
     text = regex_once(
         text,
-        r'(?m)^(\s*)"server_name":\s*"My Server",\s*$',
+        r'^\s*"server_name":\s*"My Server",\s*$',
         '    "server_name": "My Server",\n    "server_description": "A SliqServer Minecraft server",',
         "Windows description default",
     )
@@ -36,7 +35,7 @@ def patch_windows(path: Path) -> None:
     )
 
     branding_block = r'''
-        # Server-list branding. Minecraft Java reads server-icon.png from the server root.
+        # Minecraft server-list branding.
         branding = tk.Frame(b, bg="#0d1b2d", highlightbackground="#1d3047", highlightthickness=1)
         branding.grid(row=98, column=0, columnspan=3, sticky="ew", padx=6, pady=(14, 4))
         branding.grid_columnconfigure(0, weight=1)
@@ -66,7 +65,7 @@ def patch_windows(path: Path) -> None:
         self.server_icon_status = tk.Label(logo_buttons, text="", fg="#8ea0b8", bg="#0d1b2d",
                                            font=("Segoe UI", 9), justify="left")
         self.server_icon_status.pack(side="left", padx=6)
-        tk.Label(branding, text="Any common image format works. SliqServer center-crops it and saves the exact 64×64 PNG Minecraft requires.",
+        tk.Label(branding, text="Choose PNG, JPG, WEBP, BMP or GIF. SliqServer center-crops it and creates Minecraft's exact 64×64 server-icon.png.",
                  fg="#8ea0b8", bg="#0d1b2d", font=("Segoe UI", 8), wraplength=900, justify="left").grid(row=5, column=0, sticky="w", padx=12, pady=(0, 10))
         self._refresh_server_icon_preview()
 
@@ -89,7 +88,11 @@ def patch_windows(path: Path) -> None:
                 img = ImageOps.fit(img, (64, 64), method=resample, centering=(0.5, 0.5))
                 img.save(SERVER / "server-icon.png", format="PNG", optimize=True)
             self._refresh_server_icon_preview()
-            messagebox.showinfo("SliqServer", "Server logo saved as a 64×64 PNG.\nRestart the Minecraft server if it is currently online so every client sees the new logo.")
+            messagebox.showinfo(
+                "SliqServer",
+                "Server logo saved as Minecraft's 64×64 server-icon.png.\n\n"
+                "If the server is online, restart it so every client sees the new logo."
+            )
         except Exception as exc:
             messagebox.showerror("SliqServer", f"Could not use this image:\n{exc}")
 
@@ -107,7 +110,7 @@ def patch_windows(path: Path) -> None:
         if not hasattr(self, "server_icon_preview"):
             return
         if not icon.exists():
-            self.server_icon_preview.config(image="", text="No logo")
+            self.server_icon_preview.config(image="", text="No logo", padx=12, pady=12)
             if hasattr(self, "server_icon_status"):
                 self.server_icon_status.config(text="No server logo set", fg="#8ea0b8")
             self._server_icon_photo = None
@@ -115,7 +118,8 @@ def patch_windows(path: Path) -> None:
         try:
             from PIL import Image, ImageTk
             with Image.open(icon) as opened:
-                img = opened.convert("RGBA").resize((64, 64), getattr(getattr(Image, "Resampling", Image), "LANCZOS"))
+                resample = getattr(getattr(Image, "Resampling", Image), "LANCZOS")
+                img = opened.convert("RGBA").resize((64, 64), resample)
             self._server_icon_photo = ImageTk.PhotoImage(img)
             self.server_icon_preview.config(image=self._server_icon_photo, text="", padx=4, pady=4)
             if hasattr(self, "server_icon_status"):
@@ -153,7 +157,6 @@ def patch_android(path: Path) -> None:
         "Android branding fields",
     )
 
-    # Add the description directly beneath the server name.
     text = replace_once(
         text,
         '        serverName = edit(box, "Server name", "My Server")\n',
@@ -167,25 +170,18 @@ def patch_android(path: Path) -> None:
         logoRow.addView(actionButton("CHOOSE SERVER LOGO", blue) { chooseServerIcon() }, weight())
         logoRow.addView(actionButton("REMOVE LOGO", field) { removeServerIcon() }, weight())
         box.addView(logoRow, match(dp(50)))
-        box.addView(label("The image is center-cropped and converted to Minecraft's required 64×64 server-icon.png.", muted, 11f))
+        box.addView(label("Choose any image. SliqServer center-crops it and creates Minecraft's required 64×64 server-icon.png.", muted, 11f))
         updateServerIconStatus()
 '''
 
-    # Put logo controls immediately after Spawn protection, before the switches.
-    text = regex_once(
+    spawn_match = re.search(
+        r'(?m)^\s*spawnProtection\s*=\s*edit\(box,\s*"Spawn protection",\s*"16",\s*true\)\s*$',
         text,
-        r'(\s*spawnProtection\s*=\s*edit\(box,\s*"Spawn protection",\s*"16",\s*true\)\s*\n)',
-        lambda_text := None if False else '',
-        "unused",
-    ) if False else text
-    spawn_match = re.search(r'(?m)^\s*spawnProtection\s*=\s*edit\(box,\s*"Spawn protection",\s*"16",\s*true\)\s*$', text)
+    )
     if not spawn_match:
         raise SystemExit("Could not patch Android logo UI: Spawn protection field missing")
     insert_pos = text.find('\n', spawn_match.end())
-    if insert_pos < 0:
-        insert_pos = spawn_match.end()
-    else:
-        insert_pos += 1
+    insert_pos = spawn_match.end() if insert_pos < 0 else insert_pos + 1
     text = text[:insert_pos] + '\n' + logo_ui + text[insert_pos:]
 
     text = replace_once(
@@ -202,7 +198,6 @@ def patch_android(path: Path) -> None:
         "Android description save",
     )
 
-    # Re-apply the copied icon whenever settings are saved, so Termux always has server-icon.png.
     text = replace_once(
         text,
         '        writeServerProperties()\n        updateAddress()\n',
@@ -232,9 +227,18 @@ def patch_android(path: Path) -> None:
         if (requestCode != 4404 || resultCode != RESULT_OK) return
         val uri = data?.data ?: return
         try {
-            val source = contentResolver.openInputStream(uri)?.use { android.graphics.BitmapFactory.decodeStream(it) }
-                ?: throw IllegalArgumentException("Android could not open that image")
-            if (source.width < 1 || source.height < 1) throw IllegalArgumentException("Invalid image")
+            val bounds = android.graphics.BitmapFactory.Options().apply { inJustDecodeBounds = true }
+            contentResolver.openInputStream(uri)?.use {
+                android.graphics.BitmapFactory.decodeStream(it, null, bounds)
+            }
+            if (bounds.outWidth < 1 || bounds.outHeight < 1) throw IllegalArgumentException("Invalid image")
+            var sample = 1
+            while (maxOf(bounds.outWidth, bounds.outHeight) / sample > 1600) sample *= 2
+            val options = android.graphics.BitmapFactory.Options().apply { inSampleSize = sample }
+            val source = contentResolver.openInputStream(uri)?.use {
+                android.graphics.BitmapFactory.decodeStream(it, null, options)
+            } ?: throw IllegalArgumentException("Android could not open that image")
+
             val side = minOf(source.width, source.height)
             val x = (source.width - side) / 2
             val y = (source.height - side) / 2
@@ -244,9 +248,11 @@ def patch_android(path: Path) -> None:
             icon.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, output)
             val encoded = android.util.Base64.encodeToString(output.toByteArray(), android.util.Base64.NO_WRAP)
             prefs.edit().putString("server_icon_b64", encoded).apply()
-            if (square !== source) square.recycle()
+
             if (icon !== square && icon !== source) icon.recycle()
+            if (square !== source) square.recycle()
             source.recycle()
+
             applyServerIcon()
             updateServerIconStatus()
             toast("Server logo saved · 64×64 PNG")
@@ -302,7 +308,7 @@ def main() -> None:
         patch_windows(path)
     else:
         patch_android(path)
-    print(f"Applied server logo + description branding patch: {path}")
+    print(f"Applied server logo + description patch: {path}")
 
 
 if __name__ == "__main__":
