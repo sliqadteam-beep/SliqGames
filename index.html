@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
@@ -188,6 +188,47 @@ header{padding:0 10px}
 .hero{padding:25px}
 .hero h1{font-size:30px}
 }
+
+/* SLIQSERVER_DOWNLOADS_CSS */
+.sliqserver-panel{
+  background:linear-gradient(135deg,#0d1b2d,#102b52);
+  border:1px solid #25496f;
+  border-radius:22px;
+  padding:22px;
+}
+.sliqserver-panel>p{color:#9fb0c7;margin-top:0}
+.sliqserver-downloads{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:15px;
+}
+.sliqserver-download-card{
+  display:block;
+  text-decoration:none;
+  color:white;
+  background:#101f34;
+  border:1px solid #284563;
+  border-radius:16px;
+  padding:18px;
+  transition:.2s;
+}
+.sliqserver-download-card:hover{
+  transform:translateY(-3px);
+  border-color:#60a5fa;
+  background:#132944;
+}
+.sliqserver-download-card strong{display:block;font-size:18px;margin-bottom:6px}
+.sliqserver-download-card span{color:#9fb0c7;font-size:13px}
+.sliqserver-download-button{
+  display:inline-block;
+  margin-top:14px;
+  background:#2563eb;
+  color:white;
+  padding:10px 14px;
+  border-radius:10px;
+  font-weight:800;
+}
+
 </style>
 </head>
 
@@ -264,6 +305,28 @@ oninput="searchGames()"
 <h2 id="communityTitle">🎮 Community-Spiele</h2>
 <div class="games" id="communityGames"></div>
 </section>
+
+
+<!-- SLIQSERVER_DOWNLOADS_START -->
+<section class="section" id="sliqserverDownloads">
+  <h2>🖥️ SliqServer</h2>
+  <div class="sliqserver-panel">
+    <p>Run and manage your Minecraft server with Java/Bedrock controls, status monitoring, world storage tools, versions, plugins, mods, backups and more.</p>
+    <div class="sliqserver-downloads">
+      <a class="sliqserver-download-card" href="/downloads/SliqServer-Android.apk" download>
+        <strong>🤖 SliqServer for Android</strong>
+        <span>Android APK • Minecraft server control for your phone or tablet</span>
+        <div class="sliqserver-download-button">Download APK</div>
+      </a>
+      <a class="sliqserver-download-card" href="/downloads/SliqServer-Windows.exe" download>
+        <strong>🪟 SliqServer for Windows</strong>
+        <span>Windows EXE • Same server controls on your PC</span>
+        <div class="sliqserver-download-button">Download for Windows</div>
+      </a>
+    </div>
+  </div>
+</section>
+<!-- SLIQSERVER_DOWNLOADS_END -->
 
 </main>
 
