@@ -1,0 +1,65 @@
+name: Build SliqServer Windows
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'windows/SliqServer-source.b64.*'
+      - '.github/workflows/build-sliqserver-windows.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Reconstruct Windows source
+        shell: pwsh
+        run: |
+          $parts = Get-ChildItem windows/SliqServer-source.b64.* | Sort-Object Name
+          $b64 = ($parts | ForEach-Object { Get-Content $_.FullName -Raw }) -join ''
+          [IO.File]::WriteAllBytes('windows/sliqserver.py', [Convert]::FromBase64String($b64))
+          python -m py_compile windows/sliqserver.py
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install PyInstaller
+        run: python -m pip install --upgrade pip pyinstaller
+
+      - name: Build Windows EXE
+        run: pyinstaller --noconfirm --clean --onefile --windowed --name SliqServer-Windows windows/sliqserver.py
+
+      - name: Publish EXE into GitHub Pages files
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force downloads | Out-Null
+          Copy-Item dist/SliqServer-Windows.exe downloads/SliqServer-Windows.exe -Force
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SliqServer-Windows
+          path: downloads/SliqServer-Windows.exe
+
+      - name: Commit EXE to site
+        shell: pwsh
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add downloads/SliqServer-Windows.exe
+          $changes = git diff --cached --name-only
+          if (-not $changes) {
+            Write-Host "EXE unchanged"
+          } else {
+            git commit -m "Build SliqServer Windows app"
+            git pull --rebase origin main
+            git push
+          }
