@@ -4,12 +4,16 @@ on:
   push:
     branches: [main]
     paths:
-      - 'windows/SliqServer-source.b64.*'
+      - 'windows/SliqServer-v2.py.gz.b64'
       - '.github/workflows/build-sliqserver-windows.yml'
   workflow_dispatch:
 
 permissions:
   contents: write
+
+concurrency:
+  group: sliqserver-publish
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -23,43 +27,50 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Reconstruct and validate Windows source
+      - name: Reconstruct and validate Windows v2 source
         shell: pwsh
         run: |
-          $parts = Get-ChildItem windows/SliqServer-source.b64.* | Sort-Object Name
-          $b64 = ($parts | ForEach-Object { Get-Content $_.FullName -Raw }) -join ''
-          [IO.File]::WriteAllBytes('windows/sliqserver.py', [Convert]::FromBase64String($b64))
-          python -m py_compile windows/sliqserver.py
+          $b64 = (Get-Content windows/SliqServer-v2.py.gz.b64 -Raw) -replace '\s',''
+          $compressed = [Convert]::FromBase64String($b64)
+          $input = New-Object IO.MemoryStream(,$compressed)
+          $gzip = New-Object IO.Compression.GZipStream($input,[IO.Compression.CompressionMode]::Decompress)
+          $output = New-Object IO.MemoryStream
+          $gzip.CopyTo($output)
+          $gzip.Dispose(); $input.Dispose()
+          [IO.File]::WriteAllBytes('windows/sliqserver_v2.py',$output.ToArray())
+          $output.Dispose()
+          python -m py_compile windows/sliqserver_v2.py
 
       - name: Install PyInstaller
         run: python -m pip install --upgrade pip pyinstaller
 
       - name: Build Windows EXE
-        run: pyinstaller --noconfirm --clean --onefile --windowed --name SliqServer-Windows windows/sliqserver.py
+        run: pyinstaller --noconfirm --clean --onefile --windowed --name SliqServer-Windows windows/sliqserver_v2.py
 
-      - name: Publish EXE into GitHub Pages files
+      - name: Stage EXE outside repository
         shell: pwsh
-        run: |
-          New-Item -ItemType Directory -Force downloads | Out-Null
-          Copy-Item dist/SliqServer-Windows.exe downloads/SliqServer-Windows.exe -Force
+        run: Copy-Item dist/SliqServer-Windows.exe "$env:RUNNER_TEMP/SliqServer-Windows.exe" -Force
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: SliqServer-Windows
-          path: downloads/SliqServer-Windows.exe
+          path: dist/SliqServer-Windows.exe
 
-      - name: Commit EXE to site
+      - name: Publish EXE to GitHub Pages downloads
         shell: pwsh
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git reset --hard origin/main
+          New-Item -ItemType Directory -Force downloads | Out-Null
+          Copy-Item "$env:RUNNER_TEMP/SliqServer-Windows.exe" downloads/SliqServer-Windows.exe -Force
           git add downloads/SliqServer-Windows.exe
           $changes = git diff --cached --name-only
           if (-not $changes) {
             Write-Host "EXE unchanged"
           } else {
-            git commit -m "Build SliqServer Windows app"
-            git pull --rebase origin main
-            git push
+            git commit -m "Build SliqServer Windows v2"
+            git push origin main
           }
