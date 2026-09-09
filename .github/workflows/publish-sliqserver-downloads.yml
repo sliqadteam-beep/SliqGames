@@ -1,0 +1,127 @@
+name: Publish SliqServer Download Buttons
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-sliqserver-downloads.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sliqserver-publish
+  cancel-in-progress: false
+
+jobs:
+  update-site:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Add or refresh SliqServer downloads
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8-sig')
+
+          css_marker = '/* SLIQSERVER_DOWNLOADS_CSS */'
+          css = r'''
+          /* SLIQSERVER_DOWNLOADS_CSS */
+          .sliqserver-panel{
+            background:linear-gradient(135deg,#0d1b2d,#102b52);
+            border:1px solid #25496f;
+            border-radius:22px;
+            padding:22px;
+          }
+          .sliqserver-panel>p{color:#9fb0c7;margin-top:0}
+          .sliqserver-downloads{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+            gap:15px;
+          }
+          .sliqserver-download-card{
+            display:block;
+            text-decoration:none;
+            color:white;
+            background:#101f34;
+            border:1px solid #284563;
+            border-radius:16px;
+            padding:18px;
+            transition:.2s;
+          }
+          .sliqserver-download-card:hover{
+            transform:translateY(-3px);
+            border-color:#60a5fa;
+            background:#132944;
+          }
+          .sliqserver-download-card strong{display:block;font-size:18px;margin-bottom:6px}
+          .sliqserver-download-card span{color:#9fb0c7;font-size:13px}
+          .sliqserver-download-button{
+            display:inline-block;
+            margin-top:14px;
+            background:#2563eb;
+            color:white;
+            padding:10px 14px;
+            border-radius:10px;
+            font-weight:800;
+          }
+          '''
+          if css_marker not in text:
+              text = text.replace('</style>', css + '\n</style>', 1)
+
+          start = '<!-- SLIQSERVER_DOWNLOADS_START -->'
+          end = '<!-- SLIQSERVER_DOWNLOADS_END -->'
+          section = r'''
+          <!-- SLIQSERVER_DOWNLOADS_START -->
+          <section class="section" id="sliqserverDownloads">
+            <h2>🖥️ SliqServer</h2>
+            <div class="sliqserver-panel">
+              <p>Run and manage your Minecraft server with Java/Bedrock controls, status monitoring, world storage tools, versions, plugins, mods, backups and more.</p>
+              <div class="sliqserver-downloads">
+                <a class="sliqserver-download-card" href="/downloads/SliqServer-Android.apk" download>
+                  <strong>🤖 SliqServer for Android</strong>
+                  <span>Android APK • Minecraft server control for your phone or tablet</span>
+                  <div class="sliqserver-download-button">Download APK</div>
+                </a>
+                <a class="sliqserver-download-card" href="/downloads/SliqServer-Windows.exe" download>
+                  <strong>🪟 SliqServer for Windows</strong>
+                  <span>Windows EXE • Same server controls on your PC</span>
+                  <div class="sliqserver-download-button">Download for Windows</div>
+                </a>
+              </div>
+            </div>
+          </section>
+          <!-- SLIQSERVER_DOWNLOADS_END -->
+          '''
+
+          if start in text and end in text:
+              a = text.index(start)
+              b = text.index(end, a) + len(end)
+              text = text[:a] + section.strip() + text[b:]
+          else:
+              text = text.replace('</main>', section + '\n</main>', 1)
+
+          path.write_text(text, encoding='utf-8')
+          PY
+
+          git diff --check
+
+      - name: Commit homepage update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "SliqServer download section already current"
+          else
+            git commit -m "Update SliqServer download buttons"
+            git pull --rebase origin main
+            git push origin main
+          fi
