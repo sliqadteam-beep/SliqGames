@@ -1,0 +1,27 @@
+diff --git a/app/src/main/java/org/sliqado/sliqserver/MainActivity.kt b/app/src/main/java/org/sliqado/sliqserver/MainActivity.kt
+--- a/app/src/main/java/org/sliqado/sliqserver/MainActivity.kt
++++ b/app/src/main/java/org/sliqado/sliqserver/MainActivity.kt
+@@ -416,12 +416,16 @@
+         return "$slug.sliqado.org"
+     }
+ 
+-    private fun localIp(): String = try {
+-        val interfaces = Collections.list(NetworkInterface.getNetworkInterfaces())
+-        for (intf in interfaces) for (addr in Collections.list(intf.inetAddresses)) {
+-            if (!addr.isLoopbackAddress && addr is Inet4Address) return addr.hostAddress ?: "Unavailable"
++    private fun localIp(): String {
++        return try {
++            val interfaces = Collections.list(NetworkInterface.getNetworkInterfaces())
++            for (intf in interfaces) for (addr in Collections.list(intf.inetAddresses)) {
++                if (!addr.isLoopbackAddress && addr is Inet4Address) return addr.hostAddress ?: "Unavailable"
++            }
++            "Unavailable"
++        } catch (_: Exception) {
++            "Unavailable"
+         }
+-        "Unavailable"
+-    } catch (_: Exception) { "Unavailable" }
++    }
+ 
+     private fun httpGet(url: String): String {
+         val c = URL(url).openConnection() as HttpURLConnection
