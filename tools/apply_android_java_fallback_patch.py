@@ -60,8 +60,6 @@ def main():
             raise SystemExit("Could not find Android startServer() insertion point")
         text = text.replace(marker, helper + marker, 1)
 
-    # Replace the Java failure dialog with automatic Java-21/Minecraft fallback
-    # when the selected server version requires Java 25.
     pattern = re.compile(
         r'''                    r\.stdout\.contains\("NOJAVA"\) -> \{\n'''
         r'''(?P<body>.*?)'''
@@ -74,8 +72,8 @@ def main():
 
     replacement = r'''                    r.stdout.contains("NOJAVA") -> {
                         if (requiredJava >= 25 && fallbackFromJava25(selectedVersion)) {
-                            // The fallback downloader will install Java 21, replace server.jar,
-                            // and call Start again automatically.
+                            // Fallback downloader installs Java 21, replaces server.jar,
+                            // and starts again automatically.
                         } else {
                             statusValue.text = "● OFFLINE"; statusValue.setTextColor(red)
                             finishStartupUi(false)
@@ -88,22 +86,14 @@ def main():
 '''
     text = text[:match.start()] + replacement + text[match.end():]
 
-    # Add a lightweight architecture check to the generated Termux shell script.
-    # We only hard-stop old 32-bit x86, where current Termux OpenJDK packages are not viable.
+    # Lightweight CPU architecture preflight in the Termux shell block.
     java_check_anchor = "CURRENT=0\nif command -v java >/dev/null 2>&1; then"
-    arch_check = '''ARCH=$(uname -m 2>/dev/null || echo unknown)\ncase "$ARCH" in\n  i386|i486|i586|i686) echo "UNSUPPORTED_ARCH:$ARCH"; exit 6 ;;\nesac\nCURRENT=0\nif command -v java >/dev/null 2>&1; then'''
+    arch_check = '''ARCH=$(uname -m 2>/dev/null || echo unknown)\ncase "${'$'}ARCH" in\n  i386|i486|i586|i686) echo "UNSUPPORTED_ARCH:${'$'}ARCH"; exit 6 ;;\nesac\nCURRENT=0\nif command -v java >/dev/null 2>&1; then'''
     if "UNSUPPORTED_ARCH:" not in text:
         if java_check_anchor not in text:
-            # The Kotlin escaping step may already have rewritten shell variables.
-            escaped_anchor = "CURRENT=0\nif command -v java >/dev/null 2>&1; then"
-            if escaped_anchor not in text:
-                raise SystemExit("Could not find Android Java preflight shell block")
+            raise SystemExit("Could not find Android Java preflight shell block")
         text = text.replace(java_check_anchor, arch_check, 1)
 
-    # Handle the architecture error explicitly if it occurs.
-    nojava_pos = text.find('r.stdout.contains("NOJAVA") ->')
-    if nojava_pos < 0:
-        raise SystemExit("NOJAVA branch vanished after patch")
     branch_anchor = '                    r.stdout.contains("NOJAVA") -> {'
     arch_branch = '''                    r.stdout.contains("UNSUPPORTED_ARCH") -> {
                         statusValue.text = "● OFFLINE"; statusValue.setTextColor(red)
@@ -114,6 +104,8 @@ def main():
                     }
 '''
     if 'r.stdout.contains("UNSUPPORTED_ARCH") ->' not in text:
+        if branch_anchor not in text:
+            raise SystemExit("NOJAVA branch vanished after patch")
         text = text.replace(branch_anchor, arch_branch + branch_anchor, 1)
 
     path.write_text(text, encoding="utf-8")
