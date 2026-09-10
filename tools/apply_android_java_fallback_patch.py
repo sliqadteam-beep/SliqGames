@@ -86,16 +86,15 @@ def main():
 '''
     text = text[:match.start()] + replacement + text[match.end():]
 
-    # Lightweight CPU architecture preflight in the Termux shell block.
+    # Optional architecture preflight. v5 can rewrite the runtime shell block,
+    # so this enhancement is added only when the original insertion point exists.
     java_check_anchor = "CURRENT=0\nif command -v java >/dev/null 2>&1; then"
-    arch_check = '''ARCH=$(uname -m 2>/dev/null || echo unknown)\ncase "${'$'}ARCH" in\n  i386|i486|i586|i686) echo "UNSUPPORTED_ARCH:${'$'}ARCH"; exit 6 ;;\nesac\nCURRENT=0\nif command -v java >/dev/null 2>&1; then'''
-    if "UNSUPPORTED_ARCH:" not in text:
-        if java_check_anchor not in text:
-            raise SystemExit("Could not find Android Java preflight shell block")
+    if "UNSUPPORTED_ARCH:" not in text and java_check_anchor in text:
+        arch_check = '''ARCH=$(uname -m 2>/dev/null || echo unknown)\ncase "${'$'}ARCH" in\n  i386|i486|i586|i686) echo "UNSUPPORTED_ARCH:${'$'}ARCH"; exit 6 ;;\nesac\nCURRENT=0\nif command -v java >/dev/null 2>&1; then'''
         text = text.replace(java_check_anchor, arch_check, 1)
 
-    branch_anchor = '                    r.stdout.contains("NOJAVA") -> {'
-    arch_branch = '''                    r.stdout.contains("UNSUPPORTED_ARCH") -> {
+        branch_anchor = '                    r.stdout.contains("NOJAVA") -> {'
+        arch_branch = '''                    r.stdout.contains("UNSUPPORTED_ARCH") -> {
                         statusValue.text = "● OFFLINE"; statusValue.setTextColor(red)
                         finishStartupUi(false)
                         AlertDialog.Builder(this).setTitle("Android device not supported")
@@ -103,10 +102,8 @@ def main():
                             .setPositiveButton("OK", null).show()
                     }
 '''
-    if 'r.stdout.contains("UNSUPPORTED_ARCH") ->' not in text:
-        if branch_anchor not in text:
-            raise SystemExit("NOJAVA branch vanished after patch")
-        text = text.replace(branch_anchor, arch_branch + branch_anchor, 1)
+        if 'r.stdout.contains("UNSUPPORTED_ARCH") ->' not in text and branch_anchor in text:
+            text = text.replace(branch_anchor, arch_branch + branch_anchor, 1)
 
     path.write_text(text, encoding="utf-8")
     print(f"Applied Android Java 25 -> Java 21 fallback patch: {path}")
