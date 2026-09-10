@@ -71,7 +71,8 @@ def main():
         raise SystemExit("Could not find Android NOJAVA result branch")
 
     replacement = r'''                    r.stdout.contains("NOJAVA") -> {
-                        if (requiredJava >= 25 && fallbackFromJava25(selectedVersion)) {
+                        val attemptedVersion = versionSpinner.selectedItem?.toString() ?: ""
+                        if (requiredJavaFor(attemptedVersion) >= 25 && fallbackFromJava25(attemptedVersion)) {
                             // Fallback downloader installs Java 21, replaces server.jar,
                             // and starts again automatically.
                         } else {
