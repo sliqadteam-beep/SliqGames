@@ -8,6 +8,7 @@ on:
       - 'tools/patch_sliqserver_address.py'
       - 'tools/apply_address_patch.py'
       - 'tools/apply_windows_server_branding_v4.py'
+      - 'tools/apply_startup_reliability_patch.py'
       - '.github/workflows/build-sliqserver-windows.yml'
   workflow_dispatch:
 
@@ -44,9 +45,9 @@ jobs:
           $output.Dispose()
 
       - name: Validate patch tools
-        run: python -m py_compile tools/apply_address_patch.py tools/patch_sliqserver_address.py tools/apply_windows_server_branding_v4.py
+        run: python -m py_compile tools/apply_address_patch.py tools/patch_sliqserver_address.py tools/apply_windows_server_branding_v4.py tools/apply_startup_reliability_patch.py
 
-      - name: Apply easier custom-address setup
+      - name: Apply automatic server address
         run: python tools/apply_address_patch.py windows windows/sliqserver_v4.py
 
       - name: Apply server logo and description
@@ -55,6 +56,9 @@ jobs:
       - name: Normalize branding patch boundary
         run: >-
           python -c "from pathlib import Path; p=Path('windows/sliqserver_v4.py'); s=p.read_text(encoding='utf-8'); s=s.replace('return c    def save_settings', 'return c\n\n    def save_settings'); p.write_text(s, encoding='utf-8')"
+
+      - name: Apply startup reliability fixes
+        run: python tools/apply_startup_reliability_patch.py windows windows/sliqserver_v4.py
 
       - name: Validate Windows v4 source
         run: python -m py_compile windows/sliqserver_v4.py
