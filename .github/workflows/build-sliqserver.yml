@@ -61,6 +61,16 @@ jobs:
       - name: Add startup ETA runtime repair and unique server ID
         run: python3 tools/apply_startup_eta_unique_patch.py android android/SliqServer/app/src/main/java/org/sliqado/sliqserver/MainActivityV4.kt
 
+      - name: Escape shell variables for Kotlin
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('android/SliqServer/app/src/main/java/org/sliqado/sliqserver/MainActivityV4.kt')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace('$CURRENT', "${'$'}CURRENT")
+          p.write_text(s, encoding='utf-8')
+          PY
+
       - name: Set up Java
         uses: actions/setup-java@v5
         with:
