@@ -45,10 +45,10 @@ def main():
         statusValue.text = "● STARTING"
         statusValue.setTextColor(amber)
         if (::startEtaValue.isInitialized) {
-            startEtaValue.text = "Java 25 unavailable · switching to $fallback (Java 21)…"
+            startEtaValue.text = "Android compatibility · using $fallback with Java 21…"
         }
-        toast("Java 25 is unavailable on this Android device. SliqServer is switching to $fallback with Java 21.")
-        handler.postDelayed({ downloadServer(true) }, 600)
+        toast("Android compatibility: using Minecraft $fallback with Java 21 instead of Java 25.")
+        handler.postDelayed({ downloadServer(true) }, 350)
         return true
     }
 
@@ -60,6 +60,21 @@ def main():
             raise SystemExit("Could not find Android startServer() insertion point")
         text = text.replace(marker, helper + marker, 1)
 
+    # IMPORTANT: Android must never begin a Java 25 install. If the chosen
+    # Minecraft version needs Java 25, switch to the newest Java-21-compatible
+    # version BEFORE any runtime-preparation code runs.
+    early_guard = r'''    private fun startServer() {
+        val androidRequestedVersion = versionSpinner.selectedItem?.toString() ?: ""
+        if (requiredJavaFor(androidRequestedVersion) >= 25) {
+            if (fallbackFromJava25(androidRequestedVersion)) return
+        }
+'''
+    if "val androidRequestedVersion = versionSpinner.selectedItem" not in text:
+        if marker not in text:
+            raise SystemExit("Could not find Android startServer() for early Java guard")
+        text = text.replace(marker, early_guard, 1)
+
+    # Keep a second fallback in the unlikely case Java setup still reports NOJAVA.
     pattern = re.compile(
         r'''                    r\.stdout\.contains\("NOJAVA"\) -> \{\n'''
         r'''(?P<body>.*?)'''
@@ -73,14 +88,13 @@ def main():
     replacement = r'''                    r.stdout.contains("NOJAVA") -> {
                         val attemptedVersion = versionSpinner.selectedItem?.toString() ?: ""
                         if (requiredJavaFor(attemptedVersion) >= 25 && fallbackFromJava25(attemptedVersion)) {
-                            // Fallback downloader installs Java 21, replaces server.jar,
-                            // and starts again automatically.
+                            // Safety fallback; normal Android starts switch before Java 25 is attempted.
                         } else {
                             statusValue.text = "● OFFLINE"; statusValue.setTextColor(red)
                             finishStartupUi(false)
                             val details = r.stdout.trim().ifBlank { "Java runtime unavailable" }
                             AlertDialog.Builder(this).setTitle("Java runtime setup failed")
-                                .setMessage("SliqServer could not prepare a compatible Java runtime on this device. Details: $details\n\nOpen Termux once, make sure it has internet access, and enable allow-external-apps=true.")
+                                .setMessage("SliqServer could not prepare Java 21 on this device. Details: $details\n\nOpen Termux once, make sure it has internet access, and enable allow-external-apps=true.")
                                 .setPositiveButton("OK", null).show()
                         }
                     }
@@ -107,7 +121,7 @@ def main():
             text = text.replace(branch_anchor, arch_branch + branch_anchor, 1)
 
     path.write_text(text, encoding="utf-8")
-    print(f"Applied Android Java 25 -> Java 21 fallback patch: {path}")
+    print(f"Applied Android no-Java-25 compatibility patch: {path}")
 
 
 if __name__ == "__main__":
