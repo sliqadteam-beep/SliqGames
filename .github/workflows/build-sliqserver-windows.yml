@@ -10,6 +10,7 @@ on:
       - 'tools/apply_windows_server_branding_v4.py'
       - 'tools/apply_startup_reliability_patch.py'
       - 'tools/apply_server_ip_patch.py'
+      - 'tools/apply_startup_eta_unique_patch.py'
       - '.github/workflows/build-sliqserver-windows.yml'
   workflow_dispatch:
 
@@ -46,7 +47,7 @@ jobs:
           $output.Dispose()
 
       - name: Validate patch tools
-        run: python -m py_compile tools/apply_address_patch.py tools/patch_sliqserver_address.py tools/apply_windows_server_branding_v4.py tools/apply_startup_reliability_patch.py tools/apply_server_ip_patch.py
+        run: python -m py_compile tools/apply_address_patch.py tools/patch_sliqserver_address.py tools/apply_windows_server_branding_v4.py tools/apply_startup_reliability_patch.py tools/apply_server_ip_patch.py tools/apply_startup_eta_unique_patch.py
 
       - name: Apply automatic server address
         run: python tools/apply_address_patch.py windows windows/sliqserver_v4.py
@@ -63,6 +64,9 @@ jobs:
 
       - name: Add local and public server IP display
         run: python tools/apply_server_ip_patch.py windows windows/sliqserver_v4.py
+
+      - name: Add startup ETA runtime repair and unique server ID
+        run: python tools/apply_startup_eta_unique_patch.py windows windows/sliqserver_v4.py
 
       - name: Validate Windows v4 source
         run: python -m py_compile windows/sliqserver_v4.py
