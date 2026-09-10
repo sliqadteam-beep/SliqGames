@@ -12,6 +12,8 @@ on:
       - 'tools/apply_server_ip_patch.py'
       - 'tools/apply_startup_eta_unique_patch.py'
       - 'tools/apply_quality_v5_patch.py'
+      - 'tools/quality_v5/**'
+      - 'tools/apply_android_java_fallback_patch.py'
       - '.github/workflows/build-sliqserver.yml'
   workflow_dispatch:
 
@@ -45,7 +47,7 @@ jobs:
           test -s "$SRC/TermuxResultService.kt"
 
       - name: Validate patch tools
-        run: python3 -m py_compile tools/apply_address_patch.py tools/patch_sliqserver_address.py tools/apply_server_branding_patch.py tools/apply_startup_reliability_patch.py tools/apply_server_ip_patch.py tools/apply_startup_eta_unique_patch.py tools/apply_quality_v5_patch.py
+        run: python3 -m py_compile tools/apply_address_patch.py tools/patch_sliqserver_address.py tools/apply_server_branding_patch.py tools/apply_startup_reliability_patch.py tools/apply_server_ip_patch.py tools/apply_startup_eta_unique_patch.py tools/apply_quality_v5_patch.py tools/apply_android_java_fallback_patch.py
 
       - name: Apply automatic server address
         run: python3 tools/apply_address_patch.py android android/SliqServer/app/src/main/java/org/sliqado/sliqserver/MainActivityV4.kt
@@ -74,6 +76,9 @@ jobs:
 
       - name: Apply v5 reliability and self-repair
         run: python3 tools/apply_quality_v5_patch.py android android/SliqServer/app/src/main/java/org/sliqado/sliqserver/MainActivityV4.kt
+
+      - name: Add Android Java 25 compatibility fallback
+        run: python3 tools/apply_android_java_fallback_patch.py android/SliqServer/app/src/main/java/org/sliqado/sliqserver/MainActivityV4.kt
 
       - name: Set up Java
         uses: actions/setup-java@v5
