@@ -20,7 +20,8 @@
         <service android:name=".TermuxResultService" android:exported="false" />
 
         <activity android:name=".MainActivityV4" android:exported="false" />
-        <activity android:name=".DedicatedServerActivity" android:exported="true">
+        <activity android:name=".DedicatedServerActivity" android:exported="false" />
+        <activity android:name=".FirstRunActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
