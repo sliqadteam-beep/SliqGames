@@ -8,6 +8,7 @@ on:
       - 'tools/patch_sliqserver_address.py'
       - 'tools/apply_address_patch.py'
       - 'tools/apply_server_branding_patch.py'
+      - 'tools/apply_startup_reliability_patch.py'
       - '.github/workflows/build-sliqserver.yml'
   workflow_dispatch:
 
@@ -41,13 +42,16 @@ jobs:
           test -s "$SRC/TermuxResultService.kt"
 
       - name: Validate patch tools
-        run: python3 -m py_compile tools/apply_address_patch.py tools/patch_sliqserver_address.py tools/apply_server_branding_patch.py
+        run: python3 -m py_compile tools/apply_address_patch.py tools/patch_sliqserver_address.py tools/apply_server_branding_patch.py tools/apply_startup_reliability_patch.py
 
-      - name: Apply easier custom-address setup
+      - name: Apply automatic server address
         run: python3 tools/apply_address_patch.py android android/SliqServer/app/src/main/java/org/sliqado/sliqserver/MainActivityV4.kt
 
       - name: Apply server logo and description
         run: python3 tools/apply_server_branding_patch.py android android/SliqServer/app/src/main/java/org/sliqado/sliqserver/MainActivityV4.kt
+
+      - name: Apply startup reliability fixes
+        run: python3 tools/apply_startup_reliability_patch.py android android/SliqServer/app/src/main/java/org/sliqado/sliqserver/MainActivityV4.kt
 
       - name: Set up Java
         uses: actions/setup-java@v5
